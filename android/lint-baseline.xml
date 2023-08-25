@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 7.3.0" type="baseline" client="gradle" dependencies="false" name="AGP (7.3.0)" variant="all" version="7.3.0">
+
+    <issue
+        id="KotlinNullnessAnnotation"
+        message="Do not use `@NonNull` in Kotlin; the nullability is already implied by the Kotlin type `FlutterPlugin.FlutterPluginBinding` **not** ending with `?`"
+        errorLine1="  override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {"
+        errorLine2="                                  ~~~~~~~~">
+        <location
+            file="src/main/kotlin/com/dena/amazon/chime/flutter/amazon_chime_plugin/AmazonChimePlugin.kt"
+            line="28"
+            column="35"/>
+    </issue>
+
+    <issue
+        id="KotlinNullnessAnnotation"
+        message="Do not use `@NonNull` in Kotlin; the nullability is already implied by the Kotlin type `MethodCall` **not** ending with `?`"
+        errorLine1="  override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {"
+        errorLine2="                            ~~~~~~~~">
+        <location
+            file="src/main/kotlin/com/dena/amazon/chime/flutter/amazon_chime_plugin/AmazonChimePlugin.kt"
+            line="33"
+            column="29"/>
+    </issue>
+
+    <issue
+        id="KotlinNullnessAnnotation"
+        message="Do not use `@NonNull` in Kotlin; the nullability is already implied by the Kotlin type `Result` **not** ending with `?`"
+        errorLine1="  override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {"
+        errorLine2="                                                       ~~~~~~~~">
+        <location
+            file="src/main/kotlin/com/dena/amazon/chime/flutter/amazon_chime_plugin/AmazonChimePlugin.kt"
+            line="33"
+            column="56"/>
+    </issue>
+
+    <issue
+        id="KotlinNullnessAnnotation"
+        message="Do not use `@NonNull` in Kotlin; the nullability is already implied by the Kotlin type `FlutterPlugin.FlutterPluginBinding` **not** ending with `?`"
+        errorLine1="  override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {"
+        errorLine2="                                    ~~~~~~~~">
+        <location
+            file="src/main/kotlin/com/dena/amazon/chime/flutter/amazon_chime_plugin/AmazonChimePlugin.kt"
+            line="41"
+            column="37"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.tools.build:gradle than 7.3.0 is available: 8.1.0. (There is also a newer version of 7.3.𝑥 available, if upgrading to 8.1.0 is difficult: 7.3.1)"
+        errorLine1="        classpath &apos;com.android.tools.build:gradle:7.3.0&apos;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle"
+            line="12"
+            column="9"/>
+    </issue>
+
+</issues>

@@ -1,0 +1,39 @@
+PODS:
+  - amazon_chime_plugin (0.0.1):
+    - AmazonChimeSDK-Bitcode (= 0.23.1)
+    - Flutter
+  - AmazonChimeSDK-Bitcode (0.23.1):
+    - AmazonChimeSDKMedia-Bitcode (= 0.18.1)
+  - AmazonChimeSDKMedia-Bitcode (0.18.1)
+  - Flutter (1.0.0)
+  - integration_test (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - amazon_chime_plugin (from `.symlinks/plugins/amazon_chime_plugin/ios`)
+  - Flutter (from `Flutter`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
+
+SPEC REPOS:
+  trunk:
+    - AmazonChimeSDK-Bitcode
+    - AmazonChimeSDKMedia-Bitcode
+
+EXTERNAL SOURCES:
+  amazon_chime_plugin:
+    :path: ".symlinks/plugins/amazon_chime_plugin/ios"
+  Flutter:
+    :path: Flutter
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
+
+SPEC CHECKSUMS:
+  amazon_chime_plugin: 8aa0fb3fd49d49b2b9ac0b80db8b695a6946ecf7
+  AmazonChimeSDK-Bitcode: d84fa7718ad937a1c9e4cce17aee55e379e83601
+  AmazonChimeSDKMedia-Bitcode: d2a2d28dbbc905d95b78edf2a4b91af76eee867a
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  integration_test: 13825b8a9334a850581300559b8839134b124670
+
+PODFILE CHECKSUM: a9c2e27431f1a63a92a90f07a76d25c78204b63c
+
+COCOAPODS: 1.12.1
