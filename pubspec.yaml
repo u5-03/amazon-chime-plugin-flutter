@@ -1,6 +1,6 @@
 name: amazon_chime_plugin
 description: A new Flutter plugin project.
-version: 0.0.1
+version: 0.0.2
 homepage:
 
 environment:
@@ -8,15 +8,26 @@ environment:
   flutter: ">=3.3.0"
 
 dependencies:
+  dev: ^1.0.0
   flutter:
     sdk: flutter
+  flutter_riverpod: ^2.3.6
+  freezed_annotation: ^2.4.1
+  http: ^1.1.0
+  json_annotation: ^4.8.1
+  json_serializable: ^6.7.1
+  logging: ^1.2.0
   pigeon: ^10.1.6
   plugin_platform_interface: ^2.0.2
+  riverpod_annotation: ^2.1.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner: ^2.4.6
   very_good_analysis: 5.0.0+1
+  freezed: ^2.4.1
+  riverpod_generator: ^2.2.6
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -33,6 +44,7 @@ flutter:
   # This is required for using `dart:ffi`.
   # All these are used by the tooling to maintain consistency when
   # adding or updating assets for this project.
+  uses-material-design: true
   plugin:
     platforms:
       android:

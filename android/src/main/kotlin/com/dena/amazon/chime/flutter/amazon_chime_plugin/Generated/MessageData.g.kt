@@ -45,7 +45,20 @@ class FlutterError (
 enum class MethodType(val raw: Int) {
   GETPLATFORMVERSION(0),
   REQUESTMICROPHONEPERMISSIONS(1),
-  REQUESTCAMERAPERMISSIONS(2);
+  REQUESTCAMERAPERMISSIONS(2),
+  INITIALAUDIOSELECTION(3),
+  LISTAUDIODEVICES(4),
+  UPDATEAUDIODEVICE(5),
+  LOCALVIDEOON(6),
+  LOCALVIDEOOFF(7),
+  JOIN(8),
+  MUTE(9),
+  UNMUTE(10),
+  STOP(11),
+  VIDEOTILEADD(12),
+  VIDEOTILEREMOVE(13),
+  AUDIOSESSIONDIDDROP(14),
+  AUDIOSESSIONDIDSTOP(15);
 
   companion object {
     fun ofRaw(raw: Int): MethodType? {
@@ -57,7 +70,8 @@ enum class MethodType(val raw: Int) {
 enum class AmazonChimeErrorType(val raw: Int) {
   UNKNOWN(0),
   INVALIDRESPONSE(1),
-  CUSTOMERROR(2);
+  RESPONSEMESSAGE(2),
+  CUSTOMERROR(3);
 
   companion object {
     fun ofRaw(raw: Int): AmazonChimeErrorType? {
@@ -67,23 +81,103 @@ enum class AmazonChimeErrorType(val raw: Int) {
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
-data class StringData (
-  val result: Boolean,
-  val data: String
+data class JoinParameter (
+  val meetingId: String,
+  val externalMeetingId: String,
+  val mediaRegion: String,
+  val audioHostUrl: String,
+  val audioFallbackUrl: String,
+  val signalingUrl: String,
+  val turnControlUrl: String,
+  val externalUserId: String,
+  val attendeeId: String,
+  val joinToken: String
 
 ) {
   companion object {
     @Suppress("UNCHECKED_CAST")
-    fun fromList(list: List<Any?>): StringData {
-      val result = list[0] as Boolean
-      val data = list[1] as String
-      return StringData(result, data)
+    fun fromList(list: List<Any?>): JoinParameter {
+      val meetingId = list[0] as String
+      val externalMeetingId = list[1] as String
+      val mediaRegion = list[2] as String
+      val audioHostUrl = list[3] as String
+      val audioFallbackUrl = list[4] as String
+      val signalingUrl = list[5] as String
+      val turnControlUrl = list[6] as String
+      val externalUserId = list[7] as String
+      val attendeeId = list[8] as String
+      val joinToken = list[9] as String
+      return JoinParameter(meetingId, externalMeetingId, mediaRegion, audioHostUrl, audioFallbackUrl, signalingUrl, turnControlUrl, externalUserId, attendeeId, joinToken)
     }
   }
   fun toList(): List<Any?> {
     return listOf<Any?>(
-      result,
-      data,
+      meetingId,
+      externalMeetingId,
+      mediaRegion,
+      audioHostUrl,
+      audioFallbackUrl,
+      signalingUrl,
+      turnControlUrl,
+      externalUserId,
+      attendeeId,
+      joinToken,
+    )
+  }
+}
+
+/** Generated class from Pigeon that represents data sent in messages. */
+data class ParticipantInfo (
+  val attendeeId: String,
+  val externalUserId: String
+
+) {
+  companion object {
+    @Suppress("UNCHECKED_CAST")
+    fun fromList(list: List<Any?>): ParticipantInfo {
+      val attendeeId = list[0] as String
+      val externalUserId = list[1] as String
+      return ParticipantInfo(attendeeId, externalUserId)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf<Any?>(
+      attendeeId,
+      externalUserId,
+    )
+  }
+}
+
+/** Generated class from Pigeon that represents data sent in messages. */
+data class TileInfo (
+  val tileId: Long,
+  val attendeeId: String,
+  val videoStreamContentWidth: Double,
+  val videoStreamContentHeight: Double,
+  val isLocalTile: Boolean,
+  val isContent: Boolean
+
+) {
+  companion object {
+    @Suppress("UNCHECKED_CAST")
+    fun fromList(list: List<Any?>): TileInfo {
+      val tileId = list[0].let { if (it is Int) it.toLong() else it as Long }
+      val attendeeId = list[1] as String
+      val videoStreamContentWidth = list[2] as Double
+      val videoStreamContentHeight = list[3] as Double
+      val isLocalTile = list[4] as Boolean
+      val isContent = list[5] as Boolean
+      return TileInfo(tileId, attendeeId, videoStreamContentWidth, videoStreamContentHeight, isLocalTile, isContent)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf<Any?>(
+      tileId,
+      attendeeId,
+      videoStreamContentWidth,
+      videoStreamContentHeight,
+      isLocalTile,
+      isContent,
     )
   }
 }
@@ -94,7 +188,7 @@ private object RequesterToNativeCodec : StandardMessageCodec() {
     return when (type) {
       128.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          StringData.fromList(it)
+          JoinParameter.fromList(it)
         }
       }
       else -> super.readValueOfType(type, buffer)
@@ -102,7 +196,7 @@ private object RequesterToNativeCodec : StandardMessageCodec() {
   }
   override fun writeValue(stream: ByteArrayOutputStream, value: Any?)   {
     when (value) {
-      is StringData -> {
+      is JoinParameter -> {
         stream.write(128)
         writeValue(stream, value.toList())
       }
@@ -113,7 +207,18 @@ private object RequesterToNativeCodec : StandardMessageCodec() {
 
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface RequesterToNative {
-  fun sendMessage(type: MethodType, callback: (Result<StringData>) -> Unit)
+  fun getPlatformVersion(callback: (Result<String>) -> Unit)
+  fun requestMicrophonePermissions(callback: (Result<String>) -> Unit)
+  fun requestCameraPermissions(callback: (Result<String>) -> Unit)
+  fun initialAudioSelection(callback: (Result<String>) -> Unit)
+  fun listAudioDevices(callback: (Result<List<String>>) -> Unit)
+  fun updateCurrentDevice(deviceLabel: String, callback: (Result<String>) -> Unit)
+  fun startLocalVideo(callback: (Result<Unit>) -> Unit)
+  fun stopLocalVideo(callback: (Result<Unit>) -> Unit)
+  fun join(parameter: JoinParameter, callback: (Result<Unit>) -> Unit)
+  fun stop(callback: (Result<Unit>) -> Unit)
+  fun mute(callback: (Result<Unit>) -> Unit)
+  fun unmute(callback: (Result<Unit>) -> Unit)
 
   companion object {
     /** The codec used by RequesterToNative. */
@@ -124,12 +229,10 @@ interface RequesterToNative {
     @Suppress("UNCHECKED_CAST")
     fun setUp(binaryMessenger: BinaryMessenger, api: RequesterToNative?) {
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.sendMessage", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.getPlatformVersion", codec)
         if (api != null) {
-          channel.setMessageHandler { message, reply ->
-            val args = message as List<Any?>
-            val typeArg = MethodType.ofRaw(args[0] as Int)!!
-            api.sendMessage(typeArg) { result: Result<StringData> ->
+          channel.setMessageHandler { _, reply ->
+            api.getPlatformVersion() { result: Result<String> ->
               val error = result.exceptionOrNull()
               if (error != null) {
                 reply.reply(wrapError(error))
@@ -143,16 +246,298 @@ interface RequesterToNative {
           channel.setMessageHandler(null)
         }
       }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.requestMicrophonePermissions", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            api.requestMicrophonePermissions() { result: Result<String> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.requestCameraPermissions", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            api.requestCameraPermissions() { result: Result<String> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.initialAudioSelection", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            api.initialAudioSelection() { result: Result<String> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.listAudioDevices", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            api.listAudioDevices() { result: Result<List<String>> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.updateCurrentDevice", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val deviceLabelArg = args[0] as String
+            api.updateCurrentDevice(deviceLabelArg) { result: Result<String> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.startLocalVideo", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            api.startLocalVideo() { result: Result<Unit> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                reply.reply(wrapResult(null))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.stopLocalVideo", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            api.stopLocalVideo() { result: Result<Unit> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                reply.reply(wrapResult(null))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.join", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val parameterArg = args[0] as JoinParameter
+            api.join(parameterArg) { result: Result<Unit> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                reply.reply(wrapResult(null))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.stop", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            api.stop() { result: Result<Unit> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                reply.reply(wrapResult(null))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.mute", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            api.mute() { result: Result<Unit> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                reply.reply(wrapResult(null))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.unmute", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            api.unmute() { result: Result<Unit> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                reply.reply(wrapResult(null))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
     }
   }
 }
+@Suppress("UNCHECKED_CAST")
+private object RequesterToFlutterCodec : StandardMessageCodec() {
+  override fun readValueOfType(type: Byte, buffer: ByteBuffer): Any? {
+    return when (type) {
+      128.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
+          ParticipantInfo.fromList(it)
+        }
+      }
+      129.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
+          TileInfo.fromList(it)
+        }
+      }
+      else -> super.readValueOfType(type, buffer)
+    }
+  }
+  override fun writeValue(stream: ByteArrayOutputStream, value: Any?)   {
+    when (value) {
+      is ParticipantInfo -> {
+        stream.write(128)
+        writeValue(stream, value.toList())
+      }
+      is TileInfo -> {
+        stream.write(129)
+        writeValue(stream, value.toList())
+      }
+      else -> super.writeValue(stream, value)
+    }
+  }
+}
+
 /** Generated class from Pigeon that represents Flutter messages that can be called from Kotlin. */
 @Suppress("UNCHECKED_CAST")
 class RequesterToFlutter(private val binaryMessenger: BinaryMessenger) {
   companion object {
     /** The codec used by RequesterToFlutter. */
     val codec: MessageCodec<Any?> by lazy {
-      StandardMessageCodec()
+      RequesterToFlutterCodec
+    }
+  }
+  fun audioSessionDidDrop(callback: () -> Unit) {
+    val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.audioSessionDidDrop", codec)
+    channel.send(null) {
+      callback()
+    }
+  }
+  fun audioSessionDidStop(callback: () -> Unit) {
+    val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.audioSessionDidStop", codec)
+    channel.send(null) {
+      callback()
+    }
+  }
+  fun joined(infoArg: ParticipantInfo, callback: () -> Unit) {
+    val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.joined", codec)
+    channel.send(listOf(infoArg)) {
+      callback()
+    }
+  }
+  fun left(infoArg: ParticipantInfo, callback: () -> Unit) {
+    val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.left", codec)
+    channel.send(listOf(infoArg)) {
+      callback()
+    }
+  }
+  fun dropped(infoArg: ParticipantInfo, callback: () -> Unit) {
+    val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.dropped", codec)
+    channel.send(listOf(infoArg)) {
+      callback()
+    }
+  }
+  fun muted(infoArg: ParticipantInfo, callback: () -> Unit) {
+    val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.muted", codec)
+    channel.send(listOf(infoArg)) {
+      callback()
+    }
+  }
+  fun unmuted(infoArg: ParticipantInfo, callback: () -> Unit) {
+    val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.unmuted", codec)
+    channel.send(listOf(infoArg)) {
+      callback()
+    }
+  }
+  fun videoTileAdded(infoArg: TileInfo, callback: () -> Unit) {
+    val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.videoTileAdded", codec)
+    channel.send(listOf(infoArg)) {
+      callback()
+    }
+  }
+  fun videoTileRemoved(infoArg: TileInfo, callback: () -> Unit) {
+    val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.videoTileRemoved", codec)
+    channel.send(listOf(infoArg)) {
+      callback()
     }
   }
 }

@@ -1,20 +1,18 @@
-import 'package:amazon_chime_plugin/amazon_chime_plugin.dart';
+import 'package:amazon_chime_plugin/api/api.dart';
 import 'package:amazon_chime_plugin/components/future_widget.dart';
+import 'package:amazon_chime_plugin/debug/input_info_debug_screen.dart';
 import 'package:amazon_chime_plugin/errors/amazon_chime_error.dart';
 import 'package:amazon_chime_plugin/extensions/alert_dialog.dart';
+import 'package:amazon_chime_plugin/utils/requester/amazon_chime_requester/amazon_chime_requester.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ChimeSDKSampleScreen extends StatefulWidget {
-  const ChimeSDKSampleScreen({super.key});
+final class AmazonChimeSDKSampleScreen extends ConsumerWidget {
+  AmazonChimeSDKSampleScreen({super.key});
 
-  @override
-  State<ChimeSDKSampleScreen> createState() => _ChimeSDKSampleState();
-}
+  final AmazonChimeRequester plugin = AmazonChimeRequester();
 
-class _ChimeSDKSampleState extends State<ChimeSDKSampleScreen> {
-  final plugin = AmazonChimePlugin();
-
-  Widget resultWidget(Result<String, AmazonChimeError> result) {
+  Widget _resultWidget(Result<String, AmazonChimeError> result) {
     switch (result) {
       case Success(value: final value):
         return Text(
@@ -32,7 +30,7 @@ class _ChimeSDKSampleState extends State<ChimeSDKSampleScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(title: const Text('Debug Info')),
       body: Center(
@@ -40,7 +38,7 @@ class _ChimeSDKSampleState extends State<ChimeSDKSampleScreen> {
           children: [
             FutureWidget(
               future: plugin.getPlatformVersion(),
-              whenDone: resultWidget,
+              whenDone: _resultWidget,
             ),
             ElevatedButton(
               child: const Text('Request Microphone Permissions'),
@@ -64,6 +62,24 @@ class _ChimeSDKSampleState extends State<ChimeSDKSampleScreen> {
                     context: context,
                   );
                 }
+              },
+            ),
+            ElevatedButton(
+              child: const Text('Present Broadcast screen'),
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute<dynamic>(
+                    builder: (_) => InputInfoDebugScreen(
+                      ApiConfig(
+                        apiUrl:
+                            'https://5zcstrkvxe.execute-api.us-east-1.amazonaws.com/Prod/',
+                        region: 'us-east-1',
+                      ),
+                    ),
+                    fullscreenDialog: true, // modal page
+                  ),
+                );
               },
             ),
           ],

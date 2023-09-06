@@ -1,16 +1,17 @@
 package com.dena.amazon.chime.flutter.amazon_chime_plugin
 
+import FlutterError
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.dena.amazon.chime.flutter.amazon_chime_plugin.PlatoformRequester.Models.ResponseMessage
-import com.dena.amazon.chime.flutter.amazon_chime_plugin.PlatoformRequester.Models.ResponseMessageData
+import com.dena.amazon.chime.flutter.amazon_chime_plugin.PlatoformRequester.Models.ResponseMessageKind
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import android.Manifest
+import com.dena.amazon.chime.flutter.amazon_chime_plugin.PlatoformRequester.AmazonChimeError
 
 class PermissionManager(
     private val activity: Activity
@@ -30,37 +31,40 @@ class PermissionManager(
         )
     }
 
-    suspend fun requestMicrophonePermission(): ResponseMessageData {
+    @Throws(FlutterError::class)
+    suspend fun requestMicrophonePermission(): ResponseMessageKind {
         val permissions = MICROPHONE_PERMISSIONS
         val requestCode = MICROPHONE_PERMISSION_REQUEST_CODE
         return if (hasPermissionsAlready(MICROPHONE_PERMISSIONS)) {
-            ResponseMessageData(true, ResponseMessage.MICROPHONE_AUTHORIZED)
+            ResponseMessageKind.MICROPHONE_AUTHORIZED
         } else {
             val granted = requestPermission(permissions, requestCode)
             if (granted) {
-                ResponseMessageData(true, ResponseMessage.MICROPHONE_AUTHORIZED)
+                throw AmazonChimeError.ResponseMessage(ResponseMessageKind.MICROPHONE_AUTHORIZED).asFlutterError
             } else {
-                ResponseMessageData(false, ResponseMessage.MICROPHONE_AUTH_NOT_GRANTED)
+                throw AmazonChimeError.ResponseMessage(ResponseMessageKind.MICROPHONE_AUTH_NOT_GRANTED).asFlutterError
             }
         }
     }
 
-    suspend fun requestVideoPermission(): ResponseMessageData {
+    @Throws(FlutterError::class)
+    suspend fun requestVideoPermission(): ResponseMessageKind {
         val permissions = CAMERA_PERMISSIONS
         val requestCode = CAMERA_PERMISSION_REQUEST_CODE
         return if (hasPermissionsAlready(MICROPHONE_PERMISSIONS)) {
-            ResponseMessageData(true, ResponseMessage.CAMERA_AUTHORIZED)
+            ResponseMessageKind.CAMERA_AUTHORIZED
         } else {
             val granted = requestPermission(permissions, requestCode)
             if (granted) {
-                ResponseMessageData(true, ResponseMessage.CAMERA_AUTHORIZED)
+                ResponseMessageKind.CAMERA_AUTHORIZED
             } else {
-                ResponseMessageData(false, ResponseMessage.CAMERA_AUTH_NOT_GRANTED)
+                throw AmazonChimeError.ResponseMessage(ResponseMessageKind.CAMERA_AUTH_NOT_GRANTED).asFlutterError
             }
         }
     }
 
-    fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    @Throws(FlutterError::class)
+    fun onRequestPermissionsResult(requestCode: Int, grantResults: IntArray) {
         permissionContinuations[requestCode]?.let { continuation ->
             val granted = grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
             continuation.resume(granted)

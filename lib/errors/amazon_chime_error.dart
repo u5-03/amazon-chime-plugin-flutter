@@ -28,6 +28,8 @@ abstract class AmazonChimeError implements Exception {
       const InvalidResponse('Invalid Response');
   static CustomError customError([String msg = '']) =>
       CustomError('Error: $msg');
+  static ResponseMessage responseMessage([String msg = '']) =>
+      ResponseMessage(msg);
   static UnknownError unknown() => const UnknownError('Unknown Error');
 }
 
@@ -37,6 +39,10 @@ class InvalidResponse extends AmazonChimeError implements Exception {
 
 class CustomError extends AmazonChimeError implements Exception {
   const CustomError(super.message);
+}
+
+class ResponseMessage extends AmazonChimeError implements Exception {
+  const ResponseMessage(super.message);
 }
 
 class UnknownError extends AmazonChimeError implements Exception {
