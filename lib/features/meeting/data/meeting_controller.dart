@@ -1,42 +1,70 @@
 import 'package:amazon_chime_plugin/api/api.dart';
 import 'package:amazon_chime_plugin/errors/amazon_chime_error.dart';
+import 'package:amazon_chime_plugin/extensions/string.dart';
 import 'package:amazon_chime_plugin/features/meeting/data/meeting_data/meeting_data.dart';
 import 'package:amazon_chime_plugin/features/meeting/models/meeting/join_info_model.dart';
 import 'package:amazon_chime_plugin/features/meeting/models/participant/participant_model.dart';
 import 'package:amazon_chime_plugin/features/meeting/models/video_tile_model/video_tile_model.dart';
 import 'package:amazon_chime_plugin/interfaces/audio_devices_interface.dart';
+import 'package:amazon_chime_plugin/pigeon/generated/message_data.g.dart';
 import 'package:amazon_chime_plugin/utils/internet_connection.dart';
 import 'package:amazon_chime_plugin/utils/logger.dart';
 import 'package:amazon_chime_plugin/utils/requester/amazon_chime_requester/amazon_chime_requester.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'meeting_controller.g.dart';
+// part 'meeting_controller.g.dart';
 
-@riverpod
-final class MeetingController extends _$MeetingController
+class DataState {
+  DataState({required this.data});
+  String data;
+}
+
+final counterProvider = NotifierProvider<Counter, DataState>(Counter.new);
+
+class Counter extends Notifier<DataState> {
+  @override
+  DataState build() {
+    // Inside "build", we return the initial state of the counter.
+    return DataState(data: '');
+  }
+
+  void increment() {
+    state = DataState(data: StringExt.randomLength);
+  }
+}
+
+final meetingControllerProvider =
+    NotifierProvider<MeetingController, MeetingData>(() {
+  return MeetingController(
+    meetingData: const MeetingData(),
+  );
+});
+
+final class MeetingController extends Notifier<MeetingData>
     implements AudioDevicesInterface {
-  MeetingController();
-  final _meetingData = MeetingData();
-
+  MeetingController({required this.meetingData});
   final chimePlugin = AmazonChimeRequester();
   final api = Api();
+  MeetingData meetingData;
 
   // LateError (LateInitializationError: Field '_element@101511105' has not been initialized.)
   @override
   MeetingData build() {
-    return _meetingData;
+    return meetingData;
   }
 
   void updateContentParticipantId(String contentParticipantId) {
-    state.contentParticipantId = contentParticipantId;
+    state = state.copyWith(contentParticipantId: contentParticipantId);
   }
 
   void updateRemoteParticipantId(String remoteParticipantId) {
-    state.remoteParticipantId = remoteParticipantId;
+    state = state.copyWith(remoteParticipantId: remoteParticipantId);
   }
 
   void addParticipant({required ParticipantModel participant}) {
-    state.participants[participant.participantId] = participant;
+    final participants = {...state.participants};
+    participants[participant.participantId] = participant;
+    state = state.copyWith(participants: participants);
   }
 
   void updateParticipant({
@@ -46,21 +74,38 @@ final class MeetingController extends _$MeetingController
     bool? isVideoOn,
     VideoTileModel? videoTile,
   }) {
-    state.updateParticipant(
-      participantId: participantId,
-      externalUserId: externalUserId,
-      muteStatus: muteStatus,
-      isVideoOn: isVideoOn,
-      videoTile: videoTile,
-    );
+    final participants = {...state.participants};
+    final participant = participants[participantId];
+    if (participant != null) {
+      participants[participantId] = participant.copyWith(
+        externalUserId: externalUserId ?? participant.externalUserId,
+        muteStatus: muteStatus ?? participant.muteStatus,
+        isVideoOn: isVideoOn ?? participant.isVideoOn,
+        videoTile: videoTile ?? participant.videoTile,
+      );
+      state = state.copyWith(participants: participants);
+    } else {
+      addParticipant(
+        participant: ParticipantModel(
+          participantId: participantId,
+          externalUserId: externalUserId ?? '',
+          muteStatus: muteStatus ?? false,
+          isVideoOn: isVideoOn ?? false,
+          videoTile: videoTile,
+        ),
+      );
+    }
+    print('updateParticipant: $participants');
   }
 
   void removeParticipant(String participantId) {
-    state.participants.remove(participantId);
+    final participants = {...state.participants};
+    participants.remove(participantId);
+    state = state.copyWith(participants: participants);
   }
 
   void clearParticipant() {
-    state.participants = {};
+    state = state.copyWith(participants: {});
   }
 
   Future<Result<void, AmazonChimeError>> joinMeetingWithAPI(
@@ -126,10 +171,11 @@ final class MeetingController extends _$MeetingController
   //
 
   void _initializeMeetingData(JoinInfoModel meetData) {
-    state
-      ..isMeetingActive = true
-      ..meetingData = meetData
-      ..meetingId = meetData.meeting.externalMeetingId;
+    state = state.copyWith(
+      isMeetingActive: true,
+      meetingData: meetData,
+      meetingId: meetData.meeting.externalMeetingId,
+    );
   }
 
   void _initializeLocalAttendee() {
@@ -140,12 +186,12 @@ final class MeetingController extends _$MeetingController
     }
     final localParticipantId = state.meetingData?.attendeeInfo.attendeeId;
     final externalUserId = state.meetingData?.attendeeInfo.externalUserId;
-    state.localParticipantId = localParticipantId;
     if (localParticipantId == null || externalUserId == null) {
       logger.severe('localParticipantId is null');
       return;
     }
-    state.updateParticipant(
+    state = state.copyWith(localParticipantId: localParticipantId);
+    updateParticipant(
       participantId: localParticipantId,
       externalUserId: externalUserId,
     );
@@ -302,7 +348,7 @@ final class MeetingController extends _$MeetingController
   // }
 
   Future<void> sendLocalMuteToggle() async {
-    final participants = state.participants;
+    final participants = {...state.participants};
     final localParticipantId = state.localParticipantId;
     final participant = participants[localParticipantId];
     if (participant == null || localParticipantId == null) {
@@ -340,7 +386,8 @@ final class MeetingController extends _$MeetingController
 
   Future<void> sendLocalVideoTileOn() async {
     final localParticipantId = state.localParticipantId;
-    final participant = state.participants[localParticipantId];
+    final participants = {...state.participants};
+    final participant = participants[localParticipantId];
     if (participant == null || localParticipantId == null) {
       logger.severe('Local attendee not found');
       return;
@@ -369,13 +416,14 @@ final class MeetingController extends _$MeetingController
 
   bool get isReceivingScreenShare => state.isReceivingScreenShare;
   set isReceivingScreenShare(bool isReceivingScreenShare) {
-    state.isReceivingScreenShare = isReceivingScreenShare;
+    state = state.copyWith(isReceivingScreenShare: isReceivingScreenShare);
   }
 
   void toggleVideoStatus({
     required String participantId,
   }) {
-    final participant = state.participants[participantId];
+    final participants = {...state.participants};
+    final participant = participants[participantId];
     if (participant == null) {
       logger.severe('Participant not found');
       return;
@@ -390,7 +438,8 @@ final class MeetingController extends _$MeetingController
     required String participantId,
     required bool isVideoOn,
   }) {
-    final participant = state.participants[participantId];
+    final participants = {...state.participants};
+    final participant = participants[participantId];
     if (participant == null) {
       logger.severe('Participant not found');
       return;
@@ -401,11 +450,38 @@ final class MeetingController extends _$MeetingController
     );
   }
 
+  void didJoinParticipant(ParticipantInfo info) {
+    final attendeeIdToAdd = info.attendeeId;
+    final attendeeIdArray = attendeeIdToAdd.split('#');
+    final localAttendeeId = state.localParticipantId;
+    final isAttendeeContent = attendeeIdArray.length == 2;
+    if (isAttendeeContent) {
+      logger.info('Content detected');
+      // meetingController
+      updateContentParticipantId(attendeeIdToAdd);
+      updateParticipant(
+        participantId: info.attendeeId,
+        externalUserId: info.externalUserId,
+      );
+      logger.info('Content added to the meeting');
+    } else if (localAttendeeId == null) {
+      state = state.copyWith(localParticipantId: localAttendeeId);
+    } else if (attendeeIdToAdd != localAttendeeId) {
+      updateRemoteParticipantId(attendeeIdToAdd);
+      updateParticipant(
+        participantId: attendeeIdToAdd,
+        externalUserId: info.externalUserId,
+      );
+      logger.info('Remote participant detected');
+    }
+  }
+
   // //
   // // —————————————————————————— Helpers ——————————————————————————————————————
   // //
 
   void resetMeetingValues() {
-    state.resetMeetingValues();
+    state = const MeetingData();
+    logger.info('Meeting values reset');
   }
 }

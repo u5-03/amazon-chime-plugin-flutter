@@ -1,6 +1,5 @@
 import 'package:amazon_chime_plugin/errors/amazon_chime_error.dart';
 import 'package:amazon_chime_plugin/extensions/list.dart';
-import 'package:amazon_chime_plugin/features/meeting/data/meeting_controller.dart';
 import 'package:amazon_chime_plugin/pigeon/generated/message_data.g.dart';
 import 'package:amazon_chime_plugin/utils/requester/amazon_chime_requester/amazon_chime_plugin_platform_interface.dart';
 import 'package:amazon_chime_plugin/utils/requester/requester_to_flutter.dart';
@@ -14,7 +13,8 @@ final class MethodChannelAmazonChimeRequester
     extends AmazonChimeRequesterPlatform {
   MethodChannelAmazonChimeRequester() : super() {
     RequesterToFlutter.setup(
-      RequesterToFlutterImp(container.read(meetingControllerProvider.notifier)),
+      // RequesterToFlutterImp(container.read(meetingControllerProvider.notifier)),
+      RequesterToFlutterImp(),
     );
   }
   final container = ProviderContainer();

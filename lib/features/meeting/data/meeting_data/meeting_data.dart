@@ -1,84 +1,52 @@
 import 'package:amazon_chime_plugin/features/meeting/models/meeting/join_info_model.dart';
 import 'package:amazon_chime_plugin/features/meeting/models/participant/participant_model.dart';
-import 'package:amazon_chime_plugin/features/meeting/models/video_tile_model/video_tile_model.dart';
-import 'package:amazon_chime_plugin/utils/logger.dart';
 import 'package:flutter/material.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'meeting_data.freezed.dart';
 part 'meeting_data.g.dart';
 
-@riverpod
-final class MeetingData extends _$MeetingData {
-  String? meetingId;
+@freezed
+class MeetingData with _$MeetingData {
+  // final _meetingData = MeetingData();
 
-  JoinInfoModel? meetingData;
+  const factory MeetingData({
+    String? meetingId,
+    JoinInfoModel? meetingData,
+    String? localParticipantId,
+    String? remoteParticipantId,
+    String? contentParticipantId,
+    @Default({}) Map<String, ParticipantModel> participants,
+    String? selectedAudioDevice,
+    @Default([]) List<String> deviceList,
+    @Default(Orientation.portrait) Orientation orientation,
+    @Default(false) bool isReceivingScreenShare,
+    @Default(false) bool isMeetingActive,
+  }) = _MeetingData;
 
-  String? localParticipantId;
-  String? remoteParticipantId;
-  String? contentParticipantId;
-  // AttendeeId is the key
-  Map<String, ParticipantModel> participants = {};
+  factory MeetingData.fromJson(Map<String, dynamic> json) =>
+      _$MeetingDataFromJson(json);
 
-  String? selectedAudioDevice;
-  List<String> deviceList = [];
-  Orientation orientation = Orientation.portrait;
+  // String? meetingId;
+
+  // JoinInfoModel? meetingData;
+
+  // String? localParticipantId;
+  // String? remoteParticipantId;
+  // String? contentParticipantId;
+  // // AttendeeId is the key
+  // Map<String, ParticipantModel> participants = {};
+
+  // String? selectedAudioDevice;
+  // List<String> deviceList = [];
+  // Orientation orientation = Orientation.portrait;
+  // String tmpValue = StringExt.randomLength;
 
   // AttendeeId is the key
   // Map<String, Attendee> currAttendees = {};
 
-  bool isReceivingScreenShare = false;
-  bool isMeetingActive = false;
-
-  @override
-  MeetingData build() {
-    return this;
-  }
-
-  void updateParticipant({
-    required String participantId,
-    String? externalUserId,
-    bool? muteStatus,
-    bool? isVideoOn,
-    VideoTileModel? videoTile,
-  }) {
-    final participant = participants[participantId];
-    if (participant == null) {
-      logger.severe('Participant not found');
-      participants[participantId] = ParticipantModel(
-        participantId: participantId,
-        externalUserId: externalUserId ?? '',
-        muteStatus: muteStatus ?? false,
-        isVideoOn: isVideoOn ?? false,
-        videoTile: videoTile ?? null,
-      );
-      print('updateParticipant: ${participants[participantId]}');
-    } else {
-      participants[participantId] = participant.copyWith(
-        participantId: participantId,
-        externalUserId: externalUserId ?? participant.externalUserId,
-        muteStatus: muteStatus ?? participant.muteStatus,
-        isVideoOn: isVideoOn ?? participant.isVideoOn,
-        videoTile: videoTile ?? participant.videoTile,
-      );
-      print('updateParticipant: ${participants[participantId]}');
-    }
-  }
-
-  void clearParticipant() {
-    participants = {};
-  }
-
-  void resetMeetingValues() {
-    meetingId = null;
-    meetingData = null;
-    localParticipantId = null;
-    remoteParticipantId = null;
-    contentParticipantId = null;
-    selectedAudioDevice = null;
-    deviceList = [];
-    clearParticipant();
-    isReceivingScreenShare = false;
-    isMeetingActive = false;
-    logger.info('Meeting values reset');
-  }
+  // @override
+  // MeetingData build() {
+  //   return _meetingData;
+  // }
 }

@@ -3,23 +3,51 @@
 part of 'meeting_data.dart';
 
 // **************************************************************************
-// RiverpodGenerator
+// JsonSerializableGenerator
 // **************************************************************************
 
-String _$meetingDataHash() => r'adda25b9e114814819f6a0791a12db1f346668d8';
+_$_MeetingData _$$_MeetingDataFromJson(Map<String, dynamic> json) =>
+    _$_MeetingData(
+      meetingId: json['meetingId'] as String?,
+      meetingData: json['meetingData'] == null
+          ? null
+          : JoinInfoModel.fromJson(json['meetingData'] as Map<String, dynamic>),
+      localParticipantId: json['localParticipantId'] as String?,
+      remoteParticipantId: json['remoteParticipantId'] as String?,
+      contentParticipantId: json['contentParticipantId'] as String?,
+      participants: (json['participants'] as Map<String, dynamic>?)?.map(
+            (k, e) => MapEntry(
+                k, ParticipantModel.fromJson(e as Map<String, dynamic>)),
+          ) ??
+          const {},
+      selectedAudioDevice: json['selectedAudioDevice'] as String?,
+      deviceList: (json['deviceList'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      orientation:
+          $enumDecodeNullable(_$OrientationEnumMap, json['orientation']) ??
+              Orientation.portrait,
+      isReceivingScreenShare: json['isReceivingScreenShare'] as bool? ?? false,
+      isMeetingActive: json['isMeetingActive'] as bool? ?? false,
+    );
 
-/// See also [MeetingData].
-@ProviderFor(MeetingData)
-final meetingDataProvider =
-    AutoDisposeNotifierProvider<MeetingData, MeetingData>.internal(
-  MeetingData.new,
-  name: r'meetingDataProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$meetingDataHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+Map<String, dynamic> _$$_MeetingDataToJson(_$_MeetingData instance) =>
+    <String, dynamic>{
+      'meetingId': instance.meetingId,
+      'meetingData': instance.meetingData,
+      'localParticipantId': instance.localParticipantId,
+      'remoteParticipantId': instance.remoteParticipantId,
+      'contentParticipantId': instance.contentParticipantId,
+      'participants': instance.participants,
+      'selectedAudioDevice': instance.selectedAudioDevice,
+      'deviceList': instance.deviceList,
+      'orientation': _$OrientationEnumMap[instance.orientation]!,
+      'isReceivingScreenShare': instance.isReceivingScreenShare,
+      'isMeetingActive': instance.isMeetingActive,
+    };
 
-typedef _$MeetingData = AutoDisposeNotifier<MeetingData>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member
+const _$OrientationEnumMap = {
+  Orientation.portrait: 'portrait',
+  Orientation.landscape: 'landscape',
+};

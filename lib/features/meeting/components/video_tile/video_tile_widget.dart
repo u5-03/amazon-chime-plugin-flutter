@@ -151,20 +151,20 @@ class VideoTileWidget extends ConsumerWidget {
         tileKind: VideoTileKind.content,
       ),
     );
-    const localVideoTile = VideoTileWidget(tileKind: VideoTileKind.local);
-    const remoteVideoTile = VideoTileWidget(tileKind: VideoTileKind.remote);
 
     final contentParticipantId = meetingData.contentParticipantId;
     final localParticipantId = meetingData.localParticipantId;
     final remoteParticipantId = meetingData.remoteParticipantId;
     final participants = meetingData.participants;
 
+    const localVideoTile = VideoTileWidget(tileKind: VideoTileKind.local);
+    const remoteVideoTile = VideoTileWidget(tileKind: VideoTileKind.remote);
+
     if (participants.containsKey(contentParticipantId)) {
       if (meetingData.isReceivingScreenShare) {
         return [screenShareWidget];
       }
     }
-    print('DisplayVideoTiles: $participants');
     final videoTiles = <Widget>[];
 
     if (participants[localParticipantId]?.isVideoOn ?? false) {

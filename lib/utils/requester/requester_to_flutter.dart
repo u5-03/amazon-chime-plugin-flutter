@@ -3,12 +3,11 @@ import 'package:amazon_chime_plugin/features/meeting/models/participant/particip
 import 'package:amazon_chime_plugin/features/meeting/models/video_tile_model/video_tile_model.dart';
 import 'package:amazon_chime_plugin/pigeon/generated/message_data.g.dart';
 import 'package:amazon_chime_plugin/utils/logger.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class RequesterToFlutterImp implements RequesterToFlutter {
-  RequesterToFlutterImp(this.meetingController);
-  final MeetingController meetingController;
-  static WidgetRef? ref;
+  RequesterToFlutterImp();
+  static MeetingController? meetingController;
+  // static WidgetRef? ref;
 
   @override
   void audioSessionDidDrop() {
@@ -18,30 +17,12 @@ class RequesterToFlutterImp implements RequesterToFlutter {
 
   @override
   void audioSessionDidStop() {
-    meetingController.resetMeetingValues();
+    meetingController?.resetMeetingValues();
   }
 
   @override
   void joined(ParticipantInfo info) {
-    final attendeeIdToAdd = info.attendeeId;
-    final attendeeIdArray = attendeeIdToAdd.split('#');
-    final isAttendeeContent = attendeeIdArray.length == 2;
-    if (isAttendeeContent) {
-      logger.info('Content detected');
-      // meetingController
-      RequesterToFlutterImp.ref!.read(meetingControllerProvider.notifier)
-        ..updateContentParticipantId(attendeeIdToAdd)
-        ..updateParticipant(
-          participantId: info.attendeeId,
-          externalUserId: info.externalUserId,
-        );
-      logger.info('Content added to the meeting');
-    }
-
-    logger.info('Remote participant detected');
-    RequesterToFlutterImp.ref!
-        .read(meetingControllerProvider.notifier)
-        .updateRemoteParticipantId(attendeeIdToAdd);
+    meetingController?.didJoinParticipant(info);
   }
 
   @override
@@ -68,17 +49,13 @@ class RequesterToFlutterImp implements RequesterToFlutter {
   void videoTileAdded(TileInfo info) {
     final attendeeId = info.attendeeId;
     final videoTile = VideoTileModel.fromPigeonModel(info);
-    RequesterToFlutterImp.ref!
-        .read(meetingControllerProvider.notifier)
-        .updateParticipant(
-          participantId: attendeeId,
-          isVideoOn: true,
-          videoTile: videoTile,
-        );
+    meetingController?.updateParticipant(
+      participantId: attendeeId,
+      isVideoOn: true,
+      videoTile: videoTile,
+    );
     if (videoTile.isContentShare) {
-      RequesterToFlutterImp.ref!
-          .read(meetingControllerProvider.notifier)
-          .isReceivingScreenShare = true;
+      meetingController?.isReceivingScreenShare = true;
     }
   }
 
@@ -89,14 +66,14 @@ class RequesterToFlutterImp implements RequesterToFlutter {
 
     if (videoTile.isContentShare) {
       final targetParticipantId =
-          meetingController.state.contentParticipantId ?? '';
+          meetingController?.state.contentParticipantId ?? '';
       meetingController
-        ..toggleVideoStatus(
+        ?..toggleVideoStatus(
           participantId: targetParticipantId,
         )
         ..isReceivingScreenShare = false;
     } else {
-      meetingController.switchVideoStatus(
+      meetingController?.switchVideoStatus(
         participantId: participantId,
         isVideoOn: false,
       );
@@ -111,7 +88,8 @@ extension RequesterToFlutterImpExt on RequesterToFlutterImp {
   }) {
     final participant = ParticipantModel.fromPigeonModel(info);
     final participantIdToDelete = participant.participantId;
-    meetingController.removeParticipant(participantIdToDelete);
+    RequesterToFlutterImp.meetingController
+        ?.removeParticipant(participantIdToDelete);
     if (didDrop) {
       logger.info(
         '${participant.formattedExternalUserId} has dropped from the meeting',
@@ -124,7 +102,7 @@ extension RequesterToFlutterImpExt on RequesterToFlutterImp {
   }
 
   void _changeMuteStatus(ParticipantInfo info, {required bool mute}) {
-    meetingController.updateParticipant(
+    RequesterToFlutterImp.meetingController?.updateParticipant(
       participantId: info.attendeeId,
       muteStatus: mute,
     );

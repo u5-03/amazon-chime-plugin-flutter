@@ -107,7 +107,6 @@ class MeetingBodyPortraitWidget extends ConsumerWidget {
     final participants = meetingData.participants;
     final localParticipantId = meetingData.localParticipantId;
     final remoteParticipantId = meetingData.remoteParticipantId;
-    print('participants: $participants');
     if (participants.containsKey(localParticipantId)) {
       participantsWidgets.add(
         localListInfo(
@@ -119,7 +118,11 @@ class MeetingBodyPortraitWidget extends ConsumerWidget {
     }
     if (participants.length > 1) {
       if (participants.containsKey(remoteParticipantId)) {
-        participantsWidgets.add(remoteListInfo(meetingData));
+        participantsWidgets.add(
+          remoteListInfo(
+            meetingData,
+          ),
+        );
       }
     }
 
@@ -129,8 +132,9 @@ class MeetingBodyPortraitWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final meetingData = ref.watch(meetingControllerProvider);
-    RequesterToFlutterImp.ref = ref;
-    print('meetingData: $meetingData');
+    // RequesterToFlutterImp.ref = ref;
+    RequesterToFlutterImp.meetingController ??=
+        ref.read(meetingControllerProvider.notifier);
     return Center(
       child: Column(
         children: [
@@ -141,14 +145,13 @@ class MeetingBodyPortraitWidget extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: VideoTileWidget.displayVideoTiles(
               Orientation.portrait,
-              // TODO: Force unwrapを外す
               meetingData,
             ),
           ),
           const Padding(
             padding: EdgeInsets.only(top: 30, bottom: 20),
             child: Text(
-              'Attendees',
+              'Attendees:',
               style: TextStyle(fontSize: Style.titleSize),
               textAlign: TextAlign.center,
             ),
@@ -337,9 +340,9 @@ extension _MeetingBodyPortraitWidgetExt on MeetingBodyPortraitWidget {
     final isVideoOn =
         meetingData.participants[localParticipantId]?.isVideoOn ?? false;
     if (isVideoOn) {
-      return Icons.videocam_off;
-    } else {
       return Icons.videocam;
+    } else {
+      return Icons.videocam_off;
     }
   }
 
@@ -348,9 +351,9 @@ extension _MeetingBodyPortraitWidgetExt on MeetingBodyPortraitWidget {
     final isVideoOn =
         meetingData.participants[remoteParticipantId]?.isVideoOn ?? false;
     if (isVideoOn) {
-      return Icons.videocam_off;
-    } else {
       return Icons.videocam;
+    } else {
+      return Icons.videocam_off;
     }
   }
 }
