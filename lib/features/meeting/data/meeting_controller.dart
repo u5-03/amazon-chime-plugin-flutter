@@ -1,57 +1,66 @@
 import 'package:amazon_chime_plugin/api/api.dart';
 import 'package:amazon_chime_plugin/errors/amazon_chime_error.dart';
+import 'package:amazon_chime_plugin/features/meeting/data/meeting_data/meeting_data.dart';
 import 'package:amazon_chime_plugin/features/meeting/models/meeting/join_info_model.dart';
 import 'package:amazon_chime_plugin/features/meeting/models/participant/participant_model.dart';
+import 'package:amazon_chime_plugin/features/meeting/models/video_tile_model/video_tile_model.dart';
 import 'package:amazon_chime_plugin/interfaces/audio_devices_interface.dart';
 import 'package:amazon_chime_plugin/utils/internet_connection.dart';
 import 'package:amazon_chime_plugin/utils/logger.dart';
 import 'package:amazon_chime_plugin/utils/requester/amazon_chime_requester/amazon_chime_requester.dart';
-import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'meeting_repository.g.dart';
+part 'meeting_controller.g.dart';
 
 @riverpod
-MeetingRepository meetingRepository(MeetingRepositoryRef ref) =>
-    MeetingRepository();
+final class MeetingController extends _$MeetingController
+    implements AudioDevicesInterface {
+  MeetingController();
+  final _meetingData = MeetingData();
 
-final class MeetingRepository implements AudioDevicesInterface {
-  MeetingRepository();
-
-  String? meetingId;
-
-  JoinInfoModel? meetingData;
-
-  String? localParticipantId;
-  String? remoteParticipantId;
-  String? contentParticipantId;
-  // AttendeeId is the key
-  Map<String, ParticipantModel> _participants = {};
-  Map<String, ParticipantModel> get participants => _participants;
-
-  String? selectedAudioDevice;
-  List<String> deviceList = [];
-  Orientation orientation = Orientation.portrait;
-
-  // AttendeeId is the key
-  // Map<String, Attendee> currAttendees = {};
-
-  bool isReceivingScreenShare = false;
-  bool isMeetingActive = false;
   final chimePlugin = AmazonChimeRequester();
   final api = Api();
 
+  // LateError (LateInitializationError: Field '_element@101511105' has not been initialized.)
+  @override
+  MeetingData build() {
+    return _meetingData;
+  }
+
+  void updateContentParticipantId(String contentParticipantId) {
+    state.contentParticipantId = contentParticipantId;
+  }
+
+  void updateRemoteParticipantId(String remoteParticipantId) {
+    state.remoteParticipantId = remoteParticipantId;
+  }
+
+  void addParticipant({required ParticipantModel participant}) {
+    state.participants[participant.participantId] = participant;
+  }
+
   void updateParticipant({
     required String participantId,
-    required ParticipantModel participant,
+    String? externalUserId,
+    bool? muteStatus,
+    bool? isVideoOn,
+    VideoTileModel? videoTile,
   }) {
-    final tmpParticipants = _participants;
-    tmpParticipants[participantId] = participant;
-    _participants = tmpParticipants;
+    state.updateParticipant(
+      participantId: participantId,
+      externalUserId: externalUserId,
+      muteStatus: muteStatus,
+      isVideoOn: isVideoOn,
+      videoTile: videoTile,
+    );
+  }
+
+  void removeParticipant(String participantId) {
+    state.participants.remove(participantId);
   }
 
   void clearParticipant() {
-    _participants = {};
+    state.participants = {};
   }
 
   Future<Result<void, AmazonChimeError>> joinMeetingWithAPI(
@@ -117,28 +126,29 @@ final class MeetingRepository implements AudioDevicesInterface {
   //
 
   void _initializeMeetingData(JoinInfoModel meetData) {
-    isMeetingActive = true;
-    meetingData = meetData;
-    meetingId = meetData.meeting.externalMeetingId;
+    state
+      ..isMeetingActive = true
+      ..meetingData = meetData
+      ..meetingId = meetData.meeting.externalMeetingId;
   }
 
   void _initializeLocalAttendee() {
-    final meetingData = this.meetingData;
+    final meetingData = state.meetingData;
     if (meetingData == null) {
       logger.severe('meeting data is null');
       return;
     }
-    final localParticipantId = meetingData.attendeeInfo.attendeeId;
-    this.localParticipantId = localParticipantId;
-    // if (localParticipantId == null) {
-    //   logger.severe('localParticipantId is null');
-    //   return;
-    // }
-    final participant = ParticipantModel(
+    final localParticipantId = state.meetingData?.attendeeInfo.attendeeId;
+    final externalUserId = state.meetingData?.attendeeInfo.externalUserId;
+    state.localParticipantId = localParticipantId;
+    if (localParticipantId == null || externalUserId == null) {
+      logger.severe('localParticipantId is null');
+      return;
+    }
+    state.updateParticipant(
       participantId: localParticipantId,
-      externalUserId: meetingData.attendeeInfo.externalUserId,
+      externalUserId: externalUserId,
     );
-    participants[localParticipantId] = participant;
   }
   // //
   // // ————————————————————————— Interface Methods —————————————————————————
@@ -292,7 +302,8 @@ final class MeetingRepository implements AudioDevicesInterface {
   // }
 
   Future<void> sendLocalMuteToggle() async {
-    final localParticipantId = this.localParticipantId;
+    final participants = state.participants;
+    final localParticipantId = state.localParticipantId;
     final participant = participants[localParticipantId];
     if (participant == null || localParticipantId == null) {
       logger.severe('Local attendee not found');
@@ -323,13 +334,13 @@ final class MeetingRepository implements AudioDevicesInterface {
     }
     updateParticipant(
       participantId: localParticipantId,
-      participant: participant.copyWith(muteStatus: !participant.muteStatus),
+      muteStatus: !participant.muteStatus,
     );
   }
 
   Future<void> sendLocalVideoTileOn() async {
-    final localParticipantId = this.localParticipantId;
-    final participant = participants[localParticipantId];
+    final localParticipantId = state.localParticipantId;
+    final participant = state.participants[localParticipantId];
     if (participant == null || localParticipantId == null) {
       logger.severe('Local attendee not found');
       return;
@@ -342,7 +353,7 @@ final class MeetingRepository implements AudioDevicesInterface {
     }
     updateParticipant(
       participantId: localParticipantId,
-      participant: participant.copyWith(isVideoOn: !participant.isVideoOn),
+      isVideoOn: !participant.isVideoOn,
     );
   }
 
@@ -356,21 +367,45 @@ final class MeetingRepository implements AudioDevicesInterface {
     }
   }
 
+  bool get isReceivingScreenShare => state.isReceivingScreenShare;
+  set isReceivingScreenShare(bool isReceivingScreenShare) {
+    state.isReceivingScreenShare = isReceivingScreenShare;
+  }
+
+  void toggleVideoStatus({
+    required String participantId,
+  }) {
+    final participant = state.participants[participantId];
+    if (participant == null) {
+      logger.severe('Participant not found');
+      return;
+    }
+    updateParticipant(
+      participantId: participantId,
+      isVideoOn: !participant.isVideoOn,
+    );
+  }
+
+  void switchVideoStatus({
+    required String participantId,
+    required bool isVideoOn,
+  }) {
+    final participant = state.participants[participantId];
+    if (participant == null) {
+      logger.severe('Participant not found');
+      return;
+    }
+    updateParticipant(
+      participantId: participantId,
+      isVideoOn: isVideoOn,
+    );
+  }
+
   // //
   // // —————————————————————————— Helpers ——————————————————————————————————————
   // //
 
   void resetMeetingValues() {
-    meetingId = null;
-    meetingData = null;
-    localParticipantId = null;
-    remoteParticipantId = null;
-    contentParticipantId = null;
-    selectedAudioDevice = null;
-    deviceList = [];
-    clearParticipant();
-    isReceivingScreenShare = false;
-    isMeetingActive = false;
-    logger.info('Meeting values reset');
+    state.resetMeetingValues();
   }
 }

@@ -15,6 +15,7 @@ final class MeetingSession {
     static let shared = MeetingSession()
 
     private(set) var meetingSession: DefaultMeetingSession?
+    private var didConnectAudio = false
 
     let audioVideoConfig = AudioVideoConfiguration()
     private let logger = ConsoleLogger(name: "MeetingSession")
@@ -49,9 +50,11 @@ private extension MeetingSession {
     }
 
     func startAudioVideoConnection() throws {
+        if didConnectAudio { return }
         do {
             try meetingSession?.audioVideo.start()
             meetingSession?.audioVideo.startRemoteVideo()
+            didConnectAudio = true
         } catch PermissionError.audioPermissionError {
             throw AmazonChimeError.customError(text: PermissionError.audioPermissionError.localizedDescription)
         } catch {

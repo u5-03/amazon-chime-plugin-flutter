@@ -1,12 +1,14 @@
-import 'package:amazon_chime_plugin/features/meeting/data/meeting_repository.dart';
+import 'package:amazon_chime_plugin/features/meeting/data/meeting_controller.dart';
 import 'package:amazon_chime_plugin/features/meeting/models/participant/participant_model.dart';
 import 'package:amazon_chime_plugin/features/meeting/models/video_tile_model/video_tile_model.dart';
 import 'package:amazon_chime_plugin/pigeon/generated/message_data.g.dart';
 import 'package:amazon_chime_plugin/utils/logger.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class RequesterToFlutterImp implements RequesterToFlutter {
-  RequesterToFlutterImp(this.meetingRepository);
-  final MeetingRepository meetingRepository;
+  RequesterToFlutterImp(this.meetingController);
+  final MeetingController meetingController;
+  static WidgetRef? ref;
 
   @override
   void audioSessionDidDrop() {
@@ -16,42 +18,30 @@ class RequesterToFlutterImp implements RequesterToFlutter {
 
   @override
   void audioSessionDidStop() {
-    meetingRepository.resetMeetingValues();
+    meetingController.resetMeetingValues();
   }
 
   @override
   void joined(ParticipantInfo info) {
     final attendeeIdToAdd = info.attendeeId;
     final attendeeIdArray = attendeeIdToAdd.split('#');
-    final contentParticipantId = meetingRepository.contentParticipantId;
-    final localParticipantId = meetingRepository.localParticipantId;
-    final remoteParticipantId = meetingRepository.remoteParticipantId;
-    final participants = meetingRepository.participants;
     final isAttendeeContent = attendeeIdArray.length == 2;
-    final participant = ParticipantModel(
-      externalUserId: info.externalUserId,
-      participantId: info.attendeeId,
-    );
     if (isAttendeeContent) {
       logger.info('Content detected');
-      meetingRepository.contentParticipantId = attendeeIdToAdd;
-      if (contentParticipantId != null) {
-        participants[contentParticipantId] = participant;
-        logger.info('Content added to the meeting');
-      }
+      // meetingController
+      RequesterToFlutterImp.ref!.read(meetingControllerProvider.notifier)
+        ..updateContentParticipantId(attendeeIdToAdd)
+        ..updateParticipant(
+          participantId: info.attendeeId,
+          externalUserId: info.externalUserId,
+        );
+      logger.info('Content added to the meeting');
     }
 
-    if (attendeeIdToAdd != localParticipantId) {
-      meetingRepository.remoteParticipantId = attendeeIdToAdd;
-      if (remoteParticipantId != null) {
-        meetingRepository.participants[remoteParticipantId] = participant;
-        logger.info(
-          '${participant.formattedExternalUserId} has joined the meeting.',
-        );
-      } else {
-        logger.severe('Remote participant id is null');
-      }
-    }
+    logger.info('Remote participant detected');
+    RequesterToFlutterImp.ref!
+        .read(meetingControllerProvider.notifier)
+        .updateRemoteParticipantId(attendeeIdToAdd);
   }
 
   @override
@@ -78,54 +68,39 @@ class RequesterToFlutterImp implements RequesterToFlutter {
   void videoTileAdded(TileInfo info) {
     final attendeeId = info.attendeeId;
     final videoTile = VideoTileModel.fromPigeonModel(info);
-    final participants = meetingRepository.participants;
-    final participant = participants[attendeeId];
-    if (participant == null) {
-      print('Participant not found for attendeeId: $attendeeId');
-      return;
-    }
-    meetingRepository.updateParticipant(
-      participantId: attendeeId,
-      participant: participant.copyWith(
-        isVideoOn: true,
-        videoTile: videoTile,
-      ),
-    );
+    RequesterToFlutterImp.ref!
+        .read(meetingControllerProvider.notifier)
+        .updateParticipant(
+          participantId: attendeeId,
+          isVideoOn: true,
+          videoTile: videoTile,
+        );
     if (videoTile.isContentShare) {
-      meetingRepository.isReceivingScreenShare = true;
+      RequesterToFlutterImp.ref!
+          .read(meetingControllerProvider.notifier)
+          .isReceivingScreenShare = true;
     }
-    print('participants: $participants');
-    return;
   }
 
   @override
   void videoTileRemoved(TileInfo info) {
     final participantId = info.attendeeId;
     final videoTile = VideoTileModel.fromPigeonModel(info);
-    final participants = meetingRepository.participants;
-
-    final String targetParticipantId;
-    final bool updatedIsVideoOn;
 
     if (videoTile.isContentShare) {
-      targetParticipantId = meetingRepository.contentParticipantId ?? '';
-      updatedIsVideoOn = participants[targetParticipantId]?.isVideoOn ?? false;
-
-      meetingRepository.isReceivingScreenShare = false;
+      final targetParticipantId =
+          meetingController.state.contentParticipantId ?? '';
+      meetingController
+        ..toggleVideoStatus(
+          participantId: targetParticipantId,
+        )
+        ..isReceivingScreenShare = false;
     } else {
-      targetParticipantId = participantId;
-      updatedIsVideoOn = false;
+      meetingController.switchVideoStatus(
+        participantId: participantId,
+        isVideoOn: false,
+      );
     }
-
-    final participant = participants[targetParticipantId];
-    if (participant == null) {
-      print('Participant not found for attendeeId: $participantId');
-      return;
-    }
-    meetingRepository.participants[targetParticipantId] = participant.copyWith(
-      muteStatus: participant.muteStatus,
-      isVideoOn: updatedIsVideoOn,
-    );
   }
 }
 
@@ -136,7 +111,7 @@ extension RequesterToFlutterImpExt on RequesterToFlutterImp {
   }) {
     final participant = ParticipantModel.fromPigeonModel(info);
     final participantIdToDelete = participant.participantId;
-    this.meetingRepository.participants.remove(participantIdToDelete);
+    meetingController.removeParticipant(participantIdToDelete);
     if (didDrop) {
       logger.info(
         '${participant.formattedExternalUserId} has dropped from the meeting',
@@ -149,22 +124,17 @@ extension RequesterToFlutterImpExt on RequesterToFlutterImp {
   }
 
   void _changeMuteStatus(ParticipantInfo info, {required bool mute}) {
-    final participants = this.meetingRepository.participants;
-    final participantToChangeStatus = participants[info.attendeeId];
-    final participant = ParticipantModel(
-      externalUserId: info.externalUserId,
+    meetingController.updateParticipant(
       participantId: info.attendeeId,
-      muteStatus: participantToChangeStatus?.muteStatus ?? false,
-      isVideoOn: participantToChangeStatus?.isVideoOn ?? false,
+      muteStatus: mute,
     );
-    participants[info.attendeeId] = participant;
     if (mute) {
       logger.info(
-        '${participant.formattedExternalUserId} has been muted',
+        '${info.attendeeId} has been muted',
       );
     } else {
       logger.info(
-        '${participant.formattedExternalUserId} has been unmuted',
+        '${info.attendeeId} has been unmuted',
       );
     }
   }

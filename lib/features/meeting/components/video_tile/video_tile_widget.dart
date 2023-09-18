@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:amazon_chime_plugin/constants/platform_view_kind.dart';
-import 'package:amazon_chime_plugin/features/meeting/data/meeting_repository.dart';
+import 'package:amazon_chime_plugin/features/meeting/data/meeting_controller.dart';
+import 'package:amazon_chime_plugin/features/meeting/data/meeting_data/meeting_data.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -102,13 +103,11 @@ class VideoTileWidget extends ConsumerWidget {
       }
     }
 
-    final contentParticipantId =
-        ref.watch(meetingRepositoryProvider).contentParticipantId;
-    final localParticipantId =
-        ref.watch(meetingRepositoryProvider).localParticipantId;
-    final remoteParticipantId =
-        ref.watch(meetingRepositoryProvider).remoteParticipantId;
-    final participants = ref.watch(meetingRepositoryProvider).participants;
+    final meetingData = ref.watch(meetingControllerProvider);
+    final contentParticipantId = meetingData.contentParticipantId;
+    final localParticipantId = meetingData.localParticipantId;
+    final remoteParticipantId = meetingData.remoteParticipantId;
+    final participants = meetingData.participants;
 
     final tileId = participants[contentParticipantId]?.videoTile?.tileId;
 
@@ -124,7 +123,7 @@ class VideoTileWidget extends ConsumerWidget {
     if (tileIdParameter == null) {
       return Container(
         color: Colors.blue,
-        child: const Text("tileIdParameter is null"),
+        child: const Text('tileIdParameter is null'),
       );
     }
     if (tileKind == VideoTileKind.content) {
@@ -145,7 +144,7 @@ class VideoTileWidget extends ConsumerWidget {
 
   static List<Widget> displayVideoTiles(
     Orientation orientation,
-    MeetingRepository meetingRepository,
+    MeetingData meetingData,
   ) {
     const Widget screenShareWidget = Expanded(
       child: VideoTileWidget(
@@ -155,17 +154,17 @@ class VideoTileWidget extends ConsumerWidget {
     const localVideoTile = VideoTileWidget(tileKind: VideoTileKind.local);
     const remoteVideoTile = VideoTileWidget(tileKind: VideoTileKind.remote);
 
-    final contentParticipantId = meetingRepository.contentParticipantId;
-    final localParticipantId = meetingRepository.localParticipantId;
-    final remoteParticipantId = meetingRepository.remoteParticipantId;
-    final participants = meetingRepository.participants;
+    final contentParticipantId = meetingData.contentParticipantId;
+    final localParticipantId = meetingData.localParticipantId;
+    final remoteParticipantId = meetingData.remoteParticipantId;
+    final participants = meetingData.participants;
 
     if (participants.containsKey(contentParticipantId)) {
-      if (meetingRepository.isReceivingScreenShare) {
+      if (meetingData.isReceivingScreenShare) {
         return [screenShareWidget];
       }
     }
-    print('DisplayVideoTiles: ${participants}');
+    print('DisplayVideoTiles: $participants');
     final videoTiles = <Widget>[];
 
     if (participants[localParticipantId]?.isVideoOn ?? false) {

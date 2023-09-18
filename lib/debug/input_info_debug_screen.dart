@@ -1,7 +1,7 @@
 import 'package:amazon_chime_plugin/api/api.dart';
 import 'package:amazon_chime_plugin/extensions/alert_dialog.dart';
 import 'package:amazon_chime_plugin/extensions/string.dart';
-import 'package:amazon_chime_plugin/features/meeting/data/meeting_repository.dart';
+import 'package:amazon_chime_plugin/features/meeting/data/meeting_controller.dart';
 import 'package:amazon_chime_plugin/utils/result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,7 +29,7 @@ class InputInfoDebugScreen extends ConsumerWidget {
     final meetingId = ref.read(_meetingIdProvider);
     final userName = ref.read(_userNameProvider);
     final result = await ref
-        .read(meetingRepositoryProvider)
+        .read(meetingControllerProvider.notifier)
         .joinMeetingWithAPI(meetingId, userName, apiConfig);
     if (!context.mounted) {
       return;
@@ -69,7 +69,7 @@ class InputInfoDebugScreen extends ConsumerWidget {
                 labelText: 'Meeting ID',
               ),
               controller: TextEditingController(
-                text: ref.read(_meetingIdProvider.notifier).state,
+                text: ref.read(_meetingIdProvider),
               ),
               onChanged: (value) {
                 ref.read(_meetingIdProvider.notifier).state = value;

@@ -133,7 +133,7 @@ final class RequesterToNativeImpl: RequesterToNative {
             try MeetingSession.shared.startMeetingAudio()
             completion(.success(()))
         } catch {
-            completion(.failure(AmazonChimeError.customError(text: "Failed to set up meeting audio!").asFlutterError))
+            completion(.failure(AmazonChimeError.customError(text: "Failed to set up meeting audio! \(error.localizedDescription)").asFlutterError))
         }
     }
 

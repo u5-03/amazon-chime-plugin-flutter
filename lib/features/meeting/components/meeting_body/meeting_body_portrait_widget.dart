@@ -1,18 +1,30 @@
 import 'package:amazon_chime_plugin/constants/style.dart';
 import 'package:amazon_chime_plugin/features/meeting/components/video_tile/video_tile_widget.dart';
-import 'package:amazon_chime_plugin/features/meeting/data/meeting_repository.dart';
+import 'package:amazon_chime_plugin/features/meeting/data/meeting_controller.dart';
+import 'package:amazon_chime_plugin/features/meeting/data/meeting_data/meeting_data.dart';
 import 'package:amazon_chime_plugin/features/meeting/models/participant/participant_model.dart';
 import 'package:amazon_chime_plugin/utils/logger.dart';
+import 'package:amazon_chime_plugin/utils/requester/requester_to_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MeetingBodyPortraitWidget extends ConsumerWidget {
-  const MeetingBodyPortraitWidget({super.key});
+  const MeetingBodyPortraitWidget({
+    // required this.meetingController,
+    // required this.meetingData,
+    super.key,
+  });
+  // final MeetingController meetingController;
+  // final MeetingData meetingData;
 
-  Widget localListInfo(BuildContext context, WidgetRef ref) {
-    final meetingProvider = ref.watch(meetingRepositoryProvider);
-    final participants = meetingProvider.participants;
-    final localParticipantId = meetingProvider.localParticipantId;
+  Widget localListInfo(
+    BuildContext context,
+    MeetingController meetingController,
+    MeetingData meetingData,
+  ) {
+    final participants = meetingData.participants;
+    final localParticipantId = meetingData.localParticipantId;
+
     return ListTile(
       title: Text(
         participants[localParticipantId]?.formattedExternalUserId ?? 'UNKNOWN',
@@ -29,31 +41,34 @@ class MeetingBodyPortraitWidget extends ConsumerWidget {
             iconSize: Style.iconSize,
             color: Colors.blue,
             onPressed: () {
-              showAudioDeviceDialog(context, ref);
+              showAudioDeviceDialog(context, meetingData, (deviceLabel) async {
+                await meetingController.updateCurrentAudioDevice(deviceLabel);
+              });
             },
           ),
           IconButton(
-            icon: Icon(localMuteIcon(ref)),
+            icon: Icon(localMuteIcon(meetingData)),
             iconSize: Style.iconSize,
             padding: EdgeInsets.symmetric(horizontal: Style.iconPadding),
             color: Colors.blue,
-            onPressed: meetingProvider.sendLocalMuteToggle,
+            onPressed: meetingController.sendLocalMuteToggle,
           ),
           IconButton(
-            icon: Icon(localVideoIcon(ref)),
+            icon: Icon(localVideoIcon(meetingData)),
             iconSize: Style.iconSize,
             padding: EdgeInsets.symmetric(horizontal: Style.iconPadding),
             constraints: const BoxConstraints(),
             color: Colors.blue,
-            onPressed: meetingProvider.sendLocalVideoTileOn,
+            onPressed: meetingController.sendLocalVideoTileOn,
           ),
         ],
       ),
     );
   }
 
-  Widget remoteListInfo(WidgetRef ref) {
-    final meetingProvider = ref.read(meetingRepositoryProvider);
+  Widget remoteListInfo(
+    MeetingData meetingData,
+  ) {
     return ListTile(
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
@@ -61,21 +76,21 @@ class MeetingBodyPortraitWidget extends ConsumerWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: Style.iconPadding),
             child: Icon(
-              remoteMuteIcon(ref),
+              remoteMuteIcon(meetingData),
               size: Style.iconSize,
             ),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: Style.iconPadding),
             child: Icon(
-              remoteVideoIcon(ref),
+              remoteVideoIcon(meetingData),
               size: Style.iconSize,
             ),
           ),
         ],
       ),
       title: Text(
-        meetingProvider.participants[meetingProvider.remoteParticipantId]
+        meetingData.participants[meetingData.remoteParticipantId]
                 ?.formattedExternalUserId ??
             '',
         style: const TextStyle(fontSize: Style.fontSize),
@@ -83,19 +98,28 @@ class MeetingBodyPortraitWidget extends ConsumerWidget {
     );
   }
 
-  List<Widget> displayParticipants(BuildContext context, WidgetRef ref) {
-    final meetingProvider = ref.watch(meetingRepositoryProvider);
+  List<Widget> displayParticipants(
+    BuildContext context,
+    MeetingController meetingController,
+    MeetingData meetingData,
+  ) {
     final participantsWidgets = <Widget>[];
-    final participants = meetingProvider.participants;
-    final localParticipantId = meetingProvider.localParticipantId;
-    final remoteParticipantId = meetingProvider.remoteParticipantId;
+    final participants = meetingData.participants;
+    final localParticipantId = meetingData.localParticipantId;
+    final remoteParticipantId = meetingData.remoteParticipantId;
     print('participants: $participants');
     if (participants.containsKey(localParticipantId)) {
-      participantsWidgets.add(localListInfo(context, ref));
+      participantsWidgets.add(
+        localListInfo(
+          context,
+          meetingController,
+          meetingData,
+        ),
+      );
     }
     if (participants.length > 1) {
       if (participants.containsKey(remoteParticipantId)) {
-        participantsWidgets.add(remoteListInfo(ref));
+        participantsWidgets.add(remoteListInfo(meetingData));
       }
     }
 
@@ -104,7 +128,9 @@ class MeetingBodyPortraitWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final meetingProvider = ref.read(meetingRepositoryProvider);
+    final meetingData = ref.watch(meetingControllerProvider);
+    RequesterToFlutterImp.ref = ref;
+    print('meetingData: $meetingData');
     return Center(
       child: Column(
         children: [
@@ -114,7 +140,10 @@ class MeetingBodyPortraitWidget extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: VideoTileWidget.displayVideoTiles(
-                Orientation.portrait, ref.watch(meetingRepositoryProvider)),
+              Orientation.portrait,
+              // TODO: Force unwrapを外す
+              meetingData,
+            ),
           ),
           const Padding(
             padding: EdgeInsets.only(top: 30, bottom: 20),
@@ -125,11 +154,15 @@ class MeetingBodyPortraitWidget extends ConsumerWidget {
             ),
           ),
           Column(
-            children: displayParticipants(context, ref),
+            children: displayParticipants(
+              context,
+              ref.read(meetingControllerProvider.notifier),
+              meetingData,
+            ),
           ),
           WillPopScope(
             onWillPop: () async {
-              await meetingProvider.stopMeeting();
+              await ref.read(meetingControllerProvider.notifier).stopMeeting();
               return true;
             },
             child: const Spacer(),
@@ -149,7 +182,8 @@ class MeetingBodyPortraitWidget extends ConsumerWidget {
 
   Future<void> showAudioDeviceDialog(
     BuildContext context,
-    WidgetRef ref,
+    MeetingData meetingData,
+    Future<void> Function(String) didShowDialog,
   ) async {
     final deviceLabel = await showDialog<String>(
       context: context,
@@ -163,29 +197,25 @@ class MeetingBodyPortraitWidget extends ConsumerWidget {
             fontWeight: FontWeight.bold,
           ),
           backgroundColor: Colors.white,
-          children: _getSimpleDialogOptionsAudioDevices(context, ref),
+          children: _getSimpleDialogOptionsAudioDevices(context, meetingData),
         );
       },
     );
-
     if (deviceLabel != null) {
-      await ref
-          .read(meetingRepositoryProvider)
-          .updateCurrentAudioDevice(deviceLabel);
-    } else {
       logger.severe('No device chosen.');
+      await didShowDialog(deviceLabel);
+      return;
     }
   }
 
   List<Widget> _getSimpleDialogOptionsAudioDevices(
     BuildContext context,
-    WidgetRef ref,
+    MeetingData meetingData,
   ) {
     final dialogOptions = <Widget>[];
     FontWeight weight;
-    final deviceList = ref.read(meetingRepositoryProvider).deviceList;
-    final selectedAudioDevice =
-        ref.read(meetingRepositoryProvider).selectedAudioDevice;
+    final deviceList = meetingData.deviceList;
+    final selectedAudioDevice = meetingData.selectedAudioDevice;
     for (var i = 0; i < deviceList.length; i++) {
       if (deviceList[i] == selectedAudioDevice) {
         weight = FontWeight.bold;
@@ -212,7 +242,7 @@ class MeetingBodyPortraitWidget extends ConsumerWidget {
 extension MeetingBodyPortraitExt on MeetingBodyPortraitWidget {
   Future<void> showAudioDeviceDialog(
     BuildContext context,
-    WidgetRef ref,
+    MeetingData meetingData,
   ) async {
     final device = await showAdaptiveDialog<String>(
       context: context,
@@ -225,7 +255,7 @@ extension MeetingBodyPortraitExt on MeetingBodyPortraitWidget {
           fontWeight: FontWeight.bold,
         ),
         backgroundColor: Colors.white,
-        actions: getSimpleDialogOptionsAudioDevices(context, ref),
+        actions: getSimpleDialogOptionsAudioDevices(context, meetingData),
       ),
     );
     if (device == null) {
@@ -239,13 +269,12 @@ extension MeetingBodyPortraitExt on MeetingBodyPortraitWidget {
 
   List<Widget> getSimpleDialogOptionsAudioDevices(
     BuildContext context,
-    WidgetRef ref,
+    MeetingData meetingData,
   ) {
     final dialogOptions = <Widget>[];
     FontWeight weight;
-    final deviceList = ref.read(meetingRepositoryProvider).deviceList;
-    final selectedAudioDevice =
-        ref.read(meetingRepositoryProvider).selectedAudioDevice;
+    final deviceList = meetingData.deviceList;
+    final selectedAudioDevice = meetingData.selectedAudioDevice;
     for (var i = 0; i < deviceList.length; i++) {
       if (deviceList[i] == selectedAudioDevice) {
         weight = FontWeight.bold;
@@ -274,21 +303,17 @@ extension _MeetingBodyPortraitWidgetExt on MeetingBodyPortraitWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
       onPressed: () {
-        ref.read(meetingRepositoryProvider).stopMeeting();
+        ref.read(meetingControllerProvider.notifier).stopMeeting();
         Navigator.pop(context);
       },
       child: const Text('Leave Meeting'),
     );
   }
 
-  IconData localMuteIcon(WidgetRef ref) {
-    final localParticipantId =
-        ref.watch(meetingRepositoryProvider).localParticipantId;
-    final isMuted = ref
-            .watch(meetingRepositoryProvider)
-            .participants[localParticipantId]
-            ?.muteStatus ??
-        false;
+  IconData localMuteIcon(MeetingData meetingData) {
+    final localParticipantId = meetingData.localParticipantId;
+    final isMuted =
+        meetingData.participants[localParticipantId]?.muteStatus ?? false;
     if (isMuted) {
       return Icons.mic_off;
     } else {
@@ -296,14 +321,10 @@ extension _MeetingBodyPortraitWidgetExt on MeetingBodyPortraitWidget {
     }
   }
 
-  IconData remoteMuteIcon(WidgetRef ref) {
-    final remoteParticipantId =
-        ref.watch(meetingRepositoryProvider).remoteParticipantId;
-    final isMuted = ref
-            .watch(meetingRepositoryProvider)
-            .participants[remoteParticipantId]
-            ?.muteStatus ??
-        false;
+  IconData remoteMuteIcon(MeetingData meetingData) {
+    final remoteParticipantId = meetingData.remoteParticipantId;
+    final isMuted =
+        meetingData.participants[remoteParticipantId]?.muteStatus ?? false;
     if (isMuted) {
       return Icons.mic_off;
     } else {
@@ -311,14 +332,10 @@ extension _MeetingBodyPortraitWidgetExt on MeetingBodyPortraitWidget {
     }
   }
 
-  IconData localVideoIcon(WidgetRef ref) {
-    final localParticipantId =
-        ref.watch(meetingRepositoryProvider).localParticipantId;
-    final isVideoOn = ref
-            .watch(meetingRepositoryProvider)
-            .participants[localParticipantId]
-            ?.isVideoOn ??
-        false;
+  IconData localVideoIcon(MeetingData meetingData) {
+    final localParticipantId = meetingData.localParticipantId;
+    final isVideoOn =
+        meetingData.participants[localParticipantId]?.isVideoOn ?? false;
     if (isVideoOn) {
       return Icons.videocam_off;
     } else {
@@ -326,14 +343,10 @@ extension _MeetingBodyPortraitWidgetExt on MeetingBodyPortraitWidget {
     }
   }
 
-  IconData remoteVideoIcon(WidgetRef ref) {
-    final remoteParticipantId =
-        ref.watch(meetingRepositoryProvider).remoteParticipantId;
-    final isVideoOn = ref
-            .read(meetingRepositoryProvider)
-            .participants[remoteParticipantId]
-            ?.isVideoOn ??
-        false;
+  IconData remoteVideoIcon(MeetingData meetingData) {
+    final remoteParticipantId = meetingData.remoteParticipantId;
+    final isVideoOn =
+        meetingData.participants[remoteParticipantId]?.isVideoOn ?? false;
     if (isVideoOn) {
       return Icons.videocam_off;
     } else {

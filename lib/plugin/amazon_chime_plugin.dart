@@ -1,6 +1,6 @@
 import 'package:amazon_chime_plugin/api/api.dart';
 import 'package:amazon_chime_plugin/errors/amazon_chime_error.dart';
-import 'package:amazon_chime_plugin/features/meeting/data/meeting_repository.dart';
+import 'package:amazon_chime_plugin/features/meeting/data/meeting_controller.dart';
 import 'package:amazon_chime_plugin/features/meeting/models/meeting/join_info_model.dart';
 import 'package:amazon_chime_plugin/plugin/amazon_chime_plugin_interface.dart';
 import 'package:amazon_chime_plugin/utils/requester/amazon_chime_requester/amazon_chime_requester.dart';
@@ -10,7 +10,7 @@ class AmazonChimePlugin implements AmazonChimePluginInterface {
   AmazonChimePlugin(this.meetingRepository) : super();
 
   @override
-  final MeetingRepository meetingRepository;
+  final MeetingController meetingRepository;
   final requester = AmazonChimeRequester();
 
   @override

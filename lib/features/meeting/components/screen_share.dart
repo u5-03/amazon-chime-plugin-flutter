@@ -1,5 +1,5 @@
 import 'package:amazon_chime_plugin/features/meeting/components/video_tile/video_tile_widget.dart';
-import 'package:amazon_chime_plugin/features/meeting/data/meeting_repository.dart';
+import 'package:amazon_chime_plugin/features/meeting/data/meeting_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -10,8 +10,9 @@ class ScreenShareWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     const Widget contentTile = VideoTileWidget(tileKind: VideoTileKind.content);
     Widget body;
-
-    if (!ref.read(meetingRepositoryProvider).isReceivingScreenShare) {
+    final isReceivingScreenShare =
+        ref.watch(meetingControllerProvider).isReceivingScreenShare;
+    if (!isReceivingScreenShare) {
       body = GestureDetector(
         onDoubleTap: () => Navigator.popAndPushNamed(context, '/meeting'),
         child: const Column(

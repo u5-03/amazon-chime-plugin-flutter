@@ -1,13 +1,13 @@
 import 'package:amazon_chime_plugin/api/api.dart';
 import 'package:amazon_chime_plugin/errors/amazon_chime_error.dart';
-import 'package:amazon_chime_plugin/features/meeting/data/meeting_repository.dart';
+import 'package:amazon_chime_plugin/features/meeting/data/meeting_controller.dart';
 import 'package:amazon_chime_plugin/features/meeting/models/meeting/join_info_model.dart';
 import 'package:amazon_chime_plugin/utils/result.dart';
 
 /// An implementation of AmazonChimePluginRequesterPlatform that uses method channels.
 abstract interface class AmazonChimePluginInterface {
   AmazonChimePluginInterface(this.meetingRepository) : super();
-  final MeetingRepository meetingRepository;
+  final MeetingController meetingRepository;
 
   Future<Result<String, AmazonChimeError>> getPlatformVersion();
   Future<Result<String, AmazonChimeError>> requestMicrophonePermissions();
