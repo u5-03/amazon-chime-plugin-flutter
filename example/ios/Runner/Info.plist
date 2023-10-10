@@ -51,5 +51,7 @@
 	<string>配信のためにカメラへアクセスします</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>配信のためにマイクへアクセスします</string>
+	<key>io.flutter.embedded_views_preview</key>
+	<true/>
 </dict>
 </plist>

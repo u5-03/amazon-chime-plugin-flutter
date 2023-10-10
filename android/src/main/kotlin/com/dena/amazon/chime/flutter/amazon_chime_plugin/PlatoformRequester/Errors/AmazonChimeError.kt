@@ -2,7 +2,6 @@ package com.dena.amazon.chime.flutter.amazon_chime_plugin.PlatoformRequester.Err
 
 import AmazonChimeErrorType
 import FlutterError
-import com.dena.amazon.chime.flutter.amazon_chime_plugin.PlatoformRequester.Models.ResponseMessage
 
 sealed class AmazonChimeError(private val errorType: AmazonChimeErrorType) {
     object InvalidResponse : AmazonChimeError(AmazonChimeErrorType.INVALIDRESPONSE)

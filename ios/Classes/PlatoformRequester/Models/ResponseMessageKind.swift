@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ResponseMessage: String {
+enum ResponseMessageKind: String {
     // Authorization
     case microphoneAuthorized = "iOS: Microphone authorized."
     case cameraAuthorized = "iOS: Camera authorized."

@@ -1,6 +1,6 @@
 package com.dena.amazon.chime.flutter.amazon_chime_plugin.PlatoformRequester.Models
 
-enum class ResponseMessage(val rawValue: String) {
+enum class ResponseMessageKind(val rawValue: String) {
     // Authorization
     MICROPHONE_AUTHORIZED("Android: Microphone authorized."),
     CAMERA_AUTHORIZED("Android: Camera authorized."),
@@ -17,6 +17,7 @@ enum class ResponseMessage(val rawValue: String) {
     CREATE_MEETING_FAILED("Android: ERROR failed to create meetingSession."),
     MEETING_START_FAILED("Android: ERROR failed to start meeting."),
     MEETING_STOPPED_SUCCESSFULLY("Android: meetingSession stopped successfuly."),
+    MEETING_SESSION_IS_NULL("Android: ERROR Meeting session is null."),
 
     // Mute
     MUTE_SUCCESSFUL("Android: Successfully muted user"),
