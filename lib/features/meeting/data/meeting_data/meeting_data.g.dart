@@ -17,7 +17,9 @@ _$_MeetingData _$$_MeetingDataFromJson(Map<String, dynamic> json) =>
       contentParticipantId: json['contentParticipantId'] as String?,
       participants: (json['participants'] as Map<String, dynamic>?)?.map(
             (k, e) => MapEntry(
-                k, ParticipantModel.fromJson(e as Map<String, dynamic>)),
+              k,
+              ParticipantModel.fromJson(e as Map<String, dynamic>),
+            ),
           ) ??
           const {},
       selectedAudioDevice: json['selectedAudioDevice'] as String?,
@@ -42,7 +44,7 @@ Map<String, dynamic> _$$_MeetingDataToJson(_$_MeetingData instance) =>
       'participants': instance.participants,
       'selectedAudioDevice': instance.selectedAudioDevice,
       'deviceList': instance.deviceList,
-      'orientation': _$OrientationEnumMap[instance.orientation]!,
+      'orientation': _$OrientationEnumMap[instance.orientation],
       'isReceivingScreenShare': instance.isReceivingScreenShare,
       'isMeetingActive': instance.isMeetingActive,
     };

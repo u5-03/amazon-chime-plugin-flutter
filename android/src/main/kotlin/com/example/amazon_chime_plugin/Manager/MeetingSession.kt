@@ -1,8 +1,8 @@
-package com.dena.amazon.chime.flutter.amazon_chime_plugin.Manager
+package com.example.amazon_chime_plugin.Manager
 
 import com.amazonaws.services.chime.sdk.meetings.audiovideo.AudioVideoFacade
 import com.amazonaws.services.chime.sdk.meetings.session.DefaultMeetingSession
-import com.dena.amazon.chime.flutter.amazon_chime_plugin.PlatoformRequester.AmazonChimeError
+import com.example.amazon_chime_plugin.PlatoformRequester.AmazonChimeError
 
 class MeetingSession private constructor() {
     companion object {
@@ -29,12 +29,10 @@ class MeetingSession private constructor() {
         val audioVideo =
             meetingSession?.audioVideo
         if (audioVideo != null) {
-            // TODO: implement
-            //        addObservers(realtimeObserver, videoTileObserver, audioVideoObserver)
             audioVideo.start()
             audioVideo.startRemoteVideo()
         } else {
-            throw AmazonChimeError.CustomError("Audio video is null")
+            throw AmazonChimeError.CustomError("Audio video is null").asFlutterError
         }
     }
 }

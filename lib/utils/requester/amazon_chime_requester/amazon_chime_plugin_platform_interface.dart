@@ -30,19 +30,6 @@ abstract class AmazonChimeRequesterPlatform extends PlatformInterface {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
-  Future<Result<String, AmazonChimeError>>
-      requestMicrophonePermissions() async {
-    throw UnimplementedError(
-      'requestMicrophonePermissions() has not been implemented.',
-    );
-  }
-
-  Future<Result<String, AmazonChimeError>> requestCameraPermissions() async {
-    throw UnimplementedError(
-      'requestCameraPermissions() has not been implemented.',
-    );
-  }
-
   Future<Result<String, AmazonChimeError>> initialAudioSelection() async {
     throw UnimplementedError(
       'initialAudioSelection() has not been implemented.',

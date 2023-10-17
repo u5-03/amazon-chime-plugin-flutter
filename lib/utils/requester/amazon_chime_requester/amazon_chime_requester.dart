@@ -12,16 +12,6 @@ final class AmazonChimeRequester extends AmazonChimeRequesterPlatform {
   }
 
   @override
-  Future<Result<String, AmazonChimeError>> requestMicrophonePermissions() {
-    return AmazonChimeRequesterPlatform.instance.requestMicrophonePermissions();
-  }
-
-  @override
-  Future<Result<String, AmazonChimeError>> requestCameraPermissions() {
-    return AmazonChimeRequesterPlatform.instance.requestCameraPermissions();
-  }
-
-  @override
   Future<Result<String, AmazonChimeError>> initialAudioSelection() async {
     return AmazonChimeRequesterPlatform.instance.initialAudioSelection();
   }

@@ -1,4 +1,4 @@
-package com.dena.amazon.chime.flutter.amazon_chime_plugin.Views.VideoTile
+package com.example.amazon_chime_plugin.Views.VideoTile
 
 import android.content.Context
 import android.view.View
@@ -7,7 +7,7 @@ import java.util.*
 import com.amazonaws.services.chime.sdk.meetings.audiovideo.video.DefaultVideoRenderView
 import com.amazonaws.services.chime.sdk.meetings.audiovideo.video.VideoScalingType
 import com.amazonaws.services.chime.sdk.meetings.utils.logger.ConsoleLogger
-import com.dena.amazon.chime.flutter.amazon_chime_plugin.Manager.MeetingSession
+import com.example.amazon_chime_plugin.Manager.MeetingSession
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory

@@ -9,7 +9,9 @@ import 'package:amazon_chime_plugin/interfaces/audio_devices_interface.dart';
 import 'package:amazon_chime_plugin/pigeon/generated/message_data.g.dart';
 import 'package:amazon_chime_plugin/utils/internet_connection.dart';
 import 'package:amazon_chime_plugin/utils/logger.dart';
+import 'package:amazon_chime_plugin/utils/permission_manager.dart';
 import 'package:amazon_chime_plugin/utils/requester/amazon_chime_requester/amazon_chime_requester.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 // part 'meeting_controller.g.dart';
@@ -130,18 +132,17 @@ final class MeetingController extends Notifier<MeetingData>
 
   Future<Result<void, AmazonChimeError>> joinMeeting(JoinInfoModel info) async {
     final microphonePermissionResult =
-        await chimePlugin.requestMicrophonePermissions();
-    final cameraPermissionResult = await chimePlugin.requestCameraPermissions();
-
-    if (microphonePermissionResult.isFailure ||
-        cameraPermissionResult.isFailure) {
+        await PermissionManager.requestMicrophonePermissions();
+    final cameraPermissionResult =
+        await PermissionManager.requestCameraPermissions();
+    if (!microphonePermissionResult.isGranted ||
+        !cameraPermissionResult.isGranted) {
       return Failure(
         AmazonChimeError.customError(
           'Camera and Microphone Permission is required',
         ),
       );
     }
-
     if (!await isInternetConnectionAvailable) {
       return Failure(
         AmazonChimeError.customError(
@@ -149,7 +150,6 @@ final class MeetingController extends Notifier<MeetingData>
         ),
       );
     }
-
     _initializeMeetingData(info);
 
     final parameter = info.asJoinParameter;
@@ -455,6 +455,7 @@ final class MeetingController extends Notifier<MeetingData>
     final attendeeIdArray = attendeeIdToAdd.split('#');
     final localAttendeeId = state.localParticipantId;
     final isAttendeeContent = attendeeIdArray.length == 2;
+    logger.info('didJoinParticipant: ${info.attendeeId}}');
     if (isAttendeeContent) {
       logger.info('Content detected');
       // meetingController

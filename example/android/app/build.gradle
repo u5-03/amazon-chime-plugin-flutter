@@ -25,16 +25,16 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
-android.lint {
-    // 外部の依存関係に対する lint チェックを無効にする
-    checkDependencies false
-    disable 'NewApi'
-    baseline file("lint-baseline.xml")
-    abortOnError false
-}
+// android.lint {
+//     // 外部の依存関係に対する lint チェックを無効にする
+//     checkDependencies false
+//     disable 'NewApi'
+//     baseline file("lint-baseline.xml")
+//     abortOnError false
+// }
 
 android {
-    namespace "com.dena.amazon.chime.flutter.amazon_chime_plugin_example"
+    namespace "com.example.amazon_chime_plugin_example"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
@@ -61,7 +61,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.dena.amazon.chime.flutter.amazon_chime_plugin_example"
+        applicationId "com.example.amazon_chime_plugin_example"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         // aws-chimeのversionに合わせる

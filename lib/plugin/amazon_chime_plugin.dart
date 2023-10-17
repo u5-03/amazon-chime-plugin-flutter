@@ -19,17 +19,6 @@ class AmazonChimePlugin implements AmazonChimePluginInterface {
   }
 
   @override
-  Future<Result<String, AmazonChimeError>>
-      requestMicrophonePermissions() async {
-    return requester.requestMicrophonePermissions();
-  }
-
-  @override
-  Future<Result<String, AmazonChimeError>> requestCameraPermissions() async {
-    return requester.requestCameraPermissions();
-  }
-
-  @override
   Future<Result<String, AmazonChimeError>> initialAudioSelection() async {
     return requester.initialAudioSelection();
   }

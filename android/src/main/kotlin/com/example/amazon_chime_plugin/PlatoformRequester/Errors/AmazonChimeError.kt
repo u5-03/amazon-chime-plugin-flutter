@@ -1,4 +1,4 @@
-package com.dena.amazon.chime.flutter.amazon_chime_plugin.PlatoformRequester.Errors
+package com.example.amazon_chime_plugin.PlatoformRequester.Errors
 
 import AmazonChimeErrorType
 import FlutterError

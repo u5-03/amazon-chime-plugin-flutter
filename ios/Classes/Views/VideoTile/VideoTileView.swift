@@ -30,13 +30,13 @@ final class VideoTileView: NSObject, FlutterPlatformView {
 
         // Memo: without delay, tileView won't present when re-display tileView
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-        // Bind view to VideoView
+            // Bind view to VideoView
             MeetingSession.shared.meetingSession?.audioVideo.bindVideoView(videoView: self.videoRenderView, tileId: tileId)
             // Fix aspect ratio
             (self.videoRenderView as? UIView)?.contentMode = .scaleAspectFit
         }
         // Declare _view as UIView for Flutter interpretation
-//        videoRenderView = videoRenderView as UIView
+        //        videoRenderView = videoRenderView as UIView
     }
 
     deinit {

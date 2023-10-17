@@ -14,6 +14,30 @@ For help getting started with Flutter development, view the
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+## Permissions
+
+### 1. When iOS app, need to add code below to Podfile.
+
+```
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    flutter_additional_ios_build_settings(target)
+    target.build_configurations.each do |config|
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '16.0'
+      # Ref: https://pub.dev/packages/permission_handler
+      # From here
+      config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
+        '$(inherited)',
+        'PERMISSION_CAMERA=1',
+        'PERMISSION_MICROPHONE=1',
+      ]
+      # to here
+    end
+  end
+end
+
+```
+
 ## メモ
 
 1. 現状 Android の plugin および`example`の Android のアプリは、Lint がうまく通らない

@@ -1,4 +1,4 @@
-group 'com.dena.amazon.chime.flutter.amazon_chime_plugin'
+group 'com.example.amazon_chime_plugin'
 version '1.0-SNAPSHOT'
 
 buildscript {

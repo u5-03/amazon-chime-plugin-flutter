@@ -1,8 +1,9 @@
 import 'package:amazon_chime_plugin/api/api.dart';
 import 'package:amazon_chime_plugin/components/future_widget.dart';
+import 'package:amazon_chime_plugin/debug/components/result_widget.dart';
 import 'package:amazon_chime_plugin/debug/input_info_debug_screen.dart';
-import 'package:amazon_chime_plugin/errors/amazon_chime_error.dart';
 import 'package:amazon_chime_plugin/extensions/alert_dialog.dart';
+import 'package:amazon_chime_plugin/utils/permission_manager.dart';
 import 'package:amazon_chime_plugin/utils/requester/amazon_chime_requester/amazon_chime_requester.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,24 +12,6 @@ final class AmazonChimeSDKSampleScreen extends ConsumerWidget {
   AmazonChimeSDKSampleScreen({super.key});
 
   final AmazonChimeRequester plugin = AmazonChimeRequester();
-
-  Widget _resultWidget(Result<String, AmazonChimeError> result) {
-    switch (result) {
-      case Success(value: final value):
-        return Text(
-          'Device OS is $value',
-          // ignore: avoid_redundant_argument_values
-          maxLines: null,
-        );
-      case Failure(exception: final exception):
-        return Text(
-          exception.message,
-          // ignore: avoid_redundant_argument_values
-          maxLines: null,
-        );
-    }
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
@@ -38,15 +21,17 @@ final class AmazonChimeSDKSampleScreen extends ConsumerWidget {
           children: [
             FutureWidget(
               future: plugin.getPlatformVersion(),
-              whenDone: _resultWidget,
+              whenDone: (result) => ResultWidget(result: result),
             ),
             ElevatedButton(
               child: const Text('Request Microphone Permissions'),
               onPressed: () async {
-                final result = await plugin.requestMicrophonePermissions();
+                final status =
+                    await PermissionManager.requestMicrophonePermissions();
+
                 if (context.mounted) {
                   DialogExt.showMessageAlert(
-                    message: result.asContentString,
+                    message: status.toString(),
                     context: context,
                   );
                 }
@@ -55,10 +40,11 @@ final class AmazonChimeSDKSampleScreen extends ConsumerWidget {
             ElevatedButton(
               child: const Text('Request Camera Permissions'),
               onPressed: () async {
-                final result = await plugin.requestCameraPermissions();
+                final status =
+                    await PermissionManager.requestCameraPermissions();
                 if (context.mounted) {
                   DialogExt.showMessageAlert(
-                    message: result.asContentString,
+                    message: status.toString(),
                     context: context,
                   );
                 }

@@ -1,4 +1,5 @@
-package com.dena.amazon.chime.flutter.amazon_chime_plugin
+package com.example.amazon_chime_plugin
+
 
 import FlutterError
 import android.app.Activity
@@ -6,12 +7,12 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.dena.amazon.chime.flutter.amazon_chime_plugin.PlatoformRequester.Models.ResponseMessageKind
+import com.example.amazon_chime_plugin.PlatoformRequester.Models.ResponseMessageKind
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import android.Manifest
-import com.dena.amazon.chime.flutter.amazon_chime_plugin.PlatoformRequester.AmazonChimeError
+import com.example.amazon_chime_plugin.PlatoformRequester.AmazonChimeError
 
 class PermissionManager(
     private val activity: Activity
@@ -51,7 +52,7 @@ class PermissionManager(
     suspend fun requestVideoPermission(): ResponseMessageKind {
         val permissions = CAMERA_PERMISSIONS
         val requestCode = CAMERA_PERMISSION_REQUEST_CODE
-        return if (hasPermissionsAlready(MICROPHONE_PERMISSIONS)) {
+        return if (hasPermissionsAlready(CAMERA_PERMISSIONS)) {
             ResponseMessageKind.CAMERA_AUTHORIZED
         } else {
             val granted = requestPermission(permissions, requestCode)

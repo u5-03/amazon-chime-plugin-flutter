@@ -12,7 +12,8 @@ class RequesterToFlutterImp implements RequesterToFlutter {
   @override
   void audioSessionDidDrop() {
     // TODO: implement audioSessionDidDrop
-    throw UnimplementedError();
+    // throw UnimplementedError();
+    print('did drop!');
   }
 
   @override

@@ -32,23 +32,6 @@ final class MethodChannelAmazonChimeRequester
   }
 
   @override
-  Future<Result<String, AmazonChimeError>>
-      requestMicrophonePermissions() async {
-    return _runCatching(() async {
-      final response = await requester.requestMicrophonePermissions();
-      return response;
-    });
-  }
-
-  @override
-  Future<Result<String, AmazonChimeError>> requestCameraPermissions() async {
-    return _runCatching(() async {
-      final response = await requester.requestCameraPermissions();
-      return response;
-    });
-  }
-
-  @override
   Future<Result<String, AmazonChimeError>> initialAudioSelection() async {
     return _runCatching(() async {
       final response = await requester.initialAudioSelection();
@@ -60,7 +43,7 @@ final class MethodChannelAmazonChimeRequester
   Future<Result<List<String>, AmazonChimeError>> listAudioDevices() async {
     return _runCatching(() async {
       final response = await requester.listAudioDevices();
-      return response.nonNullable;
+      return Future.value(response.nonNullable);
     });
   }
 

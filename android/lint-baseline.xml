@@ -7,7 +7,7 @@
         errorLine1="  override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {"
         errorLine2="                                  ~~~~~~~~">
         <location
-            file="src/main/kotlin/com/dena/amazon/chime/flutter/amazon_chime_plugin/AmazonChimePlugin.kt"
+            file="src/main/kotlin/com/example/amazon_chime_plugin/AmazonChimePlugin.kt"
             line="28"
             column="35"/>
     </issue>
@@ -18,7 +18,7 @@
         errorLine1="  override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {"
         errorLine2="                            ~~~~~~~~">
         <location
-            file="src/main/kotlin/com/dena/amazon/chime/flutter/amazon_chime_plugin/AmazonChimePlugin.kt"
+            file="src/main/kotlin/com/example/amazon_chime_plugin/AmazonChimePlugin.kt"
             line="33"
             column="29"/>
     </issue>
@@ -29,7 +29,7 @@
         errorLine1="  override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {"
         errorLine2="                                                       ~~~~~~~~">
         <location
-            file="src/main/kotlin/com/dena/amazon/chime/flutter/amazon_chime_plugin/AmazonChimePlugin.kt"
+            file="src/main/kotlin/com/example/amazon_chime_plugin/AmazonChimePlugin.kt"
             line="33"
             column="56"/>
     </issue>
@@ -40,7 +40,7 @@
         errorLine1="  override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {"
         errorLine2="                                    ~~~~~~~~">
         <location
-            file="src/main/kotlin/com/dena/amazon/chime/flutter/amazon_chime_plugin/AmazonChimePlugin.kt"
+            file="src/main/kotlin/com/example/amazon_chime_plugin/AmazonChimePlugin.kt"
             line="41"
             column="37"/>
     </issue>

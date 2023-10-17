@@ -62,7 +62,7 @@ class Api {
   // }
 }
 
-class ApiConfig {
+final class ApiConfig {
   ApiConfig({
     required this.region,
     required this.apiUrl,

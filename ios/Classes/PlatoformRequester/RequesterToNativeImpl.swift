@@ -17,26 +17,6 @@ final class RequesterToNativeImpl: RequesterToNative {
         }
     }
 
-    func requestMicrophonePermissions(completion: @escaping (Result<String, Error>) -> Void) {
-        Task {
-            do {
-                completion(.success((try await requestMicrophonePermission()).rawValue))
-            } catch {
-                completion(.failure(error))
-            }
-        }
-    }
-
-    func requestCameraPermissions(completion: @escaping (Result<String, Error>) -> Void) {
-        Task {
-            do {
-                completion(.success((try await requestCameraPermission()).rawValue))
-            } catch {
-                completion(.failure(error))
-            }
-        }
-    }
-
     func initialAudioSelection(completion: @escaping (Result<String, Error>) -> Void) {
         if let initialAudioDevice = MeetingSession.shared.meetingSession?.audioVideo.getActiveAudioDevice() {
             completion(.success(initialAudioDevice.label))
@@ -127,8 +107,8 @@ final class RequesterToNativeImpl: RequesterToNative {
         // Update Singleton Class
         MeetingSession.shared.setSession(session: meetingSession)
 
-        setupAudioVideoFacadeObservers()
-        MeetingSession.shared.meetingSession?.audioVideo.addVideoTileObserver(observer: self)
+        setupObservers()
+
         do {
             try MeetingSession.shared.startMeetingAudio()
             completion(.success(()))
@@ -141,6 +121,7 @@ final class RequesterToNativeImpl: RequesterToNative {
         if let meetingSession = MeetingSession.shared.meetingSession {
             meetingSession.audioVideo.stop()
             MeetingSession.shared.removeSession()
+            removeObservers()
             completion(.success(()))
         } else {
             completion(.failure(AmazonChimeError.customError(text: "Meeting session is nil")))
@@ -169,58 +150,6 @@ final class RequesterToNativeImpl: RequesterToNative {
 }
 
 private extension RequesterToNativeImpl {
-    func requestMicrophonePermission() async throws -> ResponseMessageKind {
-        func requestMicrophonePermission() async -> Bool {
-            return await withCheckedContinuation { continuation in
-                AVAudioSession.sharedInstance().requestRecordPermission { granted in
-                    continuation.resume(returning: granted)
-                }
-            }
-        }
-
-        let microphonePermission = AVAudioSession.sharedInstance().recordPermission
-        switch microphonePermission {
-        case .undetermined:
-            if await requestMicrophonePermission() {
-                return .microphoneAuthorized
-            } else {
-                throw AmazonChimeError.responseMessage(type: .microphoneAuthNotGranted)
-            }
-        case .granted:
-            return .microphoneAuthorized
-        case .denied:
-            throw AmazonChimeError.responseMessage(type: .microphoneAuthNotGranted)
-        @unknown default:
-            throw AmazonChimeError.responseMessage(type: .unknownMicrophoneAuthorizationStatus)
-        }
-    }
-
-    func requestCameraPermission() async throws -> ResponseMessageKind {
-        func requestCameraPermission() async -> Bool {
-            return await withCheckedContinuation { continuation in
-                AVCaptureDevice.requestAccess(for: .video) { granted in
-                    continuation.resume(returning: granted)
-                }
-            }
-        }
-
-        let cameraPermission = AVCaptureDevice.authorizationStatus(for: .video)
-        switch cameraPermission {
-        case .notDetermined:
-            if await requestCameraPermission() {
-                return .cameraAuthorized
-            } else {
-                throw AmazonChimeError.responseMessage(type: .cameraAuthNotGranted)
-            }
-        case .authorized:
-            return .cameraAuthorized
-        case .denied, .restricted:
-            throw AmazonChimeError.responseMessage(type: .cameraAuthNotGranted)
-        @unknown default:
-            throw AmazonChimeError.responseMessage(type: .unknownCameraAuthorizationStatus)
-        }
-    }
-
     private func configureAudioSession() {
         let audioSession = AVAudioSession.sharedInstance()
         do {
@@ -237,11 +166,13 @@ private extension RequesterToNativeImpl {
         }
     }
 
-    private func setupAudioVideoFacadeObservers() {
+    private func setupObservers() {
         // TODO: implement
         //        self.realtimeObserver = MyRealtimeObserver(withMethodChannel: self)
 //                if realtimeObserver !=
         MeetingSession.shared.meetingSession?.audioVideo.addRealtimeObserver(observer: self)
+        MeetingSession.shared.meetingSession?.audioVideo.addVideoTileObserver(observer: self)
+        MeetingSession.shared.meetingSession?.audioVideo.addAudioVideoObserver(observer: self)
         //            MeetingSession.shared.meetingSession?.logger.info(msg: "realtimeObserver set up...")
         //        }
         //
@@ -256,6 +187,12 @@ private extension RequesterToNativeImpl {
         //            MeetingSession.shared.meetingSession?.audioVideo.addVideoTileObserver(observer: self.videoTileObserver!)
         //            MeetingSession.shared.meetingSession?.logger.info(msg: "VideoTileObserver set up...")
         //        }
+    }
+
+    private func removeObservers() {
+        MeetingSession.shared.meetingSession?.audioVideo.removeRealtimeObserver(observer: self)
+        MeetingSession.shared.meetingSession?.audioVideo.removeVideoTileObserver(observer: self)
+        MeetingSession.shared.meetingSession?.audioVideo.removeAudioVideoObserver(observer: self)
     }
 }
 
@@ -273,7 +210,7 @@ extension RequesterToNativeImpl: RealtimeObserver {
                 attendeeId: currentAttendeeInfo.attendeeId,
                 externalUserId: currentAttendeeInfo.externalUserId
             )
-            AmazonChimePlugin.requester?.joined(info: info, completion: {})
+            AmazonChimePlugin.requester?.joined(info: info, completion: { _ in })
         }
     }
 
@@ -283,7 +220,7 @@ extension RequesterToNativeImpl: RealtimeObserver {
                 attendeeId: currentAttendeeInfo.attendeeId,
                 externalUserId: currentAttendeeInfo.externalUserId
             )
-            AmazonChimePlugin.requester?.left(info: info, completion: {})
+            AmazonChimePlugin.requester?.left(info: info, completion: { _ in })
         }
     }
 
@@ -293,7 +230,7 @@ extension RequesterToNativeImpl: RealtimeObserver {
                 attendeeId: currentAttendeeInfo.attendeeId,
                 externalUserId: currentAttendeeInfo.externalUserId
             )
-            AmazonChimePlugin.requester?.dropped(info: info, completion: {})
+            AmazonChimePlugin.requester?.dropped(info: info, completion: { _ in })
         }
     }
 
@@ -303,7 +240,7 @@ extension RequesterToNativeImpl: RealtimeObserver {
                 attendeeId: currentAttendeeInfo.attendeeId,
                 externalUserId: currentAttendeeInfo.externalUserId
             )
-            AmazonChimePlugin.requester?.muted(info: info, completion: {})
+            AmazonChimePlugin.requester?.muted(info: info, completion: { _ in })
         }
     }
 
@@ -313,7 +250,7 @@ extension RequesterToNativeImpl: RealtimeObserver {
                 attendeeId: currentAttendeeInfo.attendeeId,
                 externalUserId: currentAttendeeInfo.externalUserId
             )
-            AmazonChimePlugin.requester?.unmuted(info: info, completion: {})
+            AmazonChimePlugin.requester?.unmuted(info: info, completion: { _ in })
         }
     }
 }
@@ -328,7 +265,7 @@ extension RequesterToNativeImpl: VideoTileObserver {
             isLocalTile: tileState.isLocalTile,
             isContent: tileState.isContent
         )
-        AmazonChimePlugin.requester?.videoTileAdded(info: info, completion: {})
+        AmazonChimePlugin.requester?.videoTileAdded(info: info, completion: { _ in })
     }
 
     func videoTileDidRemove(tileState: AmazonChimeSDK.VideoTileState) {
@@ -340,7 +277,7 @@ extension RequesterToNativeImpl: VideoTileObserver {
             isLocalTile: tileState.isLocalTile,
             isContent: tileState.isContent
         )
-        AmazonChimePlugin.requester?.videoTileRemoved(info: info, completion: {})
+        AmazonChimePlugin.requester?.videoTileRemoved(info: info, completion: { _ in })
     }
 
     func videoTileDidPause(tileState: AmazonChimeSDK.VideoTileState) {
@@ -353,5 +290,47 @@ extension RequesterToNativeImpl: VideoTileObserver {
 
     func videoTileSizeDidChange(tileState: AmazonChimeSDK.VideoTileState) {
 
+    }
+}
+
+extension RequesterToNativeImpl: AudioVideoObserver {
+    func audioSessionDidStartConnecting(reconnecting: Bool) {
+    }
+    
+    func audioSessionDidStart(reconnecting: Bool) {
+    }
+    
+    func audioSessionDidDrop() {
+    }
+    
+    func audioSessionDidStopWithStatus(sessionStatus: AmazonChimeSDK.MeetingSessionStatus) {
+        AmazonChimePlugin.requester?.audioSessionDidStop(completion: { _ in })
+    }
+    
+    func audioSessionDidCancelReconnect() {
+    }
+    
+    func connectionDidRecover() {
+    }
+    
+    func connectionDidBecomePoor() {
+    }
+    
+    func videoSessionDidStartConnecting() {
+    }
+    
+    func videoSessionDidStartWithStatus(sessionStatus: AmazonChimeSDK.MeetingSessionStatus) {
+    }
+    
+    func videoSessionDidStopWithStatus(sessionStatus: AmazonChimeSDK.MeetingSessionStatus) {
+    }
+    
+    func remoteVideoSourcesDidBecomeAvailable(sources: [AmazonChimeSDK.RemoteVideoSource]) {
+    }
+    
+    func remoteVideoSourcesDidBecomeUnavailable(sources: [AmazonChimeSDK.RemoteVideoSource]) {
+    }
+    
+    func cameraSendAvailabilityDidChange(available: Bool) {
     }
 }

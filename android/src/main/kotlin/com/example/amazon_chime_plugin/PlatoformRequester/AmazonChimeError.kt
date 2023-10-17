@@ -1,7 +1,7 @@
-package com.dena.amazon.chime.flutter.amazon_chime_plugin.PlatoformRequester
+package com.example.amazon_chime_plugin.PlatoformRequester
 import AmazonChimeErrorType
 import FlutterError
-import com.dena.amazon.chime.flutter.amazon_chime_plugin.PlatoformRequester.Models.ResponseMessageKind
+import com.example.amazon_chime_plugin.PlatoformRequester.Models.ResponseMessageKind
 
 sealed class AmazonChimeError: Throwable() {
     abstract val errorType: AmazonChimeErrorType

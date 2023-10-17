@@ -1,10 +1,24 @@
+import 'package:amazon_chime_plugin/features/meeting/data/meeting_controller.dart';
 import 'package:amazon_chime_plugin/features/meeting/models/meeting/join_info_model.dart';
 import 'package:amazon_chime_plugin/features/meeting/models/participant/participant_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'meeting_data.freezed.dart';
 part 'meeting_data.g.dart';
+
+final localParticipantIdProvider = StateProvider<String?>(
+  (ref) => ref.watch(
+    meetingControllerProvider.select((value) => value.localParticipantId),
+  ),
+);
+
+final remoteParticipantId = StateProvider<String?>(
+  (ref) => ref.watch(
+    meetingControllerProvider.select((value) => value.remoteParticipantId),
+  ),
+);
 
 @freezed
 class MeetingData with _$MeetingData {

@@ -7,7 +7,7 @@ import 'package:pigeon/pigeon.dart';
     dartOut: 'lib/pigeon/generated/message_data.g.dart',
     dartOptions: DartOptions(),
     kotlinOut:
-        'android/src/main/kotlin/com/dena/amazon/chime/flutter/amazon_chime_plugin/Generated/MessageData.g.kt',
+        'android/src/main/kotlin/com/example/amazon_chime_plugin/Generated/MessageData.g.kt',
     kotlinOptions: KotlinOptions(),
     swiftOut: 'ios/Classes/Generated/MessageData.g.swift',
     swiftOptions: SwiftOptions(),
@@ -105,10 +105,6 @@ enum AmazonChimeErrorType {
 abstract class RequesterToNative {
   @async
   String getPlatformVersion();
-  @async
-  String requestMicrophonePermissions();
-  @async
-  String requestCameraPermissions();
   @async
   String initialAudioSelection();
   @async

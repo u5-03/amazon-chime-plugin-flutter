@@ -10,8 +10,6 @@ abstract interface class AmazonChimePluginInterface {
   final MeetingController meetingRepository;
 
   Future<Result<String, AmazonChimeError>> getPlatformVersion();
-  Future<Result<String, AmazonChimeError>> requestMicrophonePermissions();
-  Future<Result<String, AmazonChimeError>> requestCameraPermissions();
   Future<Result<String, AmazonChimeError>> initialAudioSelection();
   Future<Result<List<String>, AmazonChimeError>> listAudioDevices();
   Future<Result<String, AmazonChimeError>> updateCurrentDevice(
