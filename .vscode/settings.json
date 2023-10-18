@@ -1,45 +1,47 @@
 {
-    "files.insertFinalNewline": true,
-    // Ref: https://zenn.dev/inari_sushio/articles/0f4c606c8340ee
-    "editor.quickSuggestions": {
-        "other": true,
-        "comments": false,
-        "strings": false,
-    },
-    "editor.formatOnSave": true,
-    "editor.suggestSelection": "first",
-    "editor.guides.bracketPairs": true,
+  "files.insertFinalNewline": true,
+  // Ref: https://zenn.dev/inari_sushio/articles/0f4c606c8340ee
+  "editor.quickSuggestions": false,
+  "editor.formatOnSave": true,
+  "editor.suggestSelection": "first",
+  "editor.guides.bracketPairs": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.organizeImports": true
+  },
+  "cSpell.words": [
+    "curr",
+    "fullscreen",
+    "nodoc",
+    "riverpod",
+    "Schyler",
+    "sugiyama",
+    "unmute",
+    "unmuted",
+    "videocam"
+  ],
+  "dart.renameFilesWithClasses": "always",
+  "dart.previewFlutterUiGuides": true,
+  "dart.previewFlutterUiGuidesCustomTracking": true,
+  "dart.closingLabels": false,
+  "[dart]": {
+    "editor.tabSize": 2,
     "editor.codeActionsOnSave": {
-        "source.fixAll": true,
-        "source.organizeImports": true,
+      "quickfix.insertSemicolon": true
     },
-    "cSpell.words": [
-        "Schyler"
-    ],
-    "dart.renameFilesWithClasses": "always",
-    "dart.previewFlutterUiGuides": true,
-    "dart.previewFlutterUiGuidesCustomTracking": true,
-    "dart.closingLabels": false,
-    "[dart]": {
-        "editor.tabSize": 2,
-        "editor.codeActionsOnSave": {
-            "quickfix.insertSemicolon": true,
-        },
-        "editor.detectIndentation": false,
-        "editor.insertSpaces": false,
-        "editor.formatOnSave": true,
-        "editor.formatOnType": true,
-        "editor.rulers": [
-            80
-        ],
-        "editor.selectionHighlight": false,
-        "editor.suggest.snippetsPreventQuickSuggestions": false,
-        "editor.suggestSelection": "first",
-        "editor.tabCompletion": "onlySnippets",
-        "editor.wordBasedSuggestions": false,
-        "editor.defaultFormatter": "Dart-Code.dart-code",
-        "editor.formatOnPaste": true
-    },
-    "editor.formatOnSaveMode": "file",
-    "notebook.formatOnSave.enabled": true
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": false,
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.rulers": [120],
+    "editor.selectionHighlight": false,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": false,
+    "editor.defaultFormatter": "Dart-Code.dart-code",
+    "editor.formatOnPaste": true
+  },
+  "editor.formatOnSaveMode": "file",
+  "notebook.formatOnSave.enabled": true
 }

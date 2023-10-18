@@ -1,4 +1,4 @@
-package com.dena.amazon.chime.flutter.amazon_chime_plugin
+package com.example.amazon_chime_plugin
 
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel

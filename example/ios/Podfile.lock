@@ -8,11 +8,14 @@ PODS:
   - Flutter (1.0.0)
   - integration_test (0.0.1):
     - Flutter
+  - permission_handler_apple (9.1.1):
+    - Flutter
 
 DEPENDENCIES:
   - amazon_chime_plugin (from `.symlinks/plugins/amazon_chime_plugin/ios`)
   - Flutter (from `Flutter`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
 
 SPEC REPOS:
   trunk:
@@ -26,14 +29,17 @@ EXTERNAL SOURCES:
     :path: Flutter
   integration_test:
     :path: ".symlinks/plugins/integration_test/ios"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
 
 SPEC CHECKSUMS:
-  amazon_chime_plugin: 8aa0fb3fd49d49b2b9ac0b80db8b695a6946ecf7
+  amazon_chime_plugin: 4e33d2f3076bfaa6d3263a6db94097ea9afb33a4
   AmazonChimeSDK-Bitcode: d84fa7718ad937a1c9e4cce17aee55e379e83601
   AmazonChimeSDKMedia-Bitcode: d2a2d28dbbc905d95b78edf2a4b91af76eee867a
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   integration_test: 13825b8a9334a850581300559b8839134b124670
+  permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
 
-PODFILE CHECKSUM: a9c2e27431f1a63a92a90f07a76d25c78204b63c
+PODFILE CHECKSUM: b693d4029366bc23c1eda2db86f00c8cc787b35d
 
 COCOAPODS: 1.12.1

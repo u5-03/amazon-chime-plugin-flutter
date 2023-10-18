@@ -1,38 +1,19 @@
-import 'package:amazon_chime_plugin/amazon_chime_plugin.dart';
+import 'package:amazon_chime_plugin/api/api.dart';
 import 'package:amazon_chime_plugin/components/future_widget.dart';
-import 'package:amazon_chime_plugin/errors/amazon_chime_error.dart';
+import 'package:amazon_chime_plugin/debug/components/result_widget.dart';
+import 'package:amazon_chime_plugin/debug/input_info_debug_screen.dart';
 import 'package:amazon_chime_plugin/extensions/alert_dialog.dart';
+import 'package:amazon_chime_plugin/utils/permission_manager.dart';
+import 'package:amazon_chime_plugin/utils/requester/amazon_chime_requester/amazon_chime_requester.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ChimeSDKSampleScreen extends StatefulWidget {
-  const ChimeSDKSampleScreen({super.key});
+final class AmazonChimeSDKSampleScreen extends ConsumerWidget {
+  AmazonChimeSDKSampleScreen({super.key});
 
+  final AmazonChimeRequester plugin = AmazonChimeRequester();
   @override
-  State<ChimeSDKSampleScreen> createState() => _ChimeSDKSampleState();
-}
-
-class _ChimeSDKSampleState extends State<ChimeSDKSampleScreen> {
-  final plugin = AmazonChimePlugin();
-
-  Widget resultWidget(Result<String, AmazonChimeError> result) {
-    switch (result) {
-      case Success(value: final value):
-        return Text(
-          'Device OS is $value',
-          // ignore: avoid_redundant_argument_values
-          maxLines: null,
-        );
-      case Failure(exception: final exception):
-        return Text(
-          exception.message,
-          // ignore: avoid_redundant_argument_values
-          maxLines: null,
-        );
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(title: const Text('Debug Info')),
       body: Center(
@@ -40,15 +21,17 @@ class _ChimeSDKSampleState extends State<ChimeSDKSampleScreen> {
           children: [
             FutureWidget(
               future: plugin.getPlatformVersion(),
-              whenDone: resultWidget,
+              whenDone: (result) => ResultWidget(result: result),
             ),
             ElevatedButton(
               child: const Text('Request Microphone Permissions'),
               onPressed: () async {
-                final result = await plugin.requestMicrophonePermissions();
+                final status =
+                    await PermissionManager.requestMicrophonePermissions();
+
                 if (context.mounted) {
                   DialogExt.showMessageAlert(
-                    message: result.asContentString,
+                    message: status.toString(),
                     context: context,
                   );
                 }
@@ -57,13 +40,32 @@ class _ChimeSDKSampleState extends State<ChimeSDKSampleScreen> {
             ElevatedButton(
               child: const Text('Request Camera Permissions'),
               onPressed: () async {
-                final result = await plugin.requestCameraPermissions();
+                final status =
+                    await PermissionManager.requestCameraPermissions();
                 if (context.mounted) {
                   DialogExt.showMessageAlert(
-                    message: result.asContentString,
+                    message: status.toString(),
                     context: context,
                   );
                 }
+              },
+            ),
+            ElevatedButton(
+              child: const Text('Present Broadcast screen'),
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute<dynamic>(
+                    builder: (_) => InputInfoDebugScreen(
+                      ApiConfig(
+                        apiUrl:
+                            'https://5zcstrkvxe.execute-api.us-east-1.amazonaws.com/Prod/',
+                        region: 'us-east-1',
+                      ),
+                    ),
+                    fullscreenDialog: true, // modal page
+                  ),
+                );
               },
             ),
           ],
