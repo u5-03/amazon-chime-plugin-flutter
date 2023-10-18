@@ -7,7 +7,7 @@ import androidx.annotation.NonNull
 import android.content.Context
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
-import com.example.amazon_chime_plugin.PlatoformRequester.RequesterToNativeImpl // ←これの実装が原因くさい
+import com.example.amazon_chime_plugin.PlatoformRequester.RequesterToNativeImpl
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.PluginRegistry
 import io.flutter.plugin.common.PluginRegistry.Registrar
@@ -33,38 +33,12 @@ public class AmazonChimePlugin: FlutterPlugin {
     // throw IllegalStateException("Another condition was not met!")
     RequesterToNative.setUp(flutterPluginBinding.binaryMessenger, RequesterToNativeImpl(flutterPluginBinding.applicationContext))
     requester = RequesterToFlutter(flutterPluginBinding.binaryMessenger)
-     flutterPluginBinding
-       .platformViewRegistry
-       .registerViewFactory(PlatformViewKind.VIDEO_TILE.rawValue, VideoTileFactory())
+    flutterPluginBinding.platformViewRegistry
+      .registerViewFactory(PlatformViewKind.VIDEO_TILE.rawValue, VideoTileFactory())
   }
 
   override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
     RequesterToNative.setUp(binding.binaryMessenger, null)
     requester = null
   }
-
-  // // MARK: ActivityAware
-  // override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-  //   val activity = binding.activity
-  //   throw IllegalStateException("Another condition was not met!")
-
-    // binaryMessenger?.let { binaryMessenger ->
-      // Ref: https://pub.dev/packages/pigeon
-      //  RequesterToNative.setUp(binaryMessenger, RequesterToNativeImpl(permissionManager, context = activity.applicationContext))
-      //  requester = RequesterToFlutter(binaryMessenger)
-      // throw IllegalStateException("Another condition was not met!")
-    // }
-  // }
-
-  // override fun onDetachedFromActivityForConfigChanges() {
-  //   binaryMessenger = null
-  // }
-
-  // override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
-  //   // onAttachedToActivity(binding)
-  // }
-
-  // override fun onDetachedFromActivity() {
-  //   // binaryMessenger = null
-  // }
 }

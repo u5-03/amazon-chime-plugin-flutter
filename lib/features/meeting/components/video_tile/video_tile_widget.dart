@@ -78,7 +78,6 @@ class VideoTileWidget extends ConsumerWidget {
         child: GestureDetector(
           onDoubleTap: () {
             // TODO: implement
-            print('Show ScreenShare screen');
             // Navigator.push(
             //   context,
             //   MaterialPageRoute(
@@ -121,9 +120,9 @@ class VideoTileWidget extends ConsumerWidget {
         tileIdParameter = tileId;
     }
     if (tileIdParameter == null) {
-      return Container(
+      return const ColoredBox(
         color: Colors.blue,
-        child: const Text('tileIdParameter is null'),
+        child: Text('tileIdParameter is null'),
       );
     }
     if (tileKind == VideoTileKind.content) {
@@ -182,9 +181,9 @@ class VideoTileWidget extends ConsumerWidget {
     }
 
     if (videoTiles.isEmpty) {
-      final Widget emptyVideos = Container(
+      const Widget emptyVideos = ColoredBox(
         color: Colors.blue,
-        child: const Text(
+        child: Text(
           'No video detected',
           style: TextStyle(
             fontSize: 16, // ここでフォントサイズを指定します
@@ -197,7 +196,7 @@ class VideoTileWidget extends ConsumerWidget {
         );
       } else {
         videoTiles.add(
-          Center(
+          const Center(
             widthFactor: 2.5,
             child: emptyVideos,
           ),

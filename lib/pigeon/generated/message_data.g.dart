@@ -7,7 +7,12 @@ import 'dart:typed_data' show Float64List, Int32List, Int64List, Uint8List;
 
 import 'package:flutter/foundation.dart' show ReadBuffer, WriteBuffer;
 import 'package:flutter/services.dart';
-List<Object?> wrapResponse({Object? result, PlatformException? error, bool empty = false}) {
+
+List<Object?> wrapResponse({
+  Object? result,
+  PlatformException? error,
+  bool empty = false,
+}) {
   if (empty) {
     return <Object?>[];
   }
@@ -92,6 +97,7 @@ class JoinParameter {
     ];
   }
 
+  // ignore: prefer_constructors_over_static_methods
   static JoinParameter decode(Object result) {
     result as List<Object?>;
     return JoinParameter(
@@ -126,6 +132,7 @@ class ParticipantInfo {
     ];
   }
 
+  // ignore: prefer_constructors_over_static_methods
   static ParticipantInfo decode(Object result) {
     result as List<Object?>;
     return ParticipantInfo(
@@ -168,6 +175,7 @@ class TileInfo {
     ];
   }
 
+  // ignore: prefer_constructors_over_static_methods
   static TileInfo decode(Object result) {
     result as List<Object?>;
     return TileInfo(
@@ -196,7 +204,7 @@ class _RequesterToNativeCodec extends StandardMessageCodec {
   @override
   Object? readValueOfType(int type, ReadBuffer buffer) {
     switch (type) {
-      case 128: 
+      case 128:
         return JoinParameter.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);
@@ -216,10 +224,11 @@ class RequesterToNative {
 
   Future<String> getPlatformVersion() async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.getPlatformVersion', codec,
-        binaryMessenger: _binaryMessenger);
-    final List<Object?>? replyList =
-        await channel.send(null) as List<Object?>?;
+      'dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.getPlatformVersion',
+      codec,
+      binaryMessenger: _binaryMessenger,
+    );
+    final List<Object?>? replyList = await channel.send(null) as List<Object?>?;
     if (replyList == null) {
       throw PlatformException(
         code: 'channel-error',
@@ -243,10 +252,11 @@ class RequesterToNative {
 
   Future<String> initialAudioSelection() async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.initialAudioSelection', codec,
-        binaryMessenger: _binaryMessenger);
-    final List<Object?>? replyList =
-        await channel.send(null) as List<Object?>?;
+      'dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.initialAudioSelection',
+      codec,
+      binaryMessenger: _binaryMessenger,
+    );
+    final List<Object?>? replyList = await channel.send(null) as List<Object?>?;
     if (replyList == null) {
       throw PlatformException(
         code: 'channel-error',
@@ -270,10 +280,11 @@ class RequesterToNative {
 
   Future<List<String?>> listAudioDevices() async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.listAudioDevices', codec,
-        binaryMessenger: _binaryMessenger);
-    final List<Object?>? replyList =
-        await channel.send(null) as List<Object?>?;
+      'dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.listAudioDevices',
+      codec,
+      binaryMessenger: _binaryMessenger,
+    );
+    final List<Object?>? replyList = await channel.send(null) as List<Object?>?;
     if (replyList == null) {
       throw PlatformException(
         code: 'channel-error',
@@ -297,8 +308,10 @@ class RequesterToNative {
 
   Future<String> updateCurrentDevice(String arg_deviceLabel) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.updateCurrentDevice', codec,
-        binaryMessenger: _binaryMessenger);
+      'dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.updateCurrentDevice',
+      codec,
+      binaryMessenger: _binaryMessenger,
+    );
     final List<Object?>? replyList =
         await channel.send(<Object?>[arg_deviceLabel]) as List<Object?>?;
     if (replyList == null) {
@@ -324,10 +337,11 @@ class RequesterToNative {
 
   Future<void> startLocalVideo() async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.startLocalVideo', codec,
-        binaryMessenger: _binaryMessenger);
-    final List<Object?>? replyList =
-        await channel.send(null) as List<Object?>?;
+      'dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.startLocalVideo',
+      codec,
+      binaryMessenger: _binaryMessenger,
+    );
+    final List<Object?>? replyList = await channel.send(null) as List<Object?>?;
     if (replyList == null) {
       throw PlatformException(
         code: 'channel-error',
@@ -346,10 +360,11 @@ class RequesterToNative {
 
   Future<void> stopLocalVideo() async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.stopLocalVideo', codec,
-        binaryMessenger: _binaryMessenger);
-    final List<Object?>? replyList =
-        await channel.send(null) as List<Object?>?;
+      'dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.stopLocalVideo',
+      codec,
+      binaryMessenger: _binaryMessenger,
+    );
+    final List<Object?>? replyList = await channel.send(null) as List<Object?>?;
     if (replyList == null) {
       throw PlatformException(
         code: 'channel-error',
@@ -368,8 +383,10 @@ class RequesterToNative {
 
   Future<void> join(JoinParameter arg_parameter) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.join', codec,
-        binaryMessenger: _binaryMessenger);
+      'dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.join',
+      codec,
+      binaryMessenger: _binaryMessenger,
+    );
     final List<Object?>? replyList =
         await channel.send(<Object?>[arg_parameter]) as List<Object?>?;
     if (replyList == null) {
@@ -390,10 +407,11 @@ class RequesterToNative {
 
   Future<void> stop() async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.stop', codec,
-        binaryMessenger: _binaryMessenger);
-    final List<Object?>? replyList =
-        await channel.send(null) as List<Object?>?;
+      'dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.stop',
+      codec,
+      binaryMessenger: _binaryMessenger,
+    );
+    final List<Object?>? replyList = await channel.send(null) as List<Object?>?;
     if (replyList == null) {
       throw PlatformException(
         code: 'channel-error',
@@ -412,10 +430,11 @@ class RequesterToNative {
 
   Future<void> mute() async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.mute', codec,
-        binaryMessenger: _binaryMessenger);
-    final List<Object?>? replyList =
-        await channel.send(null) as List<Object?>?;
+      'dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.mute',
+      codec,
+      binaryMessenger: _binaryMessenger,
+    );
+    final List<Object?>? replyList = await channel.send(null) as List<Object?>?;
     if (replyList == null) {
       throw PlatformException(
         code: 'channel-error',
@@ -434,10 +453,11 @@ class RequesterToNative {
 
   Future<void> unmute() async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.unmute', codec,
-        binaryMessenger: _binaryMessenger);
-    final List<Object?>? replyList =
-        await channel.send(null) as List<Object?>?;
+      'dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.unmute',
+      codec,
+      binaryMessenger: _binaryMessenger,
+    );
+    final List<Object?>? replyList = await channel.send(null) as List<Object?>?;
     if (replyList == null) {
       throw PlatformException(
         code: 'channel-error',
@@ -473,9 +493,9 @@ class _RequesterToFlutterCodec extends StandardMessageCodec {
   @override
   Object? readValueOfType(int type, ReadBuffer buffer) {
     switch (type) {
-      case 128: 
+      case 128:
         return ParticipantInfo.decode(readValue(buffer)!);
-      case 129: 
+      case 129:
         return TileInfo.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);
@@ -504,11 +524,16 @@ abstract class RequesterToFlutter {
 
   void videoTileRemoved(TileInfo info);
 
-  static void setup(RequesterToFlutter? api, {BinaryMessenger? binaryMessenger}) {
+  static void setup(
+    RequesterToFlutter? api, {
+    BinaryMessenger? binaryMessenger,
+  }) {
     {
       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.audioSessionDidDrop', codec,
-          binaryMessenger: binaryMessenger);
+        'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.audioSessionDidDrop',
+        codec,
+        binaryMessenger: binaryMessenger,
+      );
       if (api == null) {
         channel.setMessageHandler(null);
       } else {
@@ -518,16 +543,20 @@ abstract class RequesterToFlutter {
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
-          }          catch (e) {
-            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          } catch (e) {
+            return wrapResponse(
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
           }
         });
       }
     }
     {
       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.audioSessionDidStop', codec,
-          binaryMessenger: binaryMessenger);
+        'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.audioSessionDidStop',
+        codec,
+        binaryMessenger: binaryMessenger,
+      );
       if (api == null) {
         channel.setMessageHandler(null);
       } else {
@@ -537,183 +566,244 @@ abstract class RequesterToFlutter {
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
-          }          catch (e) {
-            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          } catch (e) {
+            return wrapResponse(
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
           }
         });
       }
     }
     {
       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.joined', codec,
-          binaryMessenger: binaryMessenger);
+        'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.joined',
+        codec,
+        binaryMessenger: binaryMessenger,
+      );
       if (api == null) {
         channel.setMessageHandler(null);
       } else {
         channel.setMessageHandler((Object? message) async {
-          assert(message != null,
-          'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.joined was null.');
+          assert(
+            message != null,
+            'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.joined was null.',
+          );
           final List<Object?> args = (message as List<Object?>?)!;
           final ParticipantInfo? arg_info = (args[0] as ParticipantInfo?);
-          assert(arg_info != null,
-              'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.joined was null, expected non-null ParticipantInfo.');
+          assert(
+            arg_info != null,
+            'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.joined was null, expected non-null ParticipantInfo.',
+          );
           try {
             api.joined(arg_info!);
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
-          }          catch (e) {
-            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          } catch (e) {
+            return wrapResponse(
+              error: PlatformException(
+                code: 'error',
+                message: e.toString(),
+              ),
+            );
           }
         });
       }
     }
     {
       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.left', codec,
-          binaryMessenger: binaryMessenger);
+        'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.left',
+        codec,
+        binaryMessenger: binaryMessenger,
+      );
       if (api == null) {
         channel.setMessageHandler(null);
       } else {
         channel.setMessageHandler((Object? message) async {
-          assert(message != null,
-          'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.left was null.');
+          assert(
+            message != null,
+            'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.left was null.',
+          );
           final List<Object?> args = (message as List<Object?>?)!;
           final ParticipantInfo? arg_info = (args[0] as ParticipantInfo?);
-          assert(arg_info != null,
-              'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.left was null, expected non-null ParticipantInfo.');
+          assert(
+            arg_info != null,
+            'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.left was null, expected non-null ParticipantInfo.',
+          );
           try {
             api.left(arg_info!);
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
-          }          catch (e) {
-            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          } catch (e) {
+            return wrapResponse(
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
           }
         });
       }
     }
     {
       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.dropped', codec,
-          binaryMessenger: binaryMessenger);
+        'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.dropped',
+        codec,
+        binaryMessenger: binaryMessenger,
+      );
       if (api == null) {
         channel.setMessageHandler(null);
       } else {
         channel.setMessageHandler((Object? message) async {
-          assert(message != null,
-          'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.dropped was null.');
+          assert(
+            message != null,
+            'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.dropped was null.',
+          );
           final List<Object?> args = (message as List<Object?>?)!;
           final ParticipantInfo? arg_info = (args[0] as ParticipantInfo?);
-          assert(arg_info != null,
-              'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.dropped was null, expected non-null ParticipantInfo.');
+          assert(
+            arg_info != null,
+            'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.dropped was null, expected non-null ParticipantInfo.',
+          );
           try {
             api.dropped(arg_info!);
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
-          }          catch (e) {
-            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          } catch (e) {
+            return wrapResponse(
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
           }
         });
       }
     }
     {
       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.muted', codec,
-          binaryMessenger: binaryMessenger);
+        'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.muted',
+        codec,
+        binaryMessenger: binaryMessenger,
+      );
       if (api == null) {
         channel.setMessageHandler(null);
       } else {
         channel.setMessageHandler((Object? message) async {
-          assert(message != null,
-          'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.muted was null.');
+          assert(
+            message != null,
+            'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.muted was null.',
+          );
           final List<Object?> args = (message as List<Object?>?)!;
           final ParticipantInfo? arg_info = (args[0] as ParticipantInfo?);
-          assert(arg_info != null,
-              'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.muted was null, expected non-null ParticipantInfo.');
+          assert(
+            arg_info != null,
+            'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.muted was null, expected non-null ParticipantInfo.',
+          );
           try {
             api.muted(arg_info!);
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
-          }          catch (e) {
-            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          } catch (e) {
+            return wrapResponse(
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
           }
         });
       }
     }
     {
       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.unmuted', codec,
-          binaryMessenger: binaryMessenger);
+        'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.unmuted',
+        codec,
+        binaryMessenger: binaryMessenger,
+      );
       if (api == null) {
         channel.setMessageHandler(null);
       } else {
         channel.setMessageHandler((Object? message) async {
-          assert(message != null,
-          'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.unmuted was null.');
+          assert(
+            message != null,
+            'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.unmuted was null.',
+          );
           final List<Object?> args = (message as List<Object?>?)!;
           final ParticipantInfo? arg_info = (args[0] as ParticipantInfo?);
-          assert(arg_info != null,
-              'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.unmuted was null, expected non-null ParticipantInfo.');
+          assert(
+            arg_info != null,
+            'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.unmuted was null, expected non-null ParticipantInfo.',
+          );
           try {
             api.unmuted(arg_info!);
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
-          }          catch (e) {
-            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          } catch (e) {
+            return wrapResponse(
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
           }
         });
       }
     }
     {
       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.videoTileAdded', codec,
-          binaryMessenger: binaryMessenger);
+        'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.videoTileAdded',
+        codec,
+        binaryMessenger: binaryMessenger,
+      );
       if (api == null) {
         channel.setMessageHandler(null);
       } else {
         channel.setMessageHandler((Object? message) async {
-          assert(message != null,
-          'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.videoTileAdded was null.');
+          assert(
+            message != null,
+            'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.videoTileAdded was null.',
+          );
           final List<Object?> args = (message as List<Object?>?)!;
           final TileInfo? arg_info = (args[0] as TileInfo?);
-          assert(arg_info != null,
-              'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.videoTileAdded was null, expected non-null TileInfo.');
+          assert(
+            arg_info != null,
+            'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.videoTileAdded was null, expected non-null TileInfo.',
+          );
           try {
             api.videoTileAdded(arg_info!);
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
-          }          catch (e) {
-            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          } catch (e) {
+            return wrapResponse(
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
           }
         });
       }
     }
     {
       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.videoTileRemoved', codec,
-          binaryMessenger: binaryMessenger);
+        'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.videoTileRemoved',
+        codec,
+        binaryMessenger: binaryMessenger,
+      );
       if (api == null) {
         channel.setMessageHandler(null);
       } else {
         channel.setMessageHandler((Object? message) async {
-          assert(message != null,
-          'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.videoTileRemoved was null.');
+          assert(
+            message != null,
+            'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.videoTileRemoved was null.',
+          );
           final List<Object?> args = (message as List<Object?>?)!;
           final TileInfo? arg_info = (args[0] as TileInfo?);
-          assert(arg_info != null,
-              'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.videoTileRemoved was null, expected non-null TileInfo.');
+          assert(
+            arg_info != null,
+            'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.videoTileRemoved was null, expected non-null TileInfo.',
+          );
           try {
             api.videoTileRemoved(arg_info!);
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
-          }          catch (e) {
-            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          } catch (e) {
+            return wrapResponse(
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
           }
         });
       }

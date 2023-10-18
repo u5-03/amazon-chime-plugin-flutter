@@ -1,5 +1,6 @@
 // ignore_for_file: one_member_abstracts
 
+// ignore: depend_on_referenced_packages
 import 'package:pigeon/pigeon.dart';
 
 @ConfigurePigeon(

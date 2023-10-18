@@ -25,13 +25,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
-// android.lint {
-//     // 外部の依存関係に対する lint チェックを無効にする
-//     checkDependencies false
-//     disable 'NewApi'
-//     baseline file("lint-baseline.xml")
-//     abortOnError false
-// }
+android.lint {
+    // 外部の依存関係に対する lint チェックを無効にする
+    checkDependencies false
+    disable 'NewApi'
+    baseline file("lint-baseline.xml")
+    abortOnError false
+}
 
 android {
     namespace "com.example.amazon_chime_plugin_example"

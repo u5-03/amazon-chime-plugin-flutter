@@ -6,6 +6,7 @@ part of 'meeting_data.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+// ignore: non_constant_identifier_names
 _$_MeetingData _$$_MeetingDataFromJson(Map<String, dynamic> json) =>
     _$_MeetingData(
       meetingId: json['meetingId'] as String?,
@@ -34,6 +35,7 @@ _$_MeetingData _$$_MeetingDataFromJson(Map<String, dynamic> json) =>
       isMeetingActive: json['isMeetingActive'] as bool? ?? false,
     );
 
+// ignore: non_constant_identifier_names
 Map<String, dynamic> _$$_MeetingDataToJson(_$_MeetingData instance) =>
     <String, dynamic>{
       'meetingId': instance.meetingId,

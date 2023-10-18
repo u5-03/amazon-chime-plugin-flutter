@@ -6,6 +6,7 @@ import 'package:amazon_chime_plugin/features/meeting/models/participant/particip
 import 'package:amazon_chime_plugin/utils/logger.dart';
 import 'package:amazon_chime_plugin/utils/requester/requester_to_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MeetingBodyPortraitWidget extends ConsumerWidget {
@@ -27,7 +28,7 @@ class MeetingBodyPortraitWidget extends ConsumerWidget {
 
     return ListTile(
       title: Text(
-        participants[localParticipantId]?.formattedExternalUserId ?? 'UNKNOWN',
+        participants[localParticipantId]?.externalUserId ?? 'UNKNOWN',
         style: const TextStyle(
           color: Colors.black,
           fontSize: Style.fontSize,
@@ -135,50 +136,73 @@ class MeetingBodyPortraitWidget extends ConsumerWidget {
     // RequesterToFlutterImp.ref = ref;
     RequesterToFlutterImp.meetingController ??=
         ref.read(meetingControllerProvider.notifier);
-    return Center(
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 8,
+    return WillPopScope(
+      onWillPop: () async {
+        await ref.read(meetingControllerProvider.notifier).stopMeeting();
+        return true;
+      },
+      child: SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: VideoTileWidget.displayVideoTiles(
-              Orientation.portrait,
-              meetingData,
+          child: IntrinsicHeight(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: VideoTileWidget.displayVideoTiles(
+                    Orientation.portrait,
+                    meetingData,
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 30, bottom: 20),
+                  child: Text(
+                    'Attendees:',
+                    style: TextStyle(fontSize: Style.titleSize),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                Column(
+                  children: displayParticipants(
+                    context,
+                    ref.read(meetingControllerProvider.notifier),
+                    meetingData,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: ElevatedButton(
+                    child: Text(
+                      'MeetingID: ${ref.watch(meetingControllerProvider).meetingId ?? ''}',
+                    ),
+                    onPressed: () {
+                      Clipboard.setData(
+                        ClipboardData(
+                          text:
+                              ref.watch(meetingControllerProvider).meetingId ??
+                                  '',
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 50),
+                  child: SizedBox(
+                    height: 50,
+                    width: 300,
+                    child: leaveMeetingButton(context, ref),
+                  ),
+                ),
+                const Spacer(),
+              ],
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(top: 30, bottom: 20),
-            child: Text(
-              'Attendees:',
-              style: TextStyle(fontSize: Style.titleSize),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Column(
-            children: displayParticipants(
-              context,
-              ref.read(meetingControllerProvider.notifier),
-              meetingData,
-            ),
-          ),
-          WillPopScope(
-            onWillPop: () async {
-              await ref.read(meetingControllerProvider.notifier).stopMeeting();
-              return true;
-            },
-            child: const Spacer(),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 50),
-            child: SizedBox(
-              height: 50,
-              width: 300,
-              child: leaveMeetingButton(context, ref),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -245,6 +269,7 @@ class MeetingBodyPortraitWidget extends ConsumerWidget {
 extension MeetingBodyPortraitExt on MeetingBodyPortraitWidget {
   Future<void> showAudioDeviceDialog(
     BuildContext context,
+    WidgetRef ref,
     MeetingData meetingData,
   ) async {
     final device = await showAdaptiveDialog<String>(
@@ -265,9 +290,9 @@ extension MeetingBodyPortraitExt on MeetingBodyPortraitWidget {
       logger.severe('No device chosen.');
       return;
     }
-
-    // TODO: implement
-    // meetingProvider.updateCurrentDevice(device);
+    await ref
+        .read(meetingControllerProvider.notifier)
+        .updateCurrentAudioDevice(device);
   }
 
   List<Widget> getSimpleDialogOptionsAudioDevices(

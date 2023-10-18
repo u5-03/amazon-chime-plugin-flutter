@@ -157,8 +157,6 @@ class RequesterToNativeImpl(context: Context): RequesterToNative, RealtimeObserv
            audioVideo.stopRemoteVideo()
            MeetingSession.shared.removeSession()
            removeObservers()
-           // TODO: implement
-        //    removeObservers()
            callback(Result.success(Unit))
        } ?: run {
            callback(Result.failure(AmazonChimeError.CustomError(text = "Meeting audioVideo is nil").asFlutterError))
@@ -190,54 +188,6 @@ class RequesterToNativeImpl(context: Context): RequesterToNative, RealtimeObserv
            callback(Result.failure(AmazonChimeError.CustomError(text = "Meeting audioVideo is nil").asFlutterError))
        }
     }
-
-
-//       override fun onAttendeesDropped(attendeeInfo: Array<AttendeeInfo>) {
-//
-//        }
-//
-//        override fun onAttendeesJoined(attendeeInfo: Array<AttendeeInfo>) {
-//
-//        }
-//
-//        override fun onAttendeesLeft(attendeeInfo: Array<AttendeeInfo>) {
-//            for (currentAttendeeInfo in attendeeInfo) {
-//                val info = ParticipantInfo(
-//                    currentAttendeeInfo.attendeeId,
-//                    currentAttendeeInfo.externalUserId
-//                )
-//                AmazonChimePlugin.requester?.left(info) {}
-//            }
-//        }
-//
-//        override fun onAttendeesMuted(attendeeInfo: Array<AttendeeInfo>) {
-//            for (currentAttendeeInfo in attendeeInfo) {
-//                val info = ParticipantInfo(
-//                    currentAttendeeInfo.attendeeId,
-//                    currentAttendeeInfo.externalUserId
-//                )
-//                AmazonChimePlugin.requester?.muted(info) {}
-//            }
-//        }
-//
-//        override fun onAttendeesUnmuted(attendeeInfo: Array<AttendeeInfo>) {
-//            for (currentAttendeeInfo in attendeeInfo) {
-//                val info = ParticipantInfo(
-//                    currentAttendeeInfo.attendeeId,
-//                    currentAttendeeInfo.externalUserId
-//                )
-//                AmazonChimePlugin.requester?.unmuted(info) {}
-//            }
-//        }
-//
-//        override fun onSignalStrengthChanged(signalUpdates: Array<SignalUpdate>) {
-//            TODO("Not yet implemented")
-//        }
-//
-//        override fun onVolumeChanged(volumeUpdates: Array<VolumeUpdate>) {
-//            TODO("Not yet implemented")
-//        }
-// }
 
     // MARK: RealtimeObserver
     override fun onAttendeesDropped(attendeeInfo: Array<AttendeeInfo>) {

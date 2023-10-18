@@ -6,6 +6,7 @@ part of 'participant_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+// ignore: non_constant_identifier_names
 _$_ParticipantModel _$$_ParticipantModelFromJson(Map<String, dynamic> json) =>
     _$_ParticipantModel(
       participantId: json['participantId'] as String,
@@ -17,6 +18,7 @@ _$_ParticipantModel _$$_ParticipantModelFromJson(Map<String, dynamic> json) =>
           : VideoTileModel.fromJson(json['videoTile'] as Map<String, dynamic>),
     );
 
+// ignore: non_constant_identifier_names
 Map<String, dynamic> _$$_ParticipantModelToJson(_$_ParticipantModel instance) =>
     <String, dynamic>{
       'participantId': instance.participantId,

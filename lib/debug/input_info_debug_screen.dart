@@ -8,14 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final _meetingIdProvider =
     StateProvider<String>((ref) => StringExt.randomLength);
-final _userNameProvider = StateProvider<String>((ref) => 'sugiy');
-
-final _isAllElementsNotEmpty = Provider<bool>((ref) {
-  final meetingId = ref.watch(_meetingIdProvider);
-  final userName = ref.watch(_userNameProvider);
-  print('meetingId: $meetingId, userName: $userName');
-  return meetingId.isNotEmpty && userName.isNotEmpty;
-});
+final _userNameProvider = StateProvider<String>((ref) => 'test');
 
 class InputInfoDebugScreen extends ConsumerWidget {
   const InputInfoDebugScreen(this.apiConfig, {super.key});

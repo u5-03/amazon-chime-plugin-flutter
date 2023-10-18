@@ -16,20 +16,17 @@ class Api {
     final url =
         '${config.apiUrl}join?title=$meetingId&name=$attendeeId&region=${config.region}';
 
-    print('POST - join api call: $url');
+    logger.info('POST - join api call: $url');
     try {
       final response = await http.post(Uri.parse(url));
       logger.info('STATUS: ${response.statusCode}');
 
       if (response.statusCode >= 200 && response.statusCode < 300) {
         logger.info('POST - join api call successful!');
-        print('response.body: ${response.body}');
         final joinInfoMap = jsonDecode(response.body) as Map<String, dynamic>;
-        print('joinInfoMap: $joinInfoMap');
         final joinInfo = JoinInfoParentAPIModel.fromJson(joinInfoMap)
             .joinInfo
             .asJoinInfoModel;
-        print('joinInfo: $joinInfo');
         return Success(joinInfo);
       } else {
         return Failure(
@@ -43,23 +40,6 @@ class Api {
       return Failure(AmazonChimeError.customError(e.toString()));
     }
   }
-
-  // Map<String, dynamic> joinInfoToJSON(JoinInfoModel info) {
-  //   final flattenedJSON = <String, dynamic>{
-  //     'MeetingId': info.meeting.meetingId,
-  //     'ExternalMeetingId': info.meeting.externalMeetingId,
-  //     'MediaRegion': info.meeting.mediaRegion,
-  //     'AudioHostUrl': info.meeting.mediaPlacement.audioHostUrl,
-  //     'AudioFallbackUrl': info.meeting.mediaPlacement.audioFallbackUrl,
-  //     'SignalingUrl': info.meeting.mediaPlacement.signalingUrl,
-  //     'TurnControlUrl': info.meeting.mediaPlacement.turnControllerUrl,
-  //     'ExternalUserId': info.attendee.externalUserId,
-  //     'AttendeeId': info.attendee.attendeeId,
-  //     'JoinToken': info.attendee.joinToken,
-  //   };
-
-  //   return flattenedJSON;
-  // }
 }
 
 final class ApiConfig {

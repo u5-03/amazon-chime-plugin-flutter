@@ -21,16 +21,16 @@ void main() {
             "Meeting": {
                 "MeetingId": "396bc713-ecdb-4fac-a406-1db789d52713",
                 "MeetingHostId": null,
-                "ExternalMeetingId": "zgA0kujZbU6AWZmaofrHP17",
+                "ExternalMeetingId": "ExternalMeetingId7",
                 "MediaRegion": "us-east-1",
                 "MediaPlacement": {
                     "AudioHostUrl": "1c6e2dd22c06d6fbf585e3f4e2eafd38.k.m3.ue1.app.chime.aws:3478",
-                    "AudioFallbackUrl": "wss://haxrp.m3.ue1.app.chime.aws:443/calls/396bc713-ecdb-4fac-a406-1db789d52713",
+                    "AudioFallbackUrl": "AudioFallbackUrl",
                     "SignalingUrl": "wss://signal.m3.ue1.app.chime.aws/control/396bc713-ecdb-4fac-a406-1db789d52713",
                     "TurnControlUrl": "https://2713.cell.us-east-1.meetings.chime.aws/v2/turn_sessions",
-                    "ScreenDataUrl": "wss://bitpw.m3.ue1.app.chime.aws:443/v2/screen/396bc713-ecdb-4fac-a406-1db789d52713",
-                    "ScreenViewingUrl": "wss://bitpw.m3.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=396bc713-ecdb-4fac-a406-1db789d52713",
-                    "ScreenSharingUrl": "wss://bitpw.m3.ue1.app.chime.aws:443/v2/screen/396bc713-ecdb-4fac-a406-1db789d52713",
+                    "ScreenDataUrl": "ScreenDataUrl",
+                    "ScreenViewingUrl": "ScreenViewingUrl",
+                    "ScreenSharingUrl": "ScreenSharingUrl",
                     "EventIngestionUrl": "https://data.svc.ue1.ingest.chime.aws/v1/client-events"
                 },
                 "PrimaryMeetingId": null,
@@ -40,9 +40,9 @@ void main() {
         },
         "Attendee": {
             "Attendee": {
-                "ExternalUserId": "737c4f63#sugiy",
+                "ExternalUserId": "ExternalUserId",
                 "AttendeeId": "35a392d3-9502-22df-830a-ba6d047bb681",
-                "JoinToken": "MzVhMzkyZDMtOTUwMi0yMmRmLTgzMGEtYmE2ZDA0N2JiNjgxOjI5N2M3ODgyLTkzZDUtNGZjNi05YmY2LTA4NjFmNzhhMTEwMQ",
+                "JoinToken": "JoinToken",
                 "Capabilities": {
                     "Audio": "SendReceive",
                     "Video": "SendReceive",
@@ -62,9 +62,7 @@ void main() {
 // ''';
 
     final jsonData = jsonDecode(jsonString) as Map<String, dynamic>;
-    print('jsonData: $jsonData');
     // final capabilities = CapabilitiesAPIModel.fromJson(jsonData);
-    // expect(capabilities.audio, 'SendReceive');
 
     // JSONデータをMyModelインスタンスにデコード
     final joinInfo =

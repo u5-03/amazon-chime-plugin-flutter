@@ -2,7 +2,7 @@ import Flutter
 import UIKit
 import AmazonChimeSDK
 
-// After modified, must modify android/dart defition too.
+// After modified, must modify android/dart definition too.
 enum PlatformViewKind: String {
     case videoTile
 }

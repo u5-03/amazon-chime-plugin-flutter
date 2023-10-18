@@ -1,7 +1,7 @@
 abstract class AudioDevicesInterface {
-  void _initialAudioSelection() {}
+  void initialAudioSelection() {}
 
-  Future<void> _listAudioDevices() async {}
+  Future<void> listAudioDevices() async {}
 
   Future<void> updateCurrentAudioDevice(String device) async {}
 }

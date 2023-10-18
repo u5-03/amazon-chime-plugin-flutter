@@ -19,6 +19,5 @@ A new Flutter plugin project.
   s.platform = :ios, '16.0'
 
   # Flutter.framework does not contain a i386 slice.
-  # s.pod_target_xcconfig = {  }
   s.swift_version = '5.0'
 end

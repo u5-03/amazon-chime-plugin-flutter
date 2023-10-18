@@ -6,6 +6,7 @@ part of 'video_tile_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+// ignore: non_constant_identifier_names
 _$_VideoTileModel _$$_VideoTileModelFromJson(Map<String, dynamic> json) =>
     _$_VideoTileModel(
       tileId: json['tileId'] as int,
@@ -15,6 +16,7 @@ _$_VideoTileModel _$$_VideoTileModelFromJson(Map<String, dynamic> json) =>
       isContentShare: json['isContentShare'] as bool,
     );
 
+// ignore: non_constant_identifier_names
 Map<String, dynamic> _$$_VideoTileModelToJson(_$_VideoTileModel instance) =>
     <String, dynamic>{
       'tileId': instance.tileId,

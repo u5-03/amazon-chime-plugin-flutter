@@ -97,12 +97,12 @@ final class MeetingController extends Notifier<MeetingData>
         ),
       );
     }
-    print('updateParticipant: $participants');
   }
 
   void removeParticipant(String participantId) {
-    final participants = {...state.participants};
-    participants.remove(participantId);
+    final participants = {
+      ...state.participants..remove(participantId),
+    };
     state = state.copyWith(participants: participants);
   }
 
@@ -122,10 +122,8 @@ final class MeetingController extends Notifier<MeetingData>
     );
     switch (result) {
       case Success(value: final value):
-        print('value: $value');
         return joinMeeting(value);
       case Failure(exception: final exception):
-        print('exception: $exception');
         return Failure(exception);
     }
   }
@@ -157,8 +155,8 @@ final class MeetingController extends Notifier<MeetingData>
     switch (result) {
       case Success():
         _initializeLocalAttendee();
-        await _listAudioDevices();
-        await _initialAudioSelection();
+        await listAudioDevices();
+        await initialAudioSelection();
         // ignore: void_checks
         return const Success(());
       case Failure(exception: final exception):
@@ -174,7 +172,7 @@ final class MeetingController extends Notifier<MeetingData>
     state = state.copyWith(
       isMeetingActive: true,
       meetingData: meetData,
-      meetingId: meetData.meeting.externalMeetingId,
+      meetingId: meetData.meeting.meetingId,
     );
   }
 
@@ -278,7 +276,7 @@ final class MeetingController extends Notifier<MeetingData>
 
   // MARK: - AudioDevicesInterface
   @override
-  Future<void> _initialAudioSelection() async {
+  Future<void> initialAudioSelection() async {
     // final device = await methodChannelProvider
     //     ?.callMethod(MethodCallOption.initialAudioSelection);
     // if (device == null) {
@@ -290,7 +288,7 @@ final class MeetingController extends Notifier<MeetingData>
   }
 
   @override
-  Future<void> _listAudioDevices() async {
+  Future<void> listAudioDevices() async {
     // final devices = await methodChannelProvider
     //     ?.callMethod(MethodCallOption.listAudioDevices);
 
@@ -408,9 +406,9 @@ final class MeetingController extends Notifier<MeetingData>
     final result = await chimePlugin.stop();
     switch (result) {
       case Success():
-        print('Success');
+        logger.info('Success');
       case Failure(exception: final exception):
-        print(exception.message);
+        logger.warning(exception.message);
     }
   }
 
