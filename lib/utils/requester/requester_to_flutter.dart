@@ -64,8 +64,7 @@ class RequesterToFlutterImp implements RequesterToFlutter {
     final videoTile = VideoTileModel.fromPigeonModel(info);
 
     if (videoTile.isContentShare) {
-      final targetParticipantId =
-          meetingController?.state.contentParticipantId ?? '';
+      final targetParticipantId = info.attendeeId;
       meetingController
         ?..toggleVideoStatus(
           participantId: targetParticipantId,

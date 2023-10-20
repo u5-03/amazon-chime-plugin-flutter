@@ -60,7 +60,7 @@ class MeetingBodyPortraitWidget extends ConsumerWidget {
             padding: EdgeInsets.symmetric(horizontal: Style.iconPadding),
             constraints: const BoxConstraints(),
             color: Colors.blue,
-            onPressed: meetingController.sendLocalVideoTileOn,
+            onPressed: meetingController.toggleLocalVideoTileStatus,
           ),
         ],
       ),
@@ -156,6 +156,7 @@ class MeetingBodyPortraitWidget extends ConsumerWidget {
                   children: VideoTileWidget.displayVideoTiles(
                     Orientation.portrait,
                     meetingData,
+                    const Size(200, 230),
                   ),
                 ),
                 const Padding(

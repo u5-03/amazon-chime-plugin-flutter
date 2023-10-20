@@ -6,74 +6,64 @@ part of 'join_info_api_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-// ignore: non_constant_identifier_names
-_$_JoinInfoParentAPIModel _$$_JoinInfoParentAPIModelFromJson(
-  Map<String, dynamic> json,
-) =>
-    _$_JoinInfoParentAPIModel(
+_$JoinInfoParentAPIModelImpl _$$JoinInfoParentAPIModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$JoinInfoParentAPIModelImpl(
       joinInfo:
           JoinInfoAPIModel.fromJson(json['JoinInfo'] as Map<String, dynamic>),
     );
 
-// ignore: non_constant_identifier_names
-Map<String, dynamic> _$$_JoinInfoParentAPIModelToJson(
-  _$_JoinInfoParentAPIModel instance,
-) =>
+Map<String, dynamic> _$$JoinInfoParentAPIModelImplToJson(
+        _$JoinInfoParentAPIModelImpl instance) =>
     <String, dynamic>{
       'JoinInfo': instance.joinInfo,
     };
 
-// ignore: non_constant_identifier_names
-_$_JoinInfoAPIModel _$$_JoinInfoAPIModelFromJson(Map<String, dynamic> json) =>
-    _$_JoinInfoAPIModel(
+_$JoinInfoAPIModelImpl _$$JoinInfoAPIModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$JoinInfoAPIModelImpl(
       meeting:
           MeetingWrapperModel.fromJson(json['Meeting'] as Map<String, dynamic>),
       attendee: AttendeeWrapperModel.fromJson(
-        json['Attendee'] as Map<String, dynamic>,
-      ),
+          json['Attendee'] as Map<String, dynamic>),
     );
 
-// ignore: non_constant_identifier_names
-Map<String, dynamic> _$$_JoinInfoAPIModelToJson(_$_JoinInfoAPIModel instance) =>
+Map<String, dynamic> _$$JoinInfoAPIModelImplToJson(
+        _$JoinInfoAPIModelImpl instance) =>
     <String, dynamic>{
       'Meeting': instance.meeting,
       'Attendee': instance.attendee,
     };
 
-// ignore: non_constant_identifier_names
-_$_MeetingWrapperModel _$$_MeetingWrapperModelFromJson(
-  Map<String, dynamic> json,
-) =>
-    _$_MeetingWrapperModel(
+_$MeetingWrapperModelImpl _$$MeetingWrapperModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$MeetingWrapperModelImpl(
       meeting:
           MeetingAPIModel.fromJson(json['Meeting'] as Map<String, dynamic>),
     );
 
-// ignore: non_constant_identifier_names
-Map<String, dynamic> _$$_MeetingWrapperModelToJson(
-  _$_MeetingWrapperModel instance,
-) =>
+Map<String, dynamic> _$$MeetingWrapperModelImplToJson(
+        _$MeetingWrapperModelImpl instance) =>
     <String, dynamic>{
       'Meeting': instance.meeting,
     };
 
-// ignore: non_constant_identifier_names
-_$_MeetingAPIModel _$$_MeetingAPIModelFromJson(Map<String, dynamic> json) =>
-    _$_MeetingAPIModel(
+_$MeetingAPIModelImpl _$$MeetingAPIModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$MeetingAPIModelImpl(
       meetingId: json['MeetingId'] as String,
       externalMeetingId: json['ExternalMeetingId'] as String,
       mediaRegion: json['MediaRegion'] as String,
       mediaPlacement: MediaPlacementAPIModel.fromJson(
-        json['MediaPlacement'] as Map<String, dynamic>,
-      ),
+          json['MediaPlacement'] as Map<String, dynamic>),
       tenantIds: json['TenantIds'] as List<dynamic>,
       meetingArn: json['MeetingArn'] as String,
       meetingHostId: json['MeetingHostId'] as String?,
       primaryMeetingId: json['PrimaryMeetingId'] as String?,
     );
 
-// ignore: non_constant_identifier_names
-Map<String, dynamic> _$$_MeetingAPIModelToJson(_$_MeetingAPIModel instance) =>
+Map<String, dynamic> _$$MeetingAPIModelImplToJson(
+        _$MeetingAPIModelImpl instance) =>
     <String, dynamic>{
       'MeetingId': instance.meetingId,
       'ExternalMeetingId': instance.externalMeetingId,
@@ -85,11 +75,9 @@ Map<String, dynamic> _$$_MeetingAPIModelToJson(_$_MeetingAPIModel instance) =>
       'PrimaryMeetingId': instance.primaryMeetingId,
     };
 
-// ignore: non_constant_identifier_names
-_$_MediaPlacementAPIModel _$$_MediaPlacementAPIModelFromJson(
-  Map<String, dynamic> json,
-) =>
-    _$_MediaPlacementAPIModel(
+_$MediaPlacementAPIModelImpl _$$MediaPlacementAPIModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$MediaPlacementAPIModelImpl(
       audioHostUrl: json['AudioHostUrl'] as String,
       audioFallbackUrl: json['AudioFallbackUrl'] as String,
       signalingUrl: json['SignalingUrl'] as String,
@@ -100,10 +88,8 @@ _$_MediaPlacementAPIModel _$$_MediaPlacementAPIModelFromJson(
       eventIngestionUrl: json['EventIngestionUrl'] as String,
     );
 
-// ignore: non_constant_identifier_names
-Map<String, dynamic> _$$_MediaPlacementAPIModelToJson(
-  _$_MediaPlacementAPIModel instance,
-) =>
+Map<String, dynamic> _$$MediaPlacementAPIModelImplToJson(
+        _$MediaPlacementAPIModelImpl instance) =>
     <String, dynamic>{
       'AudioHostUrl': instance.audioHostUrl,
       'AudioFallbackUrl': instance.audioFallbackUrl,
@@ -115,38 +101,31 @@ Map<String, dynamic> _$$_MediaPlacementAPIModelToJson(
       'EventIngestionUrl': instance.eventIngestionUrl,
     };
 
-// ignore: non_constant_identifier_names
-_$_AttendeeWrapperModel _$$_AttendeeWrapperModelFromJson(
-  Map<String, dynamic> json,
-) =>
-    _$_AttendeeWrapperModel(
+_$AttendeeWrapperModelImpl _$$AttendeeWrapperModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$AttendeeWrapperModelImpl(
       attendee:
           AttendeeAPIModel.fromJson(json['Attendee'] as Map<String, dynamic>),
     );
 
-// ignore: non_constant_identifier_names
-Map<String, dynamic> _$$_AttendeeWrapperModelToJson(
-  _$_AttendeeWrapperModel instance,
-) =>
+Map<String, dynamic> _$$AttendeeWrapperModelImplToJson(
+        _$AttendeeWrapperModelImpl instance) =>
     <String, dynamic>{
       'Attendee': instance.attendee,
     };
 
-// ignore: non_constant_identifier_names
-_$_AttendeeAPIModel _$$_AttendeeAPIModelFromJson(Map<String, dynamic> json) =>
-    _$_AttendeeAPIModel(
+_$AttendeeAPIModelImpl _$$AttendeeAPIModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$AttendeeAPIModelImpl(
       externalUserId: json['ExternalUserId'] as String,
       attendeeId: json['AttendeeId'] as String,
       joinToken: json['JoinToken'] as String,
       capabilities: CapabilitiesAPIModel.fromJson(
-        json['Capabilities'] as Map<String, dynamic>,
-      ),
+          json['Capabilities'] as Map<String, dynamic>),
     );
 
-// ignore: non_constant_identifier_names
-Map<String, dynamic> _$$_AttendeeAPIModelToJson(
-  _$_AttendeeAPIModel instance,
-) =>
+Map<String, dynamic> _$$AttendeeAPIModelImplToJson(
+        _$AttendeeAPIModelImpl instance) =>
     <String, dynamic>{
       'ExternalUserId': instance.externalUserId,
       'AttendeeId': instance.attendeeId,
@@ -154,20 +133,16 @@ Map<String, dynamic> _$$_AttendeeAPIModelToJson(
       'Capabilities': instance.capabilities,
     };
 
-// ignore: non_constant_identifier_names
-_$_CapabilitiesAPIModel _$$_CapabilitiesAPIModelFromJson(
-  Map<String, dynamic> json,
-) =>
-    _$_CapabilitiesAPIModel(
+_$CapabilitiesAPIModelImpl _$$CapabilitiesAPIModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$CapabilitiesAPIModelImpl(
       audio: json['Audio'] as String,
       video: json['Video'] as String,
       content: json['Content'] as String,
     );
 
-// ignore: non_constant_identifier_names
-Map<String, dynamic> _$$_CapabilitiesAPIModelToJson(
-  _$_CapabilitiesAPIModel instance,
-) =>
+Map<String, dynamic> _$$CapabilitiesAPIModelImplToJson(
+        _$CapabilitiesAPIModelImpl instance) =>
     <String, dynamic>{
       'Audio': instance.audio,
       'Video': instance.video,

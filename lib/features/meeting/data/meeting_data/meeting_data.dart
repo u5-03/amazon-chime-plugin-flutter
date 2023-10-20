@@ -64,3 +64,11 @@ class MeetingData with _$MeetingData {
   //   return _meetingData;
   // }
 }
+
+extension MeetingDataExt on MeetingData {
+  List<ParticipantModel> get participantsList => participants.values.toList();
+  ParticipantModel? get localParticipantModel =>
+      participants[localParticipantId];
+  ParticipantModel? get contentParticipantModel =>
+      participants[contentParticipantId];
+}

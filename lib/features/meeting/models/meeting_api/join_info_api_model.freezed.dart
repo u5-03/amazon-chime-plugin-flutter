@@ -74,11 +74,12 @@ class _$JoinInfoParentAPIModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_JoinInfoParentAPIModelCopyWith<$Res>
+abstract class _$$JoinInfoParentAPIModelImplCopyWith<$Res>
     implements $JoinInfoParentAPIModelCopyWith<$Res> {
-  factory _$$_JoinInfoParentAPIModelCopyWith(_$_JoinInfoParentAPIModel value,
-          $Res Function(_$_JoinInfoParentAPIModel) then) =
-      __$$_JoinInfoParentAPIModelCopyWithImpl<$Res>;
+  factory _$$JoinInfoParentAPIModelImplCopyWith(
+          _$JoinInfoParentAPIModelImpl value,
+          $Res Function(_$JoinInfoParentAPIModelImpl) then) =
+      __$$JoinInfoParentAPIModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({JoinInfoAPIModel joinInfo});
@@ -88,12 +89,13 @@ abstract class _$$_JoinInfoParentAPIModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_JoinInfoParentAPIModelCopyWithImpl<$Res>
+class __$$JoinInfoParentAPIModelImplCopyWithImpl<$Res>
     extends _$JoinInfoParentAPIModelCopyWithImpl<$Res,
-        _$_JoinInfoParentAPIModel>
-    implements _$$_JoinInfoParentAPIModelCopyWith<$Res> {
-  __$$_JoinInfoParentAPIModelCopyWithImpl(_$_JoinInfoParentAPIModel _value,
-      $Res Function(_$_JoinInfoParentAPIModel) _then)
+        _$JoinInfoParentAPIModelImpl>
+    implements _$$JoinInfoParentAPIModelImplCopyWith<$Res> {
+  __$$JoinInfoParentAPIModelImplCopyWithImpl(
+      _$JoinInfoParentAPIModelImpl _value,
+      $Res Function(_$JoinInfoParentAPIModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -101,7 +103,7 @@ class __$$_JoinInfoParentAPIModelCopyWithImpl<$Res>
   $Res call({
     Object? joinInfo = null,
   }) {
-    return _then(_$_JoinInfoParentAPIModel(
+    return _then(_$JoinInfoParentAPIModelImpl(
       joinInfo: null == joinInfo
           ? _value.joinInfo
           : joinInfo // ignore: cast_nullable_to_non_nullable
@@ -113,11 +115,11 @@ class __$$_JoinInfoParentAPIModelCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class _$_JoinInfoParentAPIModel implements _JoinInfoParentAPIModel {
-  const _$_JoinInfoParentAPIModel({required this.joinInfo});
+class _$JoinInfoParentAPIModelImpl implements _JoinInfoParentAPIModel {
+  const _$JoinInfoParentAPIModelImpl({required this.joinInfo});
 
-  factory _$_JoinInfoParentAPIModel.fromJson(Map<String, dynamic> json) =>
-      _$$_JoinInfoParentAPIModelFromJson(json);
+  factory _$JoinInfoParentAPIModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$JoinInfoParentAPIModelImplFromJson(json);
 
   @override
   final JoinInfoAPIModel joinInfo;
@@ -131,7 +133,7 @@ class _$_JoinInfoParentAPIModel implements _JoinInfoParentAPIModel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_JoinInfoParentAPIModel &&
+            other is _$JoinInfoParentAPIModelImpl &&
             (identical(other.joinInfo, joinInfo) ||
                 other.joinInfo == joinInfo));
   }
@@ -143,13 +145,13 @@ class _$_JoinInfoParentAPIModel implements _JoinInfoParentAPIModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_JoinInfoParentAPIModelCopyWith<_$_JoinInfoParentAPIModel> get copyWith =>
-      __$$_JoinInfoParentAPIModelCopyWithImpl<_$_JoinInfoParentAPIModel>(
-          this, _$identity);
+  _$$JoinInfoParentAPIModelImplCopyWith<_$JoinInfoParentAPIModelImpl>
+      get copyWith => __$$JoinInfoParentAPIModelImplCopyWithImpl<
+          _$JoinInfoParentAPIModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_JoinInfoParentAPIModelToJson(
+    return _$$JoinInfoParentAPIModelImplToJson(
       this,
     );
   }
@@ -157,17 +159,18 @@ class _$_JoinInfoParentAPIModel implements _JoinInfoParentAPIModel {
 
 abstract class _JoinInfoParentAPIModel implements JoinInfoParentAPIModel {
   const factory _JoinInfoParentAPIModel(
-      {required final JoinInfoAPIModel joinInfo}) = _$_JoinInfoParentAPIModel;
+          {required final JoinInfoAPIModel joinInfo}) =
+      _$JoinInfoParentAPIModelImpl;
 
   factory _JoinInfoParentAPIModel.fromJson(Map<String, dynamic> json) =
-      _$_JoinInfoParentAPIModel.fromJson;
+      _$JoinInfoParentAPIModelImpl.fromJson;
 
   @override
   JoinInfoAPIModel get joinInfo;
   @override
   @JsonKey(ignore: true)
-  _$$_JoinInfoParentAPIModelCopyWith<_$_JoinInfoParentAPIModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$JoinInfoParentAPIModelImplCopyWith<_$JoinInfoParentAPIModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 JoinInfoAPIModel _$JoinInfoAPIModelFromJson(Map<String, dynamic> json) {
@@ -243,11 +246,11 @@ class _$JoinInfoAPIModelCopyWithImpl<$Res, $Val extends JoinInfoAPIModel>
 }
 
 /// @nodoc
-abstract class _$$_JoinInfoAPIModelCopyWith<$Res>
+abstract class _$$JoinInfoAPIModelImplCopyWith<$Res>
     implements $JoinInfoAPIModelCopyWith<$Res> {
-  factory _$$_JoinInfoAPIModelCopyWith(
-          _$_JoinInfoAPIModel value, $Res Function(_$_JoinInfoAPIModel) then) =
-      __$$_JoinInfoAPIModelCopyWithImpl<$Res>;
+  factory _$$JoinInfoAPIModelImplCopyWith(_$JoinInfoAPIModelImpl value,
+          $Res Function(_$JoinInfoAPIModelImpl) then) =
+      __$$JoinInfoAPIModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({MeetingWrapperModel meeting, AttendeeWrapperModel attendee});
@@ -259,11 +262,11 @@ abstract class _$$_JoinInfoAPIModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_JoinInfoAPIModelCopyWithImpl<$Res>
-    extends _$JoinInfoAPIModelCopyWithImpl<$Res, _$_JoinInfoAPIModel>
-    implements _$$_JoinInfoAPIModelCopyWith<$Res> {
-  __$$_JoinInfoAPIModelCopyWithImpl(
-      _$_JoinInfoAPIModel _value, $Res Function(_$_JoinInfoAPIModel) _then)
+class __$$JoinInfoAPIModelImplCopyWithImpl<$Res>
+    extends _$JoinInfoAPIModelCopyWithImpl<$Res, _$JoinInfoAPIModelImpl>
+    implements _$$JoinInfoAPIModelImplCopyWith<$Res> {
+  __$$JoinInfoAPIModelImplCopyWithImpl(_$JoinInfoAPIModelImpl _value,
+      $Res Function(_$JoinInfoAPIModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -272,7 +275,7 @@ class __$$_JoinInfoAPIModelCopyWithImpl<$Res>
     Object? meeting = null,
     Object? attendee = null,
   }) {
-    return _then(_$_JoinInfoAPIModel(
+    return _then(_$JoinInfoAPIModelImpl(
       meeting: null == meeting
           ? _value.meeting
           : meeting // ignore: cast_nullable_to_non_nullable
@@ -288,11 +291,11 @@ class __$$_JoinInfoAPIModelCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class _$_JoinInfoAPIModel implements _JoinInfoAPIModel {
-  const _$_JoinInfoAPIModel({required this.meeting, required this.attendee});
+class _$JoinInfoAPIModelImpl implements _JoinInfoAPIModel {
+  const _$JoinInfoAPIModelImpl({required this.meeting, required this.attendee});
 
-  factory _$_JoinInfoAPIModel.fromJson(Map<String, dynamic> json) =>
-      _$$_JoinInfoAPIModelFromJson(json);
+  factory _$JoinInfoAPIModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$JoinInfoAPIModelImplFromJson(json);
 
   @override
   final MeetingWrapperModel meeting;
@@ -308,7 +311,7 @@ class _$_JoinInfoAPIModel implements _JoinInfoAPIModel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_JoinInfoAPIModel &&
+            other is _$JoinInfoAPIModelImpl &&
             (identical(other.meeting, meeting) || other.meeting == meeting) &&
             (identical(other.attendee, attendee) ||
                 other.attendee == attendee));
@@ -321,12 +324,13 @@ class _$_JoinInfoAPIModel implements _JoinInfoAPIModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_JoinInfoAPIModelCopyWith<_$_JoinInfoAPIModel> get copyWith =>
-      __$$_JoinInfoAPIModelCopyWithImpl<_$_JoinInfoAPIModel>(this, _$identity);
+  _$$JoinInfoAPIModelImplCopyWith<_$JoinInfoAPIModelImpl> get copyWith =>
+      __$$JoinInfoAPIModelImplCopyWithImpl<_$JoinInfoAPIModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_JoinInfoAPIModelToJson(
+    return _$$JoinInfoAPIModelImplToJson(
       this,
     );
   }
@@ -335,10 +339,10 @@ class _$_JoinInfoAPIModel implements _JoinInfoAPIModel {
 abstract class _JoinInfoAPIModel implements JoinInfoAPIModel {
   const factory _JoinInfoAPIModel(
       {required final MeetingWrapperModel meeting,
-      required final AttendeeWrapperModel attendee}) = _$_JoinInfoAPIModel;
+      required final AttendeeWrapperModel attendee}) = _$JoinInfoAPIModelImpl;
 
   factory _JoinInfoAPIModel.fromJson(Map<String, dynamic> json) =
-      _$_JoinInfoAPIModel.fromJson;
+      _$JoinInfoAPIModelImpl.fromJson;
 
   @override
   MeetingWrapperModel get meeting;
@@ -346,7 +350,7 @@ abstract class _JoinInfoAPIModel implements JoinInfoAPIModel {
   AttendeeWrapperModel get attendee;
   @override
   @JsonKey(ignore: true)
-  _$$_JoinInfoAPIModelCopyWith<_$_JoinInfoAPIModel> get copyWith =>
+  _$$JoinInfoAPIModelImplCopyWith<_$JoinInfoAPIModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -408,11 +412,11 @@ class _$MeetingWrapperModelCopyWithImpl<$Res, $Val extends MeetingWrapperModel>
 }
 
 /// @nodoc
-abstract class _$$_MeetingWrapperModelCopyWith<$Res>
+abstract class _$$MeetingWrapperModelImplCopyWith<$Res>
     implements $MeetingWrapperModelCopyWith<$Res> {
-  factory _$$_MeetingWrapperModelCopyWith(_$_MeetingWrapperModel value,
-          $Res Function(_$_MeetingWrapperModel) then) =
-      __$$_MeetingWrapperModelCopyWithImpl<$Res>;
+  factory _$$MeetingWrapperModelImplCopyWith(_$MeetingWrapperModelImpl value,
+          $Res Function(_$MeetingWrapperModelImpl) then) =
+      __$$MeetingWrapperModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({MeetingAPIModel meeting});
@@ -422,11 +426,11 @@ abstract class _$$_MeetingWrapperModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_MeetingWrapperModelCopyWithImpl<$Res>
-    extends _$MeetingWrapperModelCopyWithImpl<$Res, _$_MeetingWrapperModel>
-    implements _$$_MeetingWrapperModelCopyWith<$Res> {
-  __$$_MeetingWrapperModelCopyWithImpl(_$_MeetingWrapperModel _value,
-      $Res Function(_$_MeetingWrapperModel) _then)
+class __$$MeetingWrapperModelImplCopyWithImpl<$Res>
+    extends _$MeetingWrapperModelCopyWithImpl<$Res, _$MeetingWrapperModelImpl>
+    implements _$$MeetingWrapperModelImplCopyWith<$Res> {
+  __$$MeetingWrapperModelImplCopyWithImpl(_$MeetingWrapperModelImpl _value,
+      $Res Function(_$MeetingWrapperModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -434,7 +438,7 @@ class __$$_MeetingWrapperModelCopyWithImpl<$Res>
   $Res call({
     Object? meeting = null,
   }) {
-    return _then(_$_MeetingWrapperModel(
+    return _then(_$MeetingWrapperModelImpl(
       meeting: null == meeting
           ? _value.meeting
           : meeting // ignore: cast_nullable_to_non_nullable
@@ -446,11 +450,11 @@ class __$$_MeetingWrapperModelCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class _$_MeetingWrapperModel implements _MeetingWrapperModel {
-  const _$_MeetingWrapperModel({required this.meeting});
+class _$MeetingWrapperModelImpl implements _MeetingWrapperModel {
+  const _$MeetingWrapperModelImpl({required this.meeting});
 
-  factory _$_MeetingWrapperModel.fromJson(Map<String, dynamic> json) =>
-      _$$_MeetingWrapperModelFromJson(json);
+  factory _$MeetingWrapperModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MeetingWrapperModelImplFromJson(json);
 
   @override
   final MeetingAPIModel meeting;
@@ -464,7 +468,7 @@ class _$_MeetingWrapperModel implements _MeetingWrapperModel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MeetingWrapperModel &&
+            other is _$MeetingWrapperModelImpl &&
             (identical(other.meeting, meeting) || other.meeting == meeting));
   }
 
@@ -475,13 +479,13 @@ class _$_MeetingWrapperModel implements _MeetingWrapperModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MeetingWrapperModelCopyWith<_$_MeetingWrapperModel> get copyWith =>
-      __$$_MeetingWrapperModelCopyWithImpl<_$_MeetingWrapperModel>(
+  _$$MeetingWrapperModelImplCopyWith<_$MeetingWrapperModelImpl> get copyWith =>
+      __$$MeetingWrapperModelImplCopyWithImpl<_$MeetingWrapperModelImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MeetingWrapperModelToJson(
+    return _$$MeetingWrapperModelImplToJson(
       this,
     );
   }
@@ -489,16 +493,16 @@ class _$_MeetingWrapperModel implements _MeetingWrapperModel {
 
 abstract class _MeetingWrapperModel implements MeetingWrapperModel {
   const factory _MeetingWrapperModel({required final MeetingAPIModel meeting}) =
-      _$_MeetingWrapperModel;
+      _$MeetingWrapperModelImpl;
 
   factory _MeetingWrapperModel.fromJson(Map<String, dynamic> json) =
-      _$_MeetingWrapperModel.fromJson;
+      _$MeetingWrapperModelImpl.fromJson;
 
   @override
   MeetingAPIModel get meeting;
   @override
   @JsonKey(ignore: true)
-  _$$_MeetingWrapperModelCopyWith<_$_MeetingWrapperModel> get copyWith =>
+  _$$MeetingWrapperModelImplCopyWith<_$MeetingWrapperModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -612,11 +616,11 @@ class _$MeetingAPIModelCopyWithImpl<$Res, $Val extends MeetingAPIModel>
 }
 
 /// @nodoc
-abstract class _$$_MeetingAPIModelCopyWith<$Res>
+abstract class _$$MeetingAPIModelImplCopyWith<$Res>
     implements $MeetingAPIModelCopyWith<$Res> {
-  factory _$$_MeetingAPIModelCopyWith(
-          _$_MeetingAPIModel value, $Res Function(_$_MeetingAPIModel) then) =
-      __$$_MeetingAPIModelCopyWithImpl<$Res>;
+  factory _$$MeetingAPIModelImplCopyWith(_$MeetingAPIModelImpl value,
+          $Res Function(_$MeetingAPIModelImpl) then) =
+      __$$MeetingAPIModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -634,11 +638,11 @@ abstract class _$$_MeetingAPIModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_MeetingAPIModelCopyWithImpl<$Res>
-    extends _$MeetingAPIModelCopyWithImpl<$Res, _$_MeetingAPIModel>
-    implements _$$_MeetingAPIModelCopyWith<$Res> {
-  __$$_MeetingAPIModelCopyWithImpl(
-      _$_MeetingAPIModel _value, $Res Function(_$_MeetingAPIModel) _then)
+class __$$MeetingAPIModelImplCopyWithImpl<$Res>
+    extends _$MeetingAPIModelCopyWithImpl<$Res, _$MeetingAPIModelImpl>
+    implements _$$MeetingAPIModelImplCopyWith<$Res> {
+  __$$MeetingAPIModelImplCopyWithImpl(
+      _$MeetingAPIModelImpl _value, $Res Function(_$MeetingAPIModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -653,7 +657,7 @@ class __$$_MeetingAPIModelCopyWithImpl<$Res>
     Object? meetingHostId = freezed,
     Object? primaryMeetingId = freezed,
   }) {
-    return _then(_$_MeetingAPIModel(
+    return _then(_$MeetingAPIModelImpl(
       meetingId: null == meetingId
           ? _value.meetingId
           : meetingId // ignore: cast_nullable_to_non_nullable
@@ -693,8 +697,8 @@ class __$$_MeetingAPIModelCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class _$_MeetingAPIModel implements _MeetingAPIModel {
-  const _$_MeetingAPIModel(
+class _$MeetingAPIModelImpl implements _MeetingAPIModel {
+  const _$MeetingAPIModelImpl(
       {required this.meetingId,
       required this.externalMeetingId,
       required this.mediaRegion,
@@ -705,8 +709,8 @@ class _$_MeetingAPIModel implements _MeetingAPIModel {
       this.primaryMeetingId})
       : _tenantIds = tenantIds;
 
-  factory _$_MeetingAPIModel.fromJson(Map<String, dynamic> json) =>
-      _$$_MeetingAPIModelFromJson(json);
+  factory _$MeetingAPIModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MeetingAPIModelImplFromJson(json);
 
   @override
   final String meetingId;
@@ -740,7 +744,7 @@ class _$_MeetingAPIModel implements _MeetingAPIModel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MeetingAPIModel &&
+            other is _$MeetingAPIModelImpl &&
             (identical(other.meetingId, meetingId) ||
                 other.meetingId == meetingId) &&
             (identical(other.externalMeetingId, externalMeetingId) ||
@@ -775,12 +779,13 @@ class _$_MeetingAPIModel implements _MeetingAPIModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MeetingAPIModelCopyWith<_$_MeetingAPIModel> get copyWith =>
-      __$$_MeetingAPIModelCopyWithImpl<_$_MeetingAPIModel>(this, _$identity);
+  _$$MeetingAPIModelImplCopyWith<_$MeetingAPIModelImpl> get copyWith =>
+      __$$MeetingAPIModelImplCopyWithImpl<_$MeetingAPIModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MeetingAPIModelToJson(
+    return _$$MeetingAPIModelImplToJson(
       this,
     );
   }
@@ -795,10 +800,10 @@ abstract class _MeetingAPIModel implements MeetingAPIModel {
       required final List<dynamic> tenantIds,
       required final String meetingArn,
       final String? meetingHostId,
-      final String? primaryMeetingId}) = _$_MeetingAPIModel;
+      final String? primaryMeetingId}) = _$MeetingAPIModelImpl;
 
   factory _MeetingAPIModel.fromJson(Map<String, dynamic> json) =
-      _$_MeetingAPIModel.fromJson;
+      _$MeetingAPIModelImpl.fromJson;
 
   @override
   String get meetingId;
@@ -818,7 +823,7 @@ abstract class _MeetingAPIModel implements MeetingAPIModel {
   String? get primaryMeetingId;
   @override
   @JsonKey(ignore: true)
-  _$$_MeetingAPIModelCopyWith<_$_MeetingAPIModel> get copyWith =>
+  _$$MeetingAPIModelImplCopyWith<_$MeetingAPIModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -922,11 +927,12 @@ class _$MediaPlacementAPIModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_MediaPlacementAPIModelCopyWith<$Res>
+abstract class _$$MediaPlacementAPIModelImplCopyWith<$Res>
     implements $MediaPlacementAPIModelCopyWith<$Res> {
-  factory _$$_MediaPlacementAPIModelCopyWith(_$_MediaPlacementAPIModel value,
-          $Res Function(_$_MediaPlacementAPIModel) then) =
-      __$$_MediaPlacementAPIModelCopyWithImpl<$Res>;
+  factory _$$MediaPlacementAPIModelImplCopyWith(
+          _$MediaPlacementAPIModelImpl value,
+          $Res Function(_$MediaPlacementAPIModelImpl) then) =
+      __$$MediaPlacementAPIModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -941,12 +947,13 @@ abstract class _$$_MediaPlacementAPIModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_MediaPlacementAPIModelCopyWithImpl<$Res>
+class __$$MediaPlacementAPIModelImplCopyWithImpl<$Res>
     extends _$MediaPlacementAPIModelCopyWithImpl<$Res,
-        _$_MediaPlacementAPIModel>
-    implements _$$_MediaPlacementAPIModelCopyWith<$Res> {
-  __$$_MediaPlacementAPIModelCopyWithImpl(_$_MediaPlacementAPIModel _value,
-      $Res Function(_$_MediaPlacementAPIModel) _then)
+        _$MediaPlacementAPIModelImpl>
+    implements _$$MediaPlacementAPIModelImplCopyWith<$Res> {
+  __$$MediaPlacementAPIModelImplCopyWithImpl(
+      _$MediaPlacementAPIModelImpl _value,
+      $Res Function(_$MediaPlacementAPIModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -961,7 +968,7 @@ class __$$_MediaPlacementAPIModelCopyWithImpl<$Res>
     Object? screenSharingUrl = null,
     Object? eventIngestionUrl = null,
   }) {
-    return _then(_$_MediaPlacementAPIModel(
+    return _then(_$MediaPlacementAPIModelImpl(
       audioHostUrl: null == audioHostUrl
           ? _value.audioHostUrl
           : audioHostUrl // ignore: cast_nullable_to_non_nullable
@@ -1001,8 +1008,8 @@ class __$$_MediaPlacementAPIModelCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class _$_MediaPlacementAPIModel implements _MediaPlacementAPIModel {
-  const _$_MediaPlacementAPIModel(
+class _$MediaPlacementAPIModelImpl implements _MediaPlacementAPIModel {
+  const _$MediaPlacementAPIModelImpl(
       {required this.audioHostUrl,
       required this.audioFallbackUrl,
       required this.signalingUrl,
@@ -1012,8 +1019,8 @@ class _$_MediaPlacementAPIModel implements _MediaPlacementAPIModel {
       required this.screenSharingUrl,
       required this.eventIngestionUrl});
 
-  factory _$_MediaPlacementAPIModel.fromJson(Map<String, dynamic> json) =>
-      _$$_MediaPlacementAPIModelFromJson(json);
+  factory _$MediaPlacementAPIModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MediaPlacementAPIModelImplFromJson(json);
 
   @override
   final String audioHostUrl;
@@ -1041,7 +1048,7 @@ class _$_MediaPlacementAPIModel implements _MediaPlacementAPIModel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MediaPlacementAPIModel &&
+            other is _$MediaPlacementAPIModelImpl &&
             (identical(other.audioHostUrl, audioHostUrl) ||
                 other.audioHostUrl == audioHostUrl) &&
             (identical(other.audioFallbackUrl, audioFallbackUrl) ||
@@ -1076,13 +1083,13 @@ class _$_MediaPlacementAPIModel implements _MediaPlacementAPIModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MediaPlacementAPIModelCopyWith<_$_MediaPlacementAPIModel> get copyWith =>
-      __$$_MediaPlacementAPIModelCopyWithImpl<_$_MediaPlacementAPIModel>(
-          this, _$identity);
+  _$$MediaPlacementAPIModelImplCopyWith<_$MediaPlacementAPIModelImpl>
+      get copyWith => __$$MediaPlacementAPIModelImplCopyWithImpl<
+          _$MediaPlacementAPIModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MediaPlacementAPIModelToJson(
+    return _$$MediaPlacementAPIModelImplToJson(
       this,
     );
   }
@@ -1097,10 +1104,10 @@ abstract class _MediaPlacementAPIModel implements MediaPlacementAPIModel {
       required final String screenDataUrl,
       required final String screenViewingUrl,
       required final String screenSharingUrl,
-      required final String eventIngestionUrl}) = _$_MediaPlacementAPIModel;
+      required final String eventIngestionUrl}) = _$MediaPlacementAPIModelImpl;
 
   factory _MediaPlacementAPIModel.fromJson(Map<String, dynamic> json) =
-      _$_MediaPlacementAPIModel.fromJson;
+      _$MediaPlacementAPIModelImpl.fromJson;
 
   @override
   String get audioHostUrl;
@@ -1120,8 +1127,8 @@ abstract class _MediaPlacementAPIModel implements MediaPlacementAPIModel {
   String get eventIngestionUrl;
   @override
   @JsonKey(ignore: true)
-  _$$_MediaPlacementAPIModelCopyWith<_$_MediaPlacementAPIModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$MediaPlacementAPIModelImplCopyWith<_$MediaPlacementAPIModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 AttendeeWrapperModel _$AttendeeWrapperModelFromJson(Map<String, dynamic> json) {
@@ -1183,11 +1190,11 @@ class _$AttendeeWrapperModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_AttendeeWrapperModelCopyWith<$Res>
+abstract class _$$AttendeeWrapperModelImplCopyWith<$Res>
     implements $AttendeeWrapperModelCopyWith<$Res> {
-  factory _$$_AttendeeWrapperModelCopyWith(_$_AttendeeWrapperModel value,
-          $Res Function(_$_AttendeeWrapperModel) then) =
-      __$$_AttendeeWrapperModelCopyWithImpl<$Res>;
+  factory _$$AttendeeWrapperModelImplCopyWith(_$AttendeeWrapperModelImpl value,
+          $Res Function(_$AttendeeWrapperModelImpl) then) =
+      __$$AttendeeWrapperModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({AttendeeAPIModel attendee});
@@ -1197,11 +1204,11 @@ abstract class _$$_AttendeeWrapperModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_AttendeeWrapperModelCopyWithImpl<$Res>
-    extends _$AttendeeWrapperModelCopyWithImpl<$Res, _$_AttendeeWrapperModel>
-    implements _$$_AttendeeWrapperModelCopyWith<$Res> {
-  __$$_AttendeeWrapperModelCopyWithImpl(_$_AttendeeWrapperModel _value,
-      $Res Function(_$_AttendeeWrapperModel) _then)
+class __$$AttendeeWrapperModelImplCopyWithImpl<$Res>
+    extends _$AttendeeWrapperModelCopyWithImpl<$Res, _$AttendeeWrapperModelImpl>
+    implements _$$AttendeeWrapperModelImplCopyWith<$Res> {
+  __$$AttendeeWrapperModelImplCopyWithImpl(_$AttendeeWrapperModelImpl _value,
+      $Res Function(_$AttendeeWrapperModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1209,7 +1216,7 @@ class __$$_AttendeeWrapperModelCopyWithImpl<$Res>
   $Res call({
     Object? attendee = null,
   }) {
-    return _then(_$_AttendeeWrapperModel(
+    return _then(_$AttendeeWrapperModelImpl(
       attendee: null == attendee
           ? _value.attendee
           : attendee // ignore: cast_nullable_to_non_nullable
@@ -1221,11 +1228,11 @@ class __$$_AttendeeWrapperModelCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class _$_AttendeeWrapperModel implements _AttendeeWrapperModel {
-  const _$_AttendeeWrapperModel({required this.attendee});
+class _$AttendeeWrapperModelImpl implements _AttendeeWrapperModel {
+  const _$AttendeeWrapperModelImpl({required this.attendee});
 
-  factory _$_AttendeeWrapperModel.fromJson(Map<String, dynamic> json) =>
-      _$$_AttendeeWrapperModelFromJson(json);
+  factory _$AttendeeWrapperModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AttendeeWrapperModelImplFromJson(json);
 
   @override
   final AttendeeAPIModel attendee;
@@ -1239,7 +1246,7 @@ class _$_AttendeeWrapperModel implements _AttendeeWrapperModel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AttendeeWrapperModel &&
+            other is _$AttendeeWrapperModelImpl &&
             (identical(other.attendee, attendee) ||
                 other.attendee == attendee));
   }
@@ -1251,13 +1258,14 @@ class _$_AttendeeWrapperModel implements _AttendeeWrapperModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AttendeeWrapperModelCopyWith<_$_AttendeeWrapperModel> get copyWith =>
-      __$$_AttendeeWrapperModelCopyWithImpl<_$_AttendeeWrapperModel>(
-          this, _$identity);
+  _$$AttendeeWrapperModelImplCopyWith<_$AttendeeWrapperModelImpl>
+      get copyWith =>
+          __$$AttendeeWrapperModelImplCopyWithImpl<_$AttendeeWrapperModelImpl>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AttendeeWrapperModelToJson(
+    return _$$AttendeeWrapperModelImplToJson(
       this,
     );
   }
@@ -1265,17 +1273,17 @@ class _$_AttendeeWrapperModel implements _AttendeeWrapperModel {
 
 abstract class _AttendeeWrapperModel implements AttendeeWrapperModel {
   const factory _AttendeeWrapperModel(
-      {required final AttendeeAPIModel attendee}) = _$_AttendeeWrapperModel;
+      {required final AttendeeAPIModel attendee}) = _$AttendeeWrapperModelImpl;
 
   factory _AttendeeWrapperModel.fromJson(Map<String, dynamic> json) =
-      _$_AttendeeWrapperModel.fromJson;
+      _$AttendeeWrapperModelImpl.fromJson;
 
   @override
   AttendeeAPIModel get attendee;
   @override
   @JsonKey(ignore: true)
-  _$$_AttendeeWrapperModelCopyWith<_$_AttendeeWrapperModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$AttendeeWrapperModelImplCopyWith<_$AttendeeWrapperModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 AttendeeAPIModel _$AttendeeAPIModelFromJson(Map<String, dynamic> json) {
@@ -1358,11 +1366,11 @@ class _$AttendeeAPIModelCopyWithImpl<$Res, $Val extends AttendeeAPIModel>
 }
 
 /// @nodoc
-abstract class _$$_AttendeeAPIModelCopyWith<$Res>
+abstract class _$$AttendeeAPIModelImplCopyWith<$Res>
     implements $AttendeeAPIModelCopyWith<$Res> {
-  factory _$$_AttendeeAPIModelCopyWith(
-          _$_AttendeeAPIModel value, $Res Function(_$_AttendeeAPIModel) then) =
-      __$$_AttendeeAPIModelCopyWithImpl<$Res>;
+  factory _$$AttendeeAPIModelImplCopyWith(_$AttendeeAPIModelImpl value,
+          $Res Function(_$AttendeeAPIModelImpl) then) =
+      __$$AttendeeAPIModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -1376,11 +1384,11 @@ abstract class _$$_AttendeeAPIModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_AttendeeAPIModelCopyWithImpl<$Res>
-    extends _$AttendeeAPIModelCopyWithImpl<$Res, _$_AttendeeAPIModel>
-    implements _$$_AttendeeAPIModelCopyWith<$Res> {
-  __$$_AttendeeAPIModelCopyWithImpl(
-      _$_AttendeeAPIModel _value, $Res Function(_$_AttendeeAPIModel) _then)
+class __$$AttendeeAPIModelImplCopyWithImpl<$Res>
+    extends _$AttendeeAPIModelCopyWithImpl<$Res, _$AttendeeAPIModelImpl>
+    implements _$$AttendeeAPIModelImplCopyWith<$Res> {
+  __$$AttendeeAPIModelImplCopyWithImpl(_$AttendeeAPIModelImpl _value,
+      $Res Function(_$AttendeeAPIModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1391,7 +1399,7 @@ class __$$_AttendeeAPIModelCopyWithImpl<$Res>
     Object? joinToken = null,
     Object? capabilities = null,
   }) {
-    return _then(_$_AttendeeAPIModel(
+    return _then(_$AttendeeAPIModelImpl(
       externalUserId: null == externalUserId
           ? _value.externalUserId
           : externalUserId // ignore: cast_nullable_to_non_nullable
@@ -1415,15 +1423,15 @@ class __$$_AttendeeAPIModelCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class _$_AttendeeAPIModel implements _AttendeeAPIModel {
-  const _$_AttendeeAPIModel(
+class _$AttendeeAPIModelImpl implements _AttendeeAPIModel {
+  const _$AttendeeAPIModelImpl(
       {required this.externalUserId,
       required this.attendeeId,
       required this.joinToken,
       required this.capabilities});
 
-  factory _$_AttendeeAPIModel.fromJson(Map<String, dynamic> json) =>
-      _$$_AttendeeAPIModelFromJson(json);
+  factory _$AttendeeAPIModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AttendeeAPIModelImplFromJson(json);
 
   @override
   final String externalUserId;
@@ -1443,7 +1451,7 @@ class _$_AttendeeAPIModel implements _AttendeeAPIModel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AttendeeAPIModel &&
+            other is _$AttendeeAPIModelImpl &&
             (identical(other.externalUserId, externalUserId) ||
                 other.externalUserId == externalUserId) &&
             (identical(other.attendeeId, attendeeId) ||
@@ -1462,12 +1470,13 @@ class _$_AttendeeAPIModel implements _AttendeeAPIModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AttendeeAPIModelCopyWith<_$_AttendeeAPIModel> get copyWith =>
-      __$$_AttendeeAPIModelCopyWithImpl<_$_AttendeeAPIModel>(this, _$identity);
+  _$$AttendeeAPIModelImplCopyWith<_$AttendeeAPIModelImpl> get copyWith =>
+      __$$AttendeeAPIModelImplCopyWithImpl<_$AttendeeAPIModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AttendeeAPIModelToJson(
+    return _$$AttendeeAPIModelImplToJson(
       this,
     );
   }
@@ -1475,13 +1484,14 @@ class _$_AttendeeAPIModel implements _AttendeeAPIModel {
 
 abstract class _AttendeeAPIModel implements AttendeeAPIModel {
   const factory _AttendeeAPIModel(
-      {required final String externalUserId,
-      required final String attendeeId,
-      required final String joinToken,
-      required final CapabilitiesAPIModel capabilities}) = _$_AttendeeAPIModel;
+          {required final String externalUserId,
+          required final String attendeeId,
+          required final String joinToken,
+          required final CapabilitiesAPIModel capabilities}) =
+      _$AttendeeAPIModelImpl;
 
   factory _AttendeeAPIModel.fromJson(Map<String, dynamic> json) =
-      _$_AttendeeAPIModel.fromJson;
+      _$AttendeeAPIModelImpl.fromJson;
 
   @override
   String get externalUserId;
@@ -1493,7 +1503,7 @@ abstract class _AttendeeAPIModel implements AttendeeAPIModel {
   CapabilitiesAPIModel get capabilities;
   @override
   @JsonKey(ignore: true)
-  _$$_AttendeeAPIModelCopyWith<_$_AttendeeAPIModel> get copyWith =>
+  _$$AttendeeAPIModelImplCopyWith<_$AttendeeAPIModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1558,22 +1568,22 @@ class _$CapabilitiesAPIModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_CapabilitiesAPIModelCopyWith<$Res>
+abstract class _$$CapabilitiesAPIModelImplCopyWith<$Res>
     implements $CapabilitiesAPIModelCopyWith<$Res> {
-  factory _$$_CapabilitiesAPIModelCopyWith(_$_CapabilitiesAPIModel value,
-          $Res Function(_$_CapabilitiesAPIModel) then) =
-      __$$_CapabilitiesAPIModelCopyWithImpl<$Res>;
+  factory _$$CapabilitiesAPIModelImplCopyWith(_$CapabilitiesAPIModelImpl value,
+          $Res Function(_$CapabilitiesAPIModelImpl) then) =
+      __$$CapabilitiesAPIModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String audio, String video, String content});
 }
 
 /// @nodoc
-class __$$_CapabilitiesAPIModelCopyWithImpl<$Res>
-    extends _$CapabilitiesAPIModelCopyWithImpl<$Res, _$_CapabilitiesAPIModel>
-    implements _$$_CapabilitiesAPIModelCopyWith<$Res> {
-  __$$_CapabilitiesAPIModelCopyWithImpl(_$_CapabilitiesAPIModel _value,
-      $Res Function(_$_CapabilitiesAPIModel) _then)
+class __$$CapabilitiesAPIModelImplCopyWithImpl<$Res>
+    extends _$CapabilitiesAPIModelCopyWithImpl<$Res, _$CapabilitiesAPIModelImpl>
+    implements _$$CapabilitiesAPIModelImplCopyWith<$Res> {
+  __$$CapabilitiesAPIModelImplCopyWithImpl(_$CapabilitiesAPIModelImpl _value,
+      $Res Function(_$CapabilitiesAPIModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1583,7 +1593,7 @@ class __$$_CapabilitiesAPIModelCopyWithImpl<$Res>
     Object? video = null,
     Object? content = null,
   }) {
-    return _then(_$_CapabilitiesAPIModel(
+    return _then(_$CapabilitiesAPIModelImpl(
       audio: null == audio
           ? _value.audio
           : audio // ignore: cast_nullable_to_non_nullable
@@ -1603,12 +1613,12 @@ class __$$_CapabilitiesAPIModelCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.pascal)
-class _$_CapabilitiesAPIModel implements _CapabilitiesAPIModel {
-  const _$_CapabilitiesAPIModel(
+class _$CapabilitiesAPIModelImpl implements _CapabilitiesAPIModel {
+  const _$CapabilitiesAPIModelImpl(
       {required this.audio, required this.video, required this.content});
 
-  factory _$_CapabilitiesAPIModel.fromJson(Map<String, dynamic> json) =>
-      _$$_CapabilitiesAPIModelFromJson(json);
+  factory _$CapabilitiesAPIModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CapabilitiesAPIModelImplFromJson(json);
 
   @override
   final String audio;
@@ -1626,7 +1636,7 @@ class _$_CapabilitiesAPIModel implements _CapabilitiesAPIModel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CapabilitiesAPIModel &&
+            other is _$CapabilitiesAPIModelImpl &&
             (identical(other.audio, audio) || other.audio == audio) &&
             (identical(other.video, video) || other.video == video) &&
             (identical(other.content, content) || other.content == content));
@@ -1639,13 +1649,14 @@ class _$_CapabilitiesAPIModel implements _CapabilitiesAPIModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CapabilitiesAPIModelCopyWith<_$_CapabilitiesAPIModel> get copyWith =>
-      __$$_CapabilitiesAPIModelCopyWithImpl<_$_CapabilitiesAPIModel>(
-          this, _$identity);
+  _$$CapabilitiesAPIModelImplCopyWith<_$CapabilitiesAPIModelImpl>
+      get copyWith =>
+          __$$CapabilitiesAPIModelImplCopyWithImpl<_$CapabilitiesAPIModelImpl>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CapabilitiesAPIModelToJson(
+    return _$$CapabilitiesAPIModelImplToJson(
       this,
     );
   }
@@ -1655,10 +1666,10 @@ abstract class _CapabilitiesAPIModel implements CapabilitiesAPIModel {
   const factory _CapabilitiesAPIModel(
       {required final String audio,
       required final String video,
-      required final String content}) = _$_CapabilitiesAPIModel;
+      required final String content}) = _$CapabilitiesAPIModelImpl;
 
   factory _CapabilitiesAPIModel.fromJson(Map<String, dynamic> json) =
-      _$_CapabilitiesAPIModel.fromJson;
+      _$CapabilitiesAPIModelImpl.fromJson;
 
   @override
   String get audio;
@@ -1668,6 +1679,6 @@ abstract class _CapabilitiesAPIModel implements CapabilitiesAPIModel {
   String get content;
   @override
   @JsonKey(ignore: true)
-  _$$_CapabilitiesAPIModelCopyWith<_$_CapabilitiesAPIModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$CapabilitiesAPIModelImplCopyWith<_$CapabilitiesAPIModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

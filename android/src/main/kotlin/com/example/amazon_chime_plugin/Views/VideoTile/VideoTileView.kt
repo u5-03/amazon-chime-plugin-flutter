@@ -27,7 +27,8 @@ internal class VideoTileView(context: Context?, creationParams: Int?): PlatformV
     init {
         view = DefaultVideoRenderView(context as Context)
         tileId = creationParams as Int
-        view.scalingType = VideoScalingType.AspectFit
+        view.scalingType = VideoScalingType.AspectFill
+        view.mirror = true
         // // Memo: without delay, tileView won't present when re-display tileView
         android.os.Handler(Looper.getMainLooper()).postDelayed( {
             MeetingSession.shared.meetingSession?.audioVideo?.bindVideoView(view, tileId)

@@ -87,11 +87,11 @@ class _$JoinInfoModelCopyWithImpl<$Res, $Val extends JoinInfoModel>
 }
 
 /// @nodoc
-abstract class _$$_JoinInfoModelCopyWith<$Res>
+abstract class _$$JoinInfoModelImplCopyWith<$Res>
     implements $JoinInfoModelCopyWith<$Res> {
-  factory _$$_JoinInfoModelCopyWith(
-          _$_JoinInfoModel value, $Res Function(_$_JoinInfoModel) then) =
-      __$$_JoinInfoModelCopyWithImpl<$Res>;
+  factory _$$JoinInfoModelImplCopyWith(
+          _$JoinInfoModelImpl value, $Res Function(_$JoinInfoModelImpl) then) =
+      __$$JoinInfoModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({MeetingModel meeting, AttendeeInfoModel attendeeInfo});
@@ -103,11 +103,11 @@ abstract class _$$_JoinInfoModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_JoinInfoModelCopyWithImpl<$Res>
-    extends _$JoinInfoModelCopyWithImpl<$Res, _$_JoinInfoModel>
-    implements _$$_JoinInfoModelCopyWith<$Res> {
-  __$$_JoinInfoModelCopyWithImpl(
-      _$_JoinInfoModel _value, $Res Function(_$_JoinInfoModel) _then)
+class __$$JoinInfoModelImplCopyWithImpl<$Res>
+    extends _$JoinInfoModelCopyWithImpl<$Res, _$JoinInfoModelImpl>
+    implements _$$JoinInfoModelImplCopyWith<$Res> {
+  __$$JoinInfoModelImplCopyWithImpl(
+      _$JoinInfoModelImpl _value, $Res Function(_$JoinInfoModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -116,7 +116,7 @@ class __$$_JoinInfoModelCopyWithImpl<$Res>
     Object? meeting = null,
     Object? attendeeInfo = null,
   }) {
-    return _then(_$_JoinInfoModel(
+    return _then(_$JoinInfoModelImpl(
       meeting: null == meeting
           ? _value.meeting
           : meeting // ignore: cast_nullable_to_non_nullable
@@ -131,11 +131,12 @@ class __$$_JoinInfoModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_JoinInfoModel implements _JoinInfoModel {
-  const _$_JoinInfoModel({required this.meeting, required this.attendeeInfo});
+class _$JoinInfoModelImpl implements _JoinInfoModel {
+  const _$JoinInfoModelImpl(
+      {required this.meeting, required this.attendeeInfo});
 
-  factory _$_JoinInfoModel.fromJson(Map<String, dynamic> json) =>
-      _$$_JoinInfoModelFromJson(json);
+  factory _$JoinInfoModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$JoinInfoModelImplFromJson(json);
 
   @override
   final MeetingModel meeting;
@@ -151,7 +152,7 @@ class _$_JoinInfoModel implements _JoinInfoModel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_JoinInfoModel &&
+            other is _$JoinInfoModelImpl &&
             (identical(other.meeting, meeting) || other.meeting == meeting) &&
             (identical(other.attendeeInfo, attendeeInfo) ||
                 other.attendeeInfo == attendeeInfo));
@@ -164,12 +165,12 @@ class _$_JoinInfoModel implements _JoinInfoModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_JoinInfoModelCopyWith<_$_JoinInfoModel> get copyWith =>
-      __$$_JoinInfoModelCopyWithImpl<_$_JoinInfoModel>(this, _$identity);
+  _$$JoinInfoModelImplCopyWith<_$JoinInfoModelImpl> get copyWith =>
+      __$$JoinInfoModelImplCopyWithImpl<_$JoinInfoModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_JoinInfoModelToJson(
+    return _$$JoinInfoModelImplToJson(
       this,
     );
   }
@@ -178,10 +179,10 @@ class _$_JoinInfoModel implements _JoinInfoModel {
 abstract class _JoinInfoModel implements JoinInfoModel {
   const factory _JoinInfoModel(
       {required final MeetingModel meeting,
-      required final AttendeeInfoModel attendeeInfo}) = _$_JoinInfoModel;
+      required final AttendeeInfoModel attendeeInfo}) = _$JoinInfoModelImpl;
 
   factory _JoinInfoModel.fromJson(Map<String, dynamic> json) =
-      _$_JoinInfoModel.fromJson;
+      _$JoinInfoModelImpl.fromJson;
 
   @override
   MeetingModel get meeting;
@@ -189,7 +190,7 @@ abstract class _JoinInfoModel implements JoinInfoModel {
   AttendeeInfoModel get attendeeInfo;
   @override
   @JsonKey(ignore: true)
-  _$$_JoinInfoModelCopyWith<_$_JoinInfoModel> get copyWith =>
+  _$$JoinInfoModelImplCopyWith<_$JoinInfoModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -273,11 +274,11 @@ class _$MeetingModelCopyWithImpl<$Res, $Val extends MeetingModel>
 }
 
 /// @nodoc
-abstract class _$$_MeetingModelCopyWith<$Res>
+abstract class _$$MeetingModelImplCopyWith<$Res>
     implements $MeetingModelCopyWith<$Res> {
-  factory _$$_MeetingModelCopyWith(
-          _$_MeetingModel value, $Res Function(_$_MeetingModel) then) =
-      __$$_MeetingModelCopyWithImpl<$Res>;
+  factory _$$MeetingModelImplCopyWith(
+          _$MeetingModelImpl value, $Res Function(_$MeetingModelImpl) then) =
+      __$$MeetingModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -291,11 +292,11 @@ abstract class _$$_MeetingModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_MeetingModelCopyWithImpl<$Res>
-    extends _$MeetingModelCopyWithImpl<$Res, _$_MeetingModel>
-    implements _$$_MeetingModelCopyWith<$Res> {
-  __$$_MeetingModelCopyWithImpl(
-      _$_MeetingModel _value, $Res Function(_$_MeetingModel) _then)
+class __$$MeetingModelImplCopyWithImpl<$Res>
+    extends _$MeetingModelCopyWithImpl<$Res, _$MeetingModelImpl>
+    implements _$$MeetingModelImplCopyWith<$Res> {
+  __$$MeetingModelImplCopyWithImpl(
+      _$MeetingModelImpl _value, $Res Function(_$MeetingModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -306,7 +307,7 @@ class __$$_MeetingModelCopyWithImpl<$Res>
     Object? mediaRegion = null,
     Object? mediaPlacement = null,
   }) {
-    return _then(_$_MeetingModel(
+    return _then(_$MeetingModelImpl(
       meetingId: null == meetingId
           ? _value.meetingId
           : meetingId // ignore: cast_nullable_to_non_nullable
@@ -329,15 +330,15 @@ class __$$_MeetingModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_MeetingModel implements _MeetingModel {
-  const _$_MeetingModel(
+class _$MeetingModelImpl implements _MeetingModel {
+  const _$MeetingModelImpl(
       {required this.meetingId,
       required this.externalMeetingId,
       required this.mediaRegion,
       required this.mediaPlacement});
 
-  factory _$_MeetingModel.fromJson(Map<String, dynamic> json) =>
-      _$$_MeetingModelFromJson(json);
+  factory _$MeetingModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MeetingModelImplFromJson(json);
 
   @override
   final String meetingId;
@@ -357,7 +358,7 @@ class _$_MeetingModel implements _MeetingModel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MeetingModel &&
+            other is _$MeetingModelImpl &&
             (identical(other.meetingId, meetingId) ||
                 other.meetingId == meetingId) &&
             (identical(other.externalMeetingId, externalMeetingId) ||
@@ -376,12 +377,12 @@ class _$_MeetingModel implements _MeetingModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MeetingModelCopyWith<_$_MeetingModel> get copyWith =>
-      __$$_MeetingModelCopyWithImpl<_$_MeetingModel>(this, _$identity);
+  _$$MeetingModelImplCopyWith<_$MeetingModelImpl> get copyWith =>
+      __$$MeetingModelImplCopyWithImpl<_$MeetingModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MeetingModelToJson(
+    return _$$MeetingModelImplToJson(
       this,
     );
   }
@@ -392,10 +393,10 @@ abstract class _MeetingModel implements MeetingModel {
       {required final String meetingId,
       required final String externalMeetingId,
       required final String mediaRegion,
-      required final MediaPlacementModel mediaPlacement}) = _$_MeetingModel;
+      required final MediaPlacementModel mediaPlacement}) = _$MeetingModelImpl;
 
   factory _MeetingModel.fromJson(Map<String, dynamic> json) =
-      _$_MeetingModel.fromJson;
+      _$MeetingModelImpl.fromJson;
 
   @override
   String get meetingId;
@@ -407,7 +408,7 @@ abstract class _MeetingModel implements MeetingModel {
   MediaPlacementModel get mediaPlacement;
   @override
   @JsonKey(ignore: true)
-  _$$_MeetingModelCopyWith<_$_MeetingModel> get copyWith =>
+  _$$MeetingModelImplCopyWith<_$MeetingModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -481,11 +482,11 @@ class _$MediaPlacementModelCopyWithImpl<$Res, $Val extends MediaPlacementModel>
 }
 
 /// @nodoc
-abstract class _$$_MediaPlacementModelCopyWith<$Res>
+abstract class _$$MediaPlacementModelImplCopyWith<$Res>
     implements $MediaPlacementModelCopyWith<$Res> {
-  factory _$$_MediaPlacementModelCopyWith(_$_MediaPlacementModel value,
-          $Res Function(_$_MediaPlacementModel) then) =
-      __$$_MediaPlacementModelCopyWithImpl<$Res>;
+  factory _$$MediaPlacementModelImplCopyWith(_$MediaPlacementModelImpl value,
+          $Res Function(_$MediaPlacementModelImpl) then) =
+      __$$MediaPlacementModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -496,11 +497,11 @@ abstract class _$$_MediaPlacementModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_MediaPlacementModelCopyWithImpl<$Res>
-    extends _$MediaPlacementModelCopyWithImpl<$Res, _$_MediaPlacementModel>
-    implements _$$_MediaPlacementModelCopyWith<$Res> {
-  __$$_MediaPlacementModelCopyWithImpl(_$_MediaPlacementModel _value,
-      $Res Function(_$_MediaPlacementModel) _then)
+class __$$MediaPlacementModelImplCopyWithImpl<$Res>
+    extends _$MediaPlacementModelCopyWithImpl<$Res, _$MediaPlacementModelImpl>
+    implements _$$MediaPlacementModelImplCopyWith<$Res> {
+  __$$MediaPlacementModelImplCopyWithImpl(_$MediaPlacementModelImpl _value,
+      $Res Function(_$MediaPlacementModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -511,7 +512,7 @@ class __$$_MediaPlacementModelCopyWithImpl<$Res>
     Object? signalingUrl = null,
     Object? turnControllerUrl = null,
   }) {
-    return _then(_$_MediaPlacementModel(
+    return _then(_$MediaPlacementModelImpl(
       audioHostUrl: null == audioHostUrl
           ? _value.audioHostUrl
           : audioHostUrl // ignore: cast_nullable_to_non_nullable
@@ -534,15 +535,15 @@ class __$$_MediaPlacementModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_MediaPlacementModel implements _MediaPlacementModel {
-  const _$_MediaPlacementModel(
+class _$MediaPlacementModelImpl implements _MediaPlacementModel {
+  const _$MediaPlacementModelImpl(
       {required this.audioHostUrl,
       required this.audioFallbackUrl,
       required this.signalingUrl,
       required this.turnControllerUrl});
 
-  factory _$_MediaPlacementModel.fromJson(Map<String, dynamic> json) =>
-      _$$_MediaPlacementModelFromJson(json);
+  factory _$MediaPlacementModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MediaPlacementModelImplFromJson(json);
 
   @override
   final String audioHostUrl;
@@ -562,7 +563,7 @@ class _$_MediaPlacementModel implements _MediaPlacementModel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MediaPlacementModel &&
+            other is _$MediaPlacementModelImpl &&
             (identical(other.audioHostUrl, audioHostUrl) ||
                 other.audioHostUrl == audioHostUrl) &&
             (identical(other.audioFallbackUrl, audioFallbackUrl) ||
@@ -581,13 +582,13 @@ class _$_MediaPlacementModel implements _MediaPlacementModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MediaPlacementModelCopyWith<_$_MediaPlacementModel> get copyWith =>
-      __$$_MediaPlacementModelCopyWithImpl<_$_MediaPlacementModel>(
+  _$$MediaPlacementModelImplCopyWith<_$MediaPlacementModelImpl> get copyWith =>
+      __$$MediaPlacementModelImplCopyWithImpl<_$MediaPlacementModelImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MediaPlacementModelToJson(
+    return _$$MediaPlacementModelImplToJson(
       this,
     );
   }
@@ -598,10 +599,10 @@ abstract class _MediaPlacementModel implements MediaPlacementModel {
       {required final String audioHostUrl,
       required final String audioFallbackUrl,
       required final String signalingUrl,
-      required final String turnControllerUrl}) = _$_MediaPlacementModel;
+      required final String turnControllerUrl}) = _$MediaPlacementModelImpl;
 
   factory _MediaPlacementModel.fromJson(Map<String, dynamic> json) =
-      _$_MediaPlacementModel.fromJson;
+      _$MediaPlacementModelImpl.fromJson;
 
   @override
   String get audioHostUrl;
@@ -613,7 +614,7 @@ abstract class _MediaPlacementModel implements MediaPlacementModel {
   String get turnControllerUrl;
   @override
   @JsonKey(ignore: true)
-  _$$_MediaPlacementModelCopyWith<_$_MediaPlacementModel> get copyWith =>
+  _$$MediaPlacementModelImplCopyWith<_$MediaPlacementModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -677,22 +678,22 @@ class _$AttendeeInfoModelCopyWithImpl<$Res, $Val extends AttendeeInfoModel>
 }
 
 /// @nodoc
-abstract class _$$_AttendeeInfoModelCopyWith<$Res>
+abstract class _$$AttendeeInfoModelImplCopyWith<$Res>
     implements $AttendeeInfoModelCopyWith<$Res> {
-  factory _$$_AttendeeInfoModelCopyWith(_$_AttendeeInfoModel value,
-          $Res Function(_$_AttendeeInfoModel) then) =
-      __$$_AttendeeInfoModelCopyWithImpl<$Res>;
+  factory _$$AttendeeInfoModelImplCopyWith(_$AttendeeInfoModelImpl value,
+          $Res Function(_$AttendeeInfoModelImpl) then) =
+      __$$AttendeeInfoModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String externalUserId, String attendeeId, String joinToken});
 }
 
 /// @nodoc
-class __$$_AttendeeInfoModelCopyWithImpl<$Res>
-    extends _$AttendeeInfoModelCopyWithImpl<$Res, _$_AttendeeInfoModel>
-    implements _$$_AttendeeInfoModelCopyWith<$Res> {
-  __$$_AttendeeInfoModelCopyWithImpl(
-      _$_AttendeeInfoModel _value, $Res Function(_$_AttendeeInfoModel) _then)
+class __$$AttendeeInfoModelImplCopyWithImpl<$Res>
+    extends _$AttendeeInfoModelCopyWithImpl<$Res, _$AttendeeInfoModelImpl>
+    implements _$$AttendeeInfoModelImplCopyWith<$Res> {
+  __$$AttendeeInfoModelImplCopyWithImpl(_$AttendeeInfoModelImpl _value,
+      $Res Function(_$AttendeeInfoModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -702,7 +703,7 @@ class __$$_AttendeeInfoModelCopyWithImpl<$Res>
     Object? attendeeId = null,
     Object? joinToken = null,
   }) {
-    return _then(_$_AttendeeInfoModel(
+    return _then(_$AttendeeInfoModelImpl(
       externalUserId: null == externalUserId
           ? _value.externalUserId
           : externalUserId // ignore: cast_nullable_to_non_nullable
@@ -721,14 +722,14 @@ class __$$_AttendeeInfoModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_AttendeeInfoModel implements _AttendeeInfoModel {
-  const _$_AttendeeInfoModel(
+class _$AttendeeInfoModelImpl implements _AttendeeInfoModel {
+  const _$AttendeeInfoModelImpl(
       {required this.externalUserId,
       required this.attendeeId,
       required this.joinToken});
 
-  factory _$_AttendeeInfoModel.fromJson(Map<String, dynamic> json) =>
-      _$$_AttendeeInfoModelFromJson(json);
+  factory _$AttendeeInfoModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AttendeeInfoModelImplFromJson(json);
 
   @override
   final String externalUserId;
@@ -746,7 +747,7 @@ class _$_AttendeeInfoModel implements _AttendeeInfoModel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AttendeeInfoModel &&
+            other is _$AttendeeInfoModelImpl &&
             (identical(other.externalUserId, externalUserId) ||
                 other.externalUserId == externalUserId) &&
             (identical(other.attendeeId, attendeeId) ||
@@ -763,13 +764,13 @@ class _$_AttendeeInfoModel implements _AttendeeInfoModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AttendeeInfoModelCopyWith<_$_AttendeeInfoModel> get copyWith =>
-      __$$_AttendeeInfoModelCopyWithImpl<_$_AttendeeInfoModel>(
+  _$$AttendeeInfoModelImplCopyWith<_$AttendeeInfoModelImpl> get copyWith =>
+      __$$AttendeeInfoModelImplCopyWithImpl<_$AttendeeInfoModelImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AttendeeInfoModelToJson(
+    return _$$AttendeeInfoModelImplToJson(
       this,
     );
   }
@@ -779,10 +780,10 @@ abstract class _AttendeeInfoModel implements AttendeeInfoModel {
   const factory _AttendeeInfoModel(
       {required final String externalUserId,
       required final String attendeeId,
-      required final String joinToken}) = _$_AttendeeInfoModel;
+      required final String joinToken}) = _$AttendeeInfoModelImpl;
 
   factory _AttendeeInfoModel.fromJson(Map<String, dynamic> json) =
-      _$_AttendeeInfoModel.fromJson;
+      _$AttendeeInfoModelImpl.fromJson;
 
   @override
   String get externalUserId;
@@ -792,6 +793,6 @@ abstract class _AttendeeInfoModel implements AttendeeInfoModel {
   String get joinToken;
   @override
   @JsonKey(ignore: true)
-  _$$_AttendeeInfoModelCopyWith<_$_AttendeeInfoModel> get copyWith =>
+  _$$AttendeeInfoModelImplCopyWith<_$AttendeeInfoModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

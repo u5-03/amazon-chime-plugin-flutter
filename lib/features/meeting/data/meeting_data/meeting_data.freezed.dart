@@ -148,11 +148,11 @@ class _$MeetingDataCopyWithImpl<$Res, $Val extends MeetingData>
 }
 
 /// @nodoc
-abstract class _$$_MeetingDataCopyWith<$Res>
+abstract class _$$MeetingDataImplCopyWith<$Res>
     implements $MeetingDataCopyWith<$Res> {
-  factory _$$_MeetingDataCopyWith(
-          _$_MeetingData value, $Res Function(_$_MeetingData) then) =
-      __$$_MeetingDataCopyWithImpl<$Res>;
+  factory _$$MeetingDataImplCopyWith(
+          _$MeetingDataImpl value, $Res Function(_$MeetingDataImpl) then) =
+      __$$MeetingDataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -173,11 +173,11 @@ abstract class _$$_MeetingDataCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_MeetingDataCopyWithImpl<$Res>
-    extends _$MeetingDataCopyWithImpl<$Res, _$_MeetingData>
-    implements _$$_MeetingDataCopyWith<$Res> {
-  __$$_MeetingDataCopyWithImpl(
-      _$_MeetingData _value, $Res Function(_$_MeetingData) _then)
+class __$$MeetingDataImplCopyWithImpl<$Res>
+    extends _$MeetingDataCopyWithImpl<$Res, _$MeetingDataImpl>
+    implements _$$MeetingDataImplCopyWith<$Res> {
+  __$$MeetingDataImplCopyWithImpl(
+      _$MeetingDataImpl _value, $Res Function(_$MeetingDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -195,7 +195,7 @@ class __$$_MeetingDataCopyWithImpl<$Res>
     Object? isReceivingScreenShare = null,
     Object? isMeetingActive = null,
   }) {
-    return _then(_$_MeetingData(
+    return _then(_$MeetingDataImpl(
       meetingId: freezed == meetingId
           ? _value.meetingId
           : meetingId // ignore: cast_nullable_to_non_nullable
@@ -246,8 +246,8 @@ class __$$_MeetingDataCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_MeetingData implements _MeetingData {
-  const _$_MeetingData(
+class _$MeetingDataImpl implements _MeetingData {
+  const _$MeetingDataImpl(
       {this.meetingId,
       this.meetingData,
       this.localParticipantId,
@@ -262,8 +262,8 @@ class _$_MeetingData implements _MeetingData {
       : _participants = participants,
         _deviceList = deviceList;
 
-  factory _$_MeetingData.fromJson(Map<String, dynamic> json) =>
-      _$$_MeetingDataFromJson(json);
+  factory _$MeetingDataImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MeetingDataImplFromJson(json);
 
   @override
   final String? meetingId;
@@ -314,7 +314,7 @@ class _$_MeetingData implements _MeetingData {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MeetingData &&
+            other is _$MeetingDataImpl &&
             (identical(other.meetingId, meetingId) ||
                 other.meetingId == meetingId) &&
             (identical(other.meetingData, meetingData) ||
@@ -358,12 +358,12 @@ class _$_MeetingData implements _MeetingData {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MeetingDataCopyWith<_$_MeetingData> get copyWith =>
-      __$$_MeetingDataCopyWithImpl<_$_MeetingData>(this, _$identity);
+  _$$MeetingDataImplCopyWith<_$MeetingDataImpl> get copyWith =>
+      __$$MeetingDataImplCopyWithImpl<_$MeetingDataImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MeetingDataToJson(
+    return _$$MeetingDataImplToJson(
       this,
     );
   }
@@ -381,10 +381,10 @@ abstract class _MeetingData implements MeetingData {
       final List<String> deviceList,
       final Orientation orientation,
       final bool isReceivingScreenShare,
-      final bool isMeetingActive}) = _$_MeetingData;
+      final bool isMeetingActive}) = _$MeetingDataImpl;
 
   factory _MeetingData.fromJson(Map<String, dynamic> json) =
-      _$_MeetingData.fromJson;
+      _$MeetingDataImpl.fromJson;
 
   @override
   String? get meetingId;
@@ -410,6 +410,6 @@ abstract class _MeetingData implements MeetingData {
   bool get isMeetingActive;
   @override
   @JsonKey(ignore: true)
-  _$$_MeetingDataCopyWith<_$_MeetingData> get copyWith =>
+  _$$MeetingDataImplCopyWith<_$MeetingDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

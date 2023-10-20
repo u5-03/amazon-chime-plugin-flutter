@@ -105,11 +105,11 @@ class _$ParticipantModelCopyWithImpl<$Res, $Val extends ParticipantModel>
 }
 
 /// @nodoc
-abstract class _$$_ParticipantModelCopyWith<$Res>
+abstract class _$$ParticipantModelImplCopyWith<$Res>
     implements $ParticipantModelCopyWith<$Res> {
-  factory _$$_ParticipantModelCopyWith(
-          _$_ParticipantModel value, $Res Function(_$_ParticipantModel) then) =
-      __$$_ParticipantModelCopyWithImpl<$Res>;
+  factory _$$ParticipantModelImplCopyWith(_$ParticipantModelImpl value,
+          $Res Function(_$ParticipantModelImpl) then) =
+      __$$ParticipantModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -124,11 +124,11 @@ abstract class _$$_ParticipantModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ParticipantModelCopyWithImpl<$Res>
-    extends _$ParticipantModelCopyWithImpl<$Res, _$_ParticipantModel>
-    implements _$$_ParticipantModelCopyWith<$Res> {
-  __$$_ParticipantModelCopyWithImpl(
-      _$_ParticipantModel _value, $Res Function(_$_ParticipantModel) _then)
+class __$$ParticipantModelImplCopyWithImpl<$Res>
+    extends _$ParticipantModelCopyWithImpl<$Res, _$ParticipantModelImpl>
+    implements _$$ParticipantModelImplCopyWith<$Res> {
+  __$$ParticipantModelImplCopyWithImpl(_$ParticipantModelImpl _value,
+      $Res Function(_$ParticipantModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -140,7 +140,7 @@ class __$$_ParticipantModelCopyWithImpl<$Res>
     Object? isVideoOn = null,
     Object? videoTile = freezed,
   }) {
-    return _then(_$_ParticipantModel(
+    return _then(_$ParticipantModelImpl(
       participantId: null == participantId
           ? _value.participantId
           : participantId // ignore: cast_nullable_to_non_nullable
@@ -167,16 +167,16 @@ class __$$_ParticipantModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ParticipantModel implements _ParticipantModel {
-  const _$_ParticipantModel(
+class _$ParticipantModelImpl implements _ParticipantModel {
+  const _$ParticipantModelImpl(
       {required this.participantId,
       required this.externalUserId,
       this.muteStatus = false,
       this.isVideoOn = false,
       this.videoTile});
 
-  factory _$_ParticipantModel.fromJson(Map<String, dynamic> json) =>
-      _$$_ParticipantModelFromJson(json);
+  factory _$ParticipantModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ParticipantModelImplFromJson(json);
 
   @override
   final String participantId;
@@ -200,7 +200,7 @@ class _$_ParticipantModel implements _ParticipantModel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ParticipantModel &&
+            other is _$ParticipantModelImpl &&
             (identical(other.participantId, participantId) ||
                 other.participantId == participantId) &&
             (identical(other.externalUserId, externalUserId) ||
@@ -221,12 +221,13 @@ class _$_ParticipantModel implements _ParticipantModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ParticipantModelCopyWith<_$_ParticipantModel> get copyWith =>
-      __$$_ParticipantModelCopyWithImpl<_$_ParticipantModel>(this, _$identity);
+  _$$ParticipantModelImplCopyWith<_$ParticipantModelImpl> get copyWith =>
+      __$$ParticipantModelImplCopyWithImpl<_$ParticipantModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ParticipantModelToJson(
+    return _$$ParticipantModelImplToJson(
       this,
     );
   }
@@ -238,10 +239,10 @@ abstract class _ParticipantModel implements ParticipantModel {
       required final String externalUserId,
       final bool muteStatus,
       final bool isVideoOn,
-      final VideoTileModel? videoTile}) = _$_ParticipantModel;
+      final VideoTileModel? videoTile}) = _$ParticipantModelImpl;
 
   factory _ParticipantModel.fromJson(Map<String, dynamic> json) =
-      _$_ParticipantModel.fromJson;
+      _$ParticipantModelImpl.fromJson;
 
   @override
   String get participantId;
@@ -255,6 +256,6 @@ abstract class _ParticipantModel implements ParticipantModel {
   VideoTileModel? get videoTile;
   @override
   @JsonKey(ignore: true)
-  _$$_ParticipantModelCopyWith<_$_ParticipantModel> get copyWith =>
+  _$$ParticipantModelImplCopyWith<_$ParticipantModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
