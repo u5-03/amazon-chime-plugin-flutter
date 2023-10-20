@@ -91,11 +91,11 @@ class _$VideoTileModelCopyWithImpl<$Res, $Val extends VideoTileModel>
 }
 
 /// @nodoc
-abstract class _$$_VideoTileModelCopyWith<$Res>
+abstract class _$$VideoTileModelImplCopyWith<$Res>
     implements $VideoTileModelCopyWith<$Res> {
-  factory _$$_VideoTileModelCopyWith(
-          _$_VideoTileModel value, $Res Function(_$_VideoTileModel) then) =
-      __$$_VideoTileModelCopyWithImpl<$Res>;
+  factory _$$VideoTileModelImplCopyWith(_$VideoTileModelImpl value,
+          $Res Function(_$VideoTileModelImpl) then) =
+      __$$VideoTileModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -107,11 +107,11 @@ abstract class _$$_VideoTileModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_VideoTileModelCopyWithImpl<$Res>
-    extends _$VideoTileModelCopyWithImpl<$Res, _$_VideoTileModel>
-    implements _$$_VideoTileModelCopyWith<$Res> {
-  __$$_VideoTileModelCopyWithImpl(
-      _$_VideoTileModel _value, $Res Function(_$_VideoTileModel) _then)
+class __$$VideoTileModelImplCopyWithImpl<$Res>
+    extends _$VideoTileModelCopyWithImpl<$Res, _$VideoTileModelImpl>
+    implements _$$VideoTileModelImplCopyWith<$Res> {
+  __$$VideoTileModelImplCopyWithImpl(
+      _$VideoTileModelImpl _value, $Res Function(_$VideoTileModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -123,7 +123,7 @@ class __$$_VideoTileModelCopyWithImpl<$Res>
     Object? isLocalTile = null,
     Object? isContentShare = null,
   }) {
-    return _then(_$_VideoTileModel(
+    return _then(_$VideoTileModelImpl(
       tileId: null == tileId
           ? _value.tileId
           : tileId // ignore: cast_nullable_to_non_nullable
@@ -150,16 +150,16 @@ class __$$_VideoTileModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_VideoTileModel implements _VideoTileModel {
-  const _$_VideoTileModel(
+class _$VideoTileModelImpl implements _VideoTileModel {
+  const _$VideoTileModelImpl(
       {required this.tileId,
       required this.videoStreamContentWidth,
       required this.videoStreamContentHeight,
       required this.isLocalTile,
       required this.isContentShare});
 
-  factory _$_VideoTileModel.fromJson(Map<String, dynamic> json) =>
-      _$$_VideoTileModelFromJson(json);
+  factory _$VideoTileModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$VideoTileModelImplFromJson(json);
 
   @override
   final int tileId;
@@ -181,7 +181,7 @@ class _$_VideoTileModel implements _VideoTileModel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VideoTileModel &&
+            other is _$VideoTileModelImpl &&
             (identical(other.tileId, tileId) || other.tileId == tileId) &&
             (identical(
                     other.videoStreamContentWidth, videoStreamContentWidth) ||
@@ -203,12 +203,13 @@ class _$_VideoTileModel implements _VideoTileModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VideoTileModelCopyWith<_$_VideoTileModel> get copyWith =>
-      __$$_VideoTileModelCopyWithImpl<_$_VideoTileModel>(this, _$identity);
+  _$$VideoTileModelImplCopyWith<_$VideoTileModelImpl> get copyWith =>
+      __$$VideoTileModelImplCopyWithImpl<_$VideoTileModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_VideoTileModelToJson(
+    return _$$VideoTileModelImplToJson(
       this,
     );
   }
@@ -220,10 +221,10 @@ abstract class _VideoTileModel implements VideoTileModel {
       required final int videoStreamContentWidth,
       required final int videoStreamContentHeight,
       required final bool isLocalTile,
-      required final bool isContentShare}) = _$_VideoTileModel;
+      required final bool isContentShare}) = _$VideoTileModelImpl;
 
   factory _VideoTileModel.fromJson(Map<String, dynamic> json) =
-      _$_VideoTileModel.fromJson;
+      _$VideoTileModelImpl.fromJson;
 
   @override
   int get tileId;
@@ -237,6 +238,6 @@ abstract class _VideoTileModel implements VideoTileModel {
   bool get isContentShare;
   @override
   @JsonKey(ignore: true)
-  _$$_VideoTileModelCopyWith<_$_VideoTileModel> get copyWith =>
+  _$$VideoTileModelImplCopyWith<_$VideoTileModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

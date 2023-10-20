@@ -6,7 +6,6 @@ import 'package:amazon_chime_plugin/utils/requester/requester_to_flutter.dart';
 import 'package:amazon_chime_plugin/utils/result.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// An implementation of AmazonChimePluginRequesterPlatform that uses method channels.
 final class MethodChannelAmazonChimeRequester
@@ -17,7 +16,6 @@ final class MethodChannelAmazonChimeRequester
       RequesterToFlutterImp(),
     );
   }
-  final container = ProviderContainer();
 
   @visibleForTesting
   final methodChannel = const MethodChannel('amazon_chime_plugin');

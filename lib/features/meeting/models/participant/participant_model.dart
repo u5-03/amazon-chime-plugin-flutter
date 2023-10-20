@@ -32,4 +32,9 @@ extension ParticipantModelExt on ParticipantModel {
         externalUserIdArray.length == 2 ? externalUserIdArray[1] : 'UNKNOWN';
     return extUserId;
   }
+
+  bool get isContentShare {
+    final participantIdArray = participantId.split('#');
+    return participantIdArray.length == 2;
+  }
 }

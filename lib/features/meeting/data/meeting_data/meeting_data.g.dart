@@ -6,9 +6,8 @@ part of 'meeting_data.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-// ignore: non_constant_identifier_names
-_$_MeetingData _$$_MeetingDataFromJson(Map<String, dynamic> json) =>
-    _$_MeetingData(
+_$MeetingDataImpl _$$MeetingDataImplFromJson(Map<String, dynamic> json) =>
+    _$MeetingDataImpl(
       meetingId: json['meetingId'] as String?,
       meetingData: json['meetingData'] == null
           ? null
@@ -18,9 +17,7 @@ _$_MeetingData _$$_MeetingDataFromJson(Map<String, dynamic> json) =>
       contentParticipantId: json['contentParticipantId'] as String?,
       participants: (json['participants'] as Map<String, dynamic>?)?.map(
             (k, e) => MapEntry(
-              k,
-              ParticipantModel.fromJson(e as Map<String, dynamic>),
-            ),
+                k, ParticipantModel.fromJson(e as Map<String, dynamic>)),
           ) ??
           const {},
       selectedAudioDevice: json['selectedAudioDevice'] as String?,
@@ -35,8 +32,7 @@ _$_MeetingData _$$_MeetingDataFromJson(Map<String, dynamic> json) =>
       isMeetingActive: json['isMeetingActive'] as bool? ?? false,
     );
 
-// ignore: non_constant_identifier_names
-Map<String, dynamic> _$$_MeetingDataToJson(_$_MeetingData instance) =>
+Map<String, dynamic> _$$MeetingDataImplToJson(_$MeetingDataImpl instance) =>
     <String, dynamic>{
       'meetingId': instance.meetingId,
       'meetingData': instance.meetingData,
@@ -46,7 +42,7 @@ Map<String, dynamic> _$$_MeetingDataToJson(_$_MeetingData instance) =>
       'participants': instance.participants,
       'selectedAudioDevice': instance.selectedAudioDevice,
       'deviceList': instance.deviceList,
-      'orientation': _$OrientationEnumMap[instance.orientation],
+      'orientation': _$OrientationEnumMap[instance.orientation]!,
       'isReceivingScreenShare': instance.isReceivingScreenShare,
       'isMeetingActive': instance.isMeetingActive,
     };

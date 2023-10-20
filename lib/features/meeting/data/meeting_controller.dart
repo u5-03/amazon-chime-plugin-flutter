@@ -1,5 +1,6 @@
 import 'package:amazon_chime_plugin/api/api.dart';
 import 'package:amazon_chime_plugin/errors/amazon_chime_error.dart';
+import 'package:amazon_chime_plugin/extensions/participant_info.dart';
 import 'package:amazon_chime_plugin/extensions/string.dart';
 import 'package:amazon_chime_plugin/features/meeting/data/meeting_data/meeting_data.dart';
 import 'package:amazon_chime_plugin/features/meeting/models/meeting/join_info_model.dart';
@@ -382,7 +383,25 @@ final class MeetingController extends Notifier<MeetingData>
     );
   }
 
-  Future<void> sendLocalVideoTileOn() async {
+  Future<void> switchLocalVideoTileStatus({required bool isVideoOn}) async {
+    final localParticipantId = state.localParticipantId;
+    if (localParticipantId == null) {
+      logger.severe('Local attendee not found');
+      return;
+    }
+
+    if (isVideoOn) {
+      await chimePlugin.startLocalVideo();
+    } else {
+      await chimePlugin.stopLocalVideo();
+    }
+    updateParticipant(
+      participantId: localParticipantId,
+      isVideoOn: isVideoOn,
+    );
+  }
+
+  Future<void> toggleLocalVideoTileStatus() async {
     final localParticipantId = state.localParticipantId;
     final participants = {...state.participants};
     final participant = participants[localParticipantId];
@@ -390,16 +409,7 @@ final class MeetingController extends Notifier<MeetingData>
       logger.severe('Local attendee not found');
       return;
     }
-
-    if (participant.isVideoOn) {
-      await chimePlugin.stopLocalVideo();
-    } else {
-      await chimePlugin.startLocalVideo();
-    }
-    updateParticipant(
-      participantId: localParticipantId,
-      isVideoOn: !participant.isVideoOn,
-    );
+    await switchLocalVideoTileStatus(isVideoOn: !participant.isVideoOn);
   }
 
   Future<void> stopMeeting() async {
@@ -449,12 +459,11 @@ final class MeetingController extends Notifier<MeetingData>
   }
 
   void didJoinParticipant(ParticipantInfo info) {
-    final attendeeIdToAdd = info.attendeeId;
-    final attendeeIdArray = attendeeIdToAdd.split('#');
     final localAttendeeId = state.localParticipantId;
-    final isAttendeeContent = attendeeIdArray.length == 2;
+    final attendeeIdToAdd = info.attendeeId;
     logger.info('didJoinParticipant: ${info.attendeeId}}');
-    if (isAttendeeContent) {
+
+    if (info.isContentShare) {
       logger.info('Content detected');
       // meetingController
       updateContentParticipantId(attendeeIdToAdd);

@@ -16,23 +16,61 @@ enum VideoTileKind {
   content,
 }
 
-class VideoTileWidget extends ConsumerWidget {
-  const VideoTileWidget({
-    required this.tileKind,
-    super.key,
+final class VideoTileWidget extends ConsumerWidget {
+  factory VideoTileWidget.tileId({
+    required int tileId,
+    bool isMirror = false,
+    bool isScaleToFill = true,
+  }) =>
+      VideoTileWidget._(
+        tileId: tileId,
+        isMirror: isMirror,
+        isScaleToFill: isScaleToFill,
+      );
+  factory VideoTileWidget.tileKind({
+    required VideoTileKind tileKind,
+    bool isMirror = false,
+    bool isScaleToFill = true,
+  }) =>
+      VideoTileWidget._(
+        tileKind: tileKind,
+        isMirror: isMirror,
+        isScaleToFill: isScaleToFill,
+      );
+
+  const VideoTileWidget._({
+    required this.isMirror,
+    required this.isScaleToFill,
+    this.tileKind,
+    this.tileId,
   });
 
-  final VideoTileKind tileKind;
+  final VideoTileKind? tileKind;
+  final int? tileId;
+  final bool isMirror;
+  final bool isScaleToFill;
 
-  Widget _iosVideoTile({required int tileId}) {
+  Widget _iosVideoTile({
+    required int tileId,
+    bool isMirror = false,
+    bool isScaleToFill = true,
+  }) {
     return UiKitView(
       viewType: PlatformViewKind.videoTile.rawValue,
-      creationParams: tileId,
+      creationParams: {
+        'tileId': tileId,
+        'isMirror': isMirror,
+        'isScaleToFill': isScaleToFill,
+      },
       creationParamsCodec: const StandardMessageCodec(),
     );
   }
 
-  Widget _androidVideoTile({required int tileId}) {
+  Widget _androidVideoTile({
+    required int tileId,
+    bool isMirror = false,
+    bool isScaleToFill = true,
+  }) {
     return PlatformViewLink(
       viewType: PlatformViewKind.videoTile.rawValue,
       surfaceFactory: (
@@ -50,7 +88,11 @@ class VideoTileWidget extends ConsumerWidget {
           id: params.id,
           viewType: PlatformViewKind.videoTile.rawValue,
           layoutDirection: TextDirection.ltr,
-          creationParams: tileId,
+          creationParams: {
+            'tileId': tileId,
+            'isMirror': isMirror,
+            'isScaleToFill': isScaleToFill,
+          },
           creationParamsCodec: const StandardMessageCodec(),
         )
           ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
@@ -63,92 +105,84 @@ class VideoTileWidget extends ConsumerWidget {
   Widget contentVideoTileWidget({required int tileId}) {
     Widget videoTile;
     if (Platform.isIOS) {
-      videoTile = _iosVideoTile(tileId: tileId);
+      videoTile = _iosVideoTile(
+        tileId: tileId,
+        isMirror: isMirror,
+        isScaleToFill: isScaleToFill,
+      );
     } else if (Platform.isAndroid) {
-      videoTile = _androidVideoTile(tileId: tileId);
+      videoTile = _androidVideoTile(
+        tileId: tileId,
+        isMirror: isMirror,
+        isScaleToFill: isScaleToFill,
+      );
     } else {
       videoTile = const Text('Unrecognized Platform.');
     }
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4),
-      child: SizedBox(
-        width: 200,
-        height: 230,
-        child: GestureDetector(
-          onDoubleTap: () {
-            // TODO: implement
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => ScreenShare(paramsVT: paramsVT),
-            //   ),
-          },
-          child: videoTile,
-        ),
-      ),
+    return GestureDetector(
+      onDoubleTap: () {
+        // TODO: implement
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => ScreenShare(paramsVT: paramsVT),
+        //   ),
+      },
+      child: videoTile,
     );
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Widget paddingChildWidget(int tileId) {
-      if (Platform.isIOS) {
-        return _iosVideoTile(tileId: tileId);
-      } else if (Platform.isAndroid) {
-        return _androidVideoTile(tileId: tileId);
-      } else {
-        return const Text('Unrecognized Platform.');
+    final tileKind = this.tileKind;
+    final tileId = this.tileId;
+    if (tileKind != null) {
+      final meetingData = ref.watch(meetingControllerProvider);
+      final contentParticipantId = meetingData.contentParticipantId;
+      final localParticipantId = meetingData.localParticipantId;
+      final remoteParticipantId = meetingData.remoteParticipantId;
+      final participants = meetingData.participants;
+
+      final tileId = participants[contentParticipantId]?.videoTile?.tileId;
+
+      int? tileIdParameter;
+      switch (tileKind) {
+        case VideoTileKind.local:
+          tileIdParameter = participants[localParticipantId]?.videoTile?.tileId;
+        case VideoTileKind.remote:
+          tileIdParameter =
+              participants[remoteParticipantId]?.videoTile?.tileId;
+        case VideoTileKind.content:
+          tileIdParameter = tileId;
       }
-    }
-
-    final meetingData = ref.watch(meetingControllerProvider);
-    final contentParticipantId = meetingData.contentParticipantId;
-    final localParticipantId = meetingData.localParticipantId;
-    final remoteParticipantId = meetingData.remoteParticipantId;
-    final participants = meetingData.participants;
-
-    final tileId = participants[contentParticipantId]?.videoTile?.tileId;
-
-    int? tileIdParameter;
-    switch (tileKind) {
-      case VideoTileKind.local:
-        tileIdParameter = participants[localParticipantId]?.videoTile?.tileId;
-      case VideoTileKind.remote:
-        tileIdParameter = participants[remoteParticipantId]?.videoTile?.tileId;
-      case VideoTileKind.content:
-        tileIdParameter = tileId;
-    }
-    if (tileIdParameter == null) {
-      return const ColoredBox(
-        color: Colors.blue,
-        child: Text('tileIdParameter is null'),
-      );
-    }
-    if (tileKind == VideoTileKind.content) {
-      return contentVideoTileWidget(
-        tileId: tileIdParameter,
-      );
+      if (tileIdParameter == null) {
+        return const ColoredBox(
+          color: Colors.blue,
+          child: Text('tileIdParameter is null'),
+        );
+      }
+      if (tileKind == VideoTileKind.content) {
+        return contentVideoTileWidget(
+          tileId: tileIdParameter,
+        );
+      } else {
+        return contentVideoTileWidget(tileId: tileIdParameter);
+      }
+    } else if (tileId != null) {
+      return contentVideoTileWidget(tileId: tileId);
     } else {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4),
-        child: SizedBox(
-          width: 200,
-          height: 230,
-          child: paddingChildWidget(tileIdParameter),
-        ),
-      );
+      throw Exception('Invalid tileKind or tileId.');
     }
   }
 
   static List<Widget> displayVideoTiles(
     Orientation orientation,
     MeetingData meetingData,
+    Size size,
   ) {
-    const Widget screenShareWidget = Expanded(
-      child: VideoTileWidget(
-        tileKind: VideoTileKind.content,
-      ),
+    final Widget screenShareWidget = Expanded(
+      child: VideoTileWidget.tileKind(tileKind: VideoTileKind.content),
     );
 
     final contentParticipantId = meetingData.contentParticipantId;
@@ -156,8 +190,10 @@ class VideoTileWidget extends ConsumerWidget {
     final remoteParticipantId = meetingData.remoteParticipantId;
     final participants = meetingData.participants;
 
-    const localVideoTile = VideoTileWidget(tileKind: VideoTileKind.local);
-    const remoteVideoTile = VideoTileWidget(tileKind: VideoTileKind.remote);
+    final localVideoTile =
+        VideoTileWidget.tileKind(tileKind: VideoTileKind.local);
+    final remoteVideoTile =
+        VideoTileWidget.tileKind(tileKind: VideoTileKind.remote);
 
     if (participants.containsKey(contentParticipantId)) {
       if (meetingData.isReceivingScreenShare) {
@@ -168,14 +204,26 @@ class VideoTileWidget extends ConsumerWidget {
 
     if (participants[localParticipantId]?.isVideoOn ?? false) {
       if (participants[localParticipantId]?.videoTile != null) {
-        videoTiles.add(localVideoTile);
+        videoTiles.add(
+          SizedBox(
+            width: size.width,
+            height: size.height,
+            child: localVideoTile,
+          ),
+        );
       }
     }
     if (participants.length > 1) {
       if (participants.containsKey(remoteParticipantId)) {
         if ((participants[remoteParticipantId]?.isVideoOn ?? false) &&
             participants[remoteParticipantId]?.videoTile != null) {
-          videoTiles.add(const Expanded(child: remoteVideoTile));
+          videoTiles.add(
+            SizedBox(
+              width: size.width,
+              height: size.height,
+              child: remoteVideoTile,
+            ),
+          );
         }
       }
     }
