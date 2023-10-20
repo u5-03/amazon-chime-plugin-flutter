@@ -17,25 +17,60 @@ enum VideoTileKind {
 }
 
 final class VideoTileWidget extends ConsumerWidget {
-  factory VideoTileWidget.tileId(int tileId) =>
-      VideoTileWidget._(tileId: tileId);
-  factory VideoTileWidget.tileKind(VideoTileKind tileKind) =>
-      VideoTileWidget._(tileKind: tileKind);
+  factory VideoTileWidget.tileId({
+    required int tileId,
+    bool isMirror = false,
+    bool isScaleToFill = true,
+  }) =>
+      VideoTileWidget._(
+        tileId: tileId,
+        isMirror: isMirror,
+        isScaleToFill: isScaleToFill,
+      );
+  factory VideoTileWidget.tileKind({
+    required VideoTileKind tileKind,
+    bool isMirror = false,
+    bool isScaleToFill = true,
+  }) =>
+      VideoTileWidget._(
+        tileKind: tileKind,
+        isMirror: isMirror,
+        isScaleToFill: isScaleToFill,
+      );
 
-  const VideoTileWidget._({this.tileKind, this.tileId});
+  const VideoTileWidget._({
+    required this.isMirror,
+    required this.isScaleToFill,
+    this.tileKind,
+    this.tileId,
+  });
 
   final VideoTileKind? tileKind;
   final int? tileId;
+  final bool isMirror;
+  final bool isScaleToFill;
 
-  Widget _iosVideoTile({required int tileId}) {
+  Widget _iosVideoTile({
+    required int tileId,
+    bool isMirror = false,
+    bool isScaleToFill = true,
+  }) {
     return UiKitView(
       viewType: PlatformViewKind.videoTile.rawValue,
-      creationParams: tileId,
+      creationParams: {
+        'tileId': tileId,
+        'isMirror': isMirror,
+        'isScaleToFill': isScaleToFill,
+      },
       creationParamsCodec: const StandardMessageCodec(),
     );
   }
 
-  Widget _androidVideoTile({required int tileId}) {
+  Widget _androidVideoTile({
+    required int tileId,
+    bool isMirror = false,
+    bool isScaleToFill = true,
+  }) {
     return PlatformViewLink(
       viewType: PlatformViewKind.videoTile.rawValue,
       surfaceFactory: (
@@ -53,7 +88,11 @@ final class VideoTileWidget extends ConsumerWidget {
           id: params.id,
           viewType: PlatformViewKind.videoTile.rawValue,
           layoutDirection: TextDirection.ltr,
-          creationParams: tileId,
+          creationParams: {
+            'tileId': tileId,
+            'isMirror': isMirror,
+            'isScaleToFill': isScaleToFill,
+          },
           creationParamsCodec: const StandardMessageCodec(),
         )
           ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
@@ -66,9 +105,17 @@ final class VideoTileWidget extends ConsumerWidget {
   Widget contentVideoTileWidget({required int tileId}) {
     Widget videoTile;
     if (Platform.isIOS) {
-      videoTile = _iosVideoTile(tileId: tileId);
+      videoTile = _iosVideoTile(
+        tileId: tileId,
+        isMirror: isMirror,
+        isScaleToFill: isScaleToFill,
+      );
     } else if (Platform.isAndroid) {
-      videoTile = _androidVideoTile(tileId: tileId);
+      videoTile = _androidVideoTile(
+        tileId: tileId,
+        isMirror: isMirror,
+        isScaleToFill: isScaleToFill,
+      );
     } else {
       videoTile = const Text('Unrecognized Platform.');
     }
@@ -135,7 +182,7 @@ final class VideoTileWidget extends ConsumerWidget {
     Size size,
   ) {
     final Widget screenShareWidget = Expanded(
-      child: VideoTileWidget.tileKind(VideoTileKind.content),
+      child: VideoTileWidget.tileKind(tileKind: VideoTileKind.content),
     );
 
     final contentParticipantId = meetingData.contentParticipantId;
@@ -143,8 +190,10 @@ final class VideoTileWidget extends ConsumerWidget {
     final remoteParticipantId = meetingData.remoteParticipantId;
     final participants = meetingData.participants;
 
-    final localVideoTile = VideoTileWidget.tileKind(VideoTileKind.local);
-    final remoteVideoTile = VideoTileWidget.tileKind(VideoTileKind.remote);
+    final localVideoTile =
+        VideoTileWidget.tileKind(tileKind: VideoTileKind.local);
+    final remoteVideoTile =
+        VideoTileWidget.tileKind(tileKind: VideoTileKind.remote);
 
     if (participants.containsKey(contentParticipantId)) {
       if (meetingData.isReceivingScreenShare) {

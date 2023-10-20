@@ -8,7 +8,8 @@ class ScreenShareWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final Widget contentTile = VideoTileWidget.tileKind(VideoTileKind.content);
+    final Widget contentTile =
+        VideoTileWidget.tileKind(tileKind: VideoTileKind.content);
     Widget body;
     final isReceivingScreenShare =
         ref.watch(meetingControllerProvider).isReceivingScreenShare;

@@ -13,8 +13,8 @@ import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 
 class VideoTileFactory : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
-    override fun create(context: Context?, viewId: Int, args: Any?): PlatformView {
-        val creationParams = args as Int?
-        return VideoTileView(context, creationParams)
+    override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
+        val creationParams = args as Map<String?, Any?>?
+        return VideoTileView(context, viewId, creationParams)
     }
 }
