@@ -9,7 +9,7 @@ import com.amazonaws.services.chime.sdk.meetings.utils.logger.ConsoleLogger
 import com.example.amazon_chime_plugin.Manager.MeetingSession
 import io.flutter.plugin.platform.PlatformView
 
-internal class VideoTileView(context: Context?, viewId: Int, creationParams: Map<String?, Any?>?): PlatformView {
+internal class VideoTileRenderView(context: Context?, viewId: Int, creationParams: Map<String?, Any?>?): PlatformView {
     private val view: DefaultVideoRenderView
     private val tileId: Int
 
