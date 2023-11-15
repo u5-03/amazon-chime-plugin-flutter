@@ -6,17 +6,17 @@
 //     with MockPlatformInterfaceMixin
 //     implements AmazonChimePlatform {
 //   @override
-//   Future<Result<String, AmazonChimeError>> getPlatformVersion() {
+//   Future<Result<String>> getPlatformVersion() {
 //     return Future.value(const Success('42'));
 //   }
 
 //   @override
-//   Future<Result<String, AmazonChimeError>> requestCameraPermissions() {
+//   Future<Result<String>> requestCameraPermissions() {
 //     return Future.value(const Success('Camera authorized.'));
 //   }
 
 //   @override
-//   Future<Result<String, AmazonChimeError>> requestMicrophonePermissions() {
+//   Future<Result<String>> requestMicrophonePermissions() {
 //     return Future.value(const Success('Microphone authorized.'));
 //   }
 // }

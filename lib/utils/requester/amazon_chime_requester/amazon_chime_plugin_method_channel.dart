@@ -22,7 +22,7 @@ final class MethodChannelAmazonChimeRequester
   final RequesterToNative requester = RequesterToNative();
 
   @override
-  Future<Result<String, AmazonChimeError>> getPlatformVersion() async {
+  Future<Result<String>> getPlatformVersion() async {
     return _runCatching(() async {
       final version = await requester.getPlatformVersion();
       return version;
@@ -30,7 +30,7 @@ final class MethodChannelAmazonChimeRequester
   }
 
   @override
-  Future<Result<String, AmazonChimeError>> initialAudioSelection() async {
+  Future<Result<String>> initialAudioSelection() async {
     return _runCatching(() async {
       final response = await requester.initialAudioSelection();
       return response;
@@ -38,7 +38,7 @@ final class MethodChannelAmazonChimeRequester
   }
 
   @override
-  Future<Result<List<String>, AmazonChimeError>> listAudioDevices() async {
+  Future<Result<List<String>>> listAudioDevices() async {
     return _runCatching(() async {
       final response = await requester.listAudioDevices();
       return Future.value(response.nonNullable);
@@ -46,7 +46,7 @@ final class MethodChannelAmazonChimeRequester
   }
 
   @override
-  Future<Result<String, AmazonChimeError>> updateCurrentDevice(
+  Future<Result<String>> updateCurrentDevice(
     String deviceLabel,
   ) async {
     return _runCatching(() async {
@@ -56,7 +56,7 @@ final class MethodChannelAmazonChimeRequester
   }
 
   @override
-  Future<Result<void, AmazonChimeError>> startLocalVideo() async {
+  Future<Result<void>> startLocalVideo() async {
     return _runCatching(() async {
       final response = await requester.startLocalVideo();
       return response;
@@ -64,7 +64,7 @@ final class MethodChannelAmazonChimeRequester
   }
 
   @override
-  Future<Result<void, AmazonChimeError>> stopLocalVideo() async {
+  Future<Result<void>> stopLocalVideo() async {
     return _runCatching(() async {
       final response = await requester.stopLocalVideo();
       return response;
@@ -72,7 +72,7 @@ final class MethodChannelAmazonChimeRequester
   }
 
   @override
-  Future<Result<void, AmazonChimeError>> join(
+  Future<Result<void>> join(
     JoinParameter parameter,
   ) async {
     return _runCatching(() async {
@@ -82,21 +82,21 @@ final class MethodChannelAmazonChimeRequester
   }
 
   @override
-  Future<Result<void, AmazonChimeError>> stop() async {
+  Future<Result<void>> stop() async {
     return _runCatching(() async {
       return requester.stop();
     });
   }
 
   @override
-  Future<Result<void, AmazonChimeError>> mute() async {
+  Future<Result<void>> mute() async {
     return _runCatching(() async {
       return requester.mute();
     });
   }
 
   @override
-  Future<Result<void, AmazonChimeError>> unmute() async {
+  Future<Result<void>> unmute() async {
     return _runCatching(() async {
       return requester.unmute();
     });
@@ -105,23 +105,25 @@ final class MethodChannelAmazonChimeRequester
 
 extension MethodChannelAmazonChimePluginExt
     on MethodChannelAmazonChimeRequester {
-  Future<Result<S, AmazonChimeError>> _runCatching<S>(
+  Future<Result<S>> _runCatching<S>(
     Future<S> Function() action,
   ) async {
     try {
       final value = await action();
-      return Success(value);
+      return Result.success(value);
     } on PlatformException catch (e) {
       final errorType = AmazonChimeErrorTypeExt.init(e.code);
       switch (errorType) {
         case AmazonChimeErrorType.invalidResponse:
-          return Failure(AmazonChimeError.invalidResponse());
+          return Result.failure(AmazonChimeError.invalidResponse());
         case AmazonChimeErrorType.customError:
-          return Failure(AmazonChimeError.customError(e.message ?? ''));
+          return Result.failure(AmazonChimeError.customError(e.message ?? ''));
         case AmazonChimeErrorType.responseMessage:
-          return Failure(AmazonChimeError.responseMessage(e.message ?? ''));
+          return Result.failure(
+            AmazonChimeError.responseMessage(e.message ?? ''),
+          );
         case AmazonChimeErrorType.unknown:
-          return Failure(AmazonChimeError.unknown());
+          return Result.failure(AmazonChimeError.unknown());
       }
     }
   }

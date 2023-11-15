@@ -9,12 +9,12 @@
 //     with MockPlatformInterfaceMixin
 //     implements AmazonChimePlatform {
 //   @override
-//   Future<Result<String, AmazonChimeError>> getPlatformVersion() {
+//   Future<Result<String>> getPlatformVersion() {
 //     return Future.value(Failure(AmazonChimeError.invalidResponse()));
 //   }
 
 //   @override
-//   Future<Result<String, AmazonChimeError>> requestCameraPermissions() {
+//   Future<Result<String>> requestCameraPermissions() {
 //     return Future.value(
 //       Failure(
 //         AmazonChimeError.customError('This is camera permission error!'),
@@ -23,7 +23,7 @@
 //   }
 
 //   @override
-//   Future<Result<String, AmazonChimeError>> requestMicrophonePermissions() {
+//   Future<Result<String>> requestMicrophonePermissions() {
 //     return Future.value(Failure(AmazonChimeError.unknown()));
 //   }
 // }

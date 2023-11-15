@@ -1,28 +1,25 @@
-import 'package:amazon_chime_plugin/errors/amazon_chime_error.dart';
 import 'package:amazon_chime_plugin/pigeon/generated/message_data.g.dart';
 import 'package:amazon_chime_plugin/utils/requester/amazon_chime_requester/amazon_chime_plugin_platform_interface.dart';
 import 'package:amazon_chime_plugin/utils/result.dart';
 
-export '../../result.dart';
-
 final class AmazonChimeRequester extends AmazonChimeRequesterPlatform {
   @override
-  Future<Result<String, AmazonChimeError>> getPlatformVersion() {
+  Future<Result<String>> getPlatformVersion() {
     return AmazonChimeRequesterPlatform.instance.getPlatformVersion();
   }
 
   @override
-  Future<Result<String, AmazonChimeError>> initialAudioSelection() async {
+  Future<Result<String>> initialAudioSelection() async {
     return AmazonChimeRequesterPlatform.instance.initialAudioSelection();
   }
 
   @override
-  Future<Result<List<String>, AmazonChimeError>> listAudioDevices() async {
+  Future<Result<List<String>>> listAudioDevices() async {
     return AmazonChimeRequesterPlatform.instance.listAudioDevices();
   }
 
   @override
-  Future<Result<String, AmazonChimeError>> updateCurrentDevice(
+  Future<Result<String>> updateCurrentDevice(
     String deviceLabel,
   ) async {
     return AmazonChimeRequesterPlatform.instance
@@ -30,34 +27,34 @@ final class AmazonChimeRequester extends AmazonChimeRequesterPlatform {
   }
 
   @override
-  Future<Result<void, AmazonChimeError>> startLocalVideo() async {
+  Future<Result<void>> startLocalVideo() async {
     return AmazonChimeRequesterPlatform.instance.startLocalVideo();
   }
 
   @override
-  Future<Result<void, AmazonChimeError>> stopLocalVideo() async {
+  Future<Result<void>> stopLocalVideo() async {
     return AmazonChimeRequesterPlatform.instance.stopLocalVideo();
   }
 
   @override
-  Future<Result<void, AmazonChimeError>> join(
+  Future<Result<void>> join(
     JoinParameter parameter,
   ) async {
     return AmazonChimeRequesterPlatform.instance.join(parameter);
   }
 
   @override
-  Future<Result<void, AmazonChimeError>> stop() async {
+  Future<Result<void>> stop() async {
     return AmazonChimeRequesterPlatform.instance.stop();
   }
 
   @override
-  Future<Result<void, AmazonChimeError>> mute() async {
+  Future<Result<void>> mute() async {
     return AmazonChimeRequesterPlatform.instance.mute();
   }
 
   @override
-  Future<Result<void, AmazonChimeError>> unmute() async {
+  Future<Result<void>> unmute() async {
     return AmazonChimeRequesterPlatform.instance.unmute();
   }
 }

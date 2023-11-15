@@ -1,4 +1,3 @@
-import 'package:amazon_chime_plugin/errors/amazon_chime_error.dart';
 import 'package:amazon_chime_plugin/pigeon/generated/message_data.g.dart';
 import 'package:amazon_chime_plugin/utils/requester/amazon_chime_requester/amazon_chime_plugin_method_channel.dart';
 import 'package:amazon_chime_plugin/utils/result.dart';
@@ -26,23 +25,23 @@ abstract class AmazonChimeRequesterPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<Result<String, AmazonChimeError>> getPlatformVersion() {
+  Future<Result<String>> getPlatformVersion() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
-  Future<Result<String, AmazonChimeError>> initialAudioSelection() async {
+  Future<Result<String>> initialAudioSelection() async {
     throw UnimplementedError(
       'initialAudioSelection() has not been implemented.',
     );
   }
 
-  Future<Result<List<String>, AmazonChimeError>> listAudioDevices() async {
+  Future<Result<List<String>>> listAudioDevices() async {
     throw UnimplementedError(
       'listAudioDevices() has not been implemented.',
     );
   }
 
-  Future<Result<String, AmazonChimeError>> updateCurrentDevice(
+  Future<Result<String>> updateCurrentDevice(
     String deviceLabel,
   ) async {
     throw UnimplementedError(
@@ -50,19 +49,19 @@ abstract class AmazonChimeRequesterPlatform extends PlatformInterface {
     );
   }
 
-  Future<Result<void, AmazonChimeError>> startLocalVideo() async {
+  Future<Result<void>> startLocalVideo() async {
     throw UnimplementedError(
       'startLocalVideo() has not been implemented.',
     );
   }
 
-  Future<Result<void, AmazonChimeError>> stopLocalVideo() async {
+  Future<Result<void>> stopLocalVideo() async {
     throw UnimplementedError(
       'stopLocalVideo() has not been implemented.',
     );
   }
 
-  Future<Result<void, AmazonChimeError>> join(
+  Future<Result<void>> join(
     JoinParameter parameter,
   ) async {
     throw UnimplementedError(
@@ -70,19 +69,19 @@ abstract class AmazonChimeRequesterPlatform extends PlatformInterface {
     );
   }
 
-  Future<Result<void, AmazonChimeError>> stop() async {
+  Future<Result<void>> stop() async {
     throw UnimplementedError(
       'stop() has not been implemented.',
     );
   }
 
-  Future<Result<void, AmazonChimeError>> mute() async {
+  Future<Result<void>> mute() async {
     throw UnimplementedError(
       'mute() has not been implemented.',
     );
   }
 
-  Future<Result<void, AmazonChimeError>> unmute() async {
+  Future<Result<void>> unmute() async {
     throw UnimplementedError(
       'unmute() has not been implemented.',
     );

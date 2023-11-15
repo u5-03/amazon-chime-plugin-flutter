@@ -8,7 +8,7 @@ import 'package:amazon_chime_plugin/utils/result.dart';
 import 'package:http/http.dart' as http;
 
 class Api {
-  Future<Result<JoinInfoModel, AmazonChimeError>> join(
+  Future<Result<JoinInfoModel>> join(
     String meetingId,
     String attendeeId,
     ApiConfig config,
