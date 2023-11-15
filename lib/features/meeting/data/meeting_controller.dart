@@ -12,6 +12,7 @@ import 'package:amazon_chime_plugin/utils/internet_connection.dart';
 import 'package:amazon_chime_plugin/utils/logger.dart';
 import 'package:amazon_chime_plugin/utils/permission_manager.dart';
 import 'package:amazon_chime_plugin/utils/requester/amazon_chime_requester/amazon_chime_requester.dart';
+import 'package:amazon_chime_plugin/utils/result.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -111,7 +112,7 @@ final class MeetingController extends Notifier<MeetingData>
     state = state.copyWith(participants: {});
   }
 
-  Future<Result<void, AmazonChimeError>> joinMeetingWithAPI(
+  Future<Result<void>> joinMeetingWithAPI(
     String meetingId,
     String attendeeName,
     ApiConfig config,
@@ -129,7 +130,7 @@ final class MeetingController extends Notifier<MeetingData>
     }
   }
 
-  Future<Result<void, AmazonChimeError>> joinMeeting(JoinInfoModel info) async {
+  Future<Result<void>> joinMeeting(JoinInfoModel info) async {
     final microphonePermissionResult =
         await PermissionManager.requestMicrophonePermissions();
     final cameraPermissionResult =

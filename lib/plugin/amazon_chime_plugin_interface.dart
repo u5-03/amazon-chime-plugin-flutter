@@ -1,5 +1,4 @@
 import 'package:amazon_chime_plugin/api/api.dart';
-import 'package:amazon_chime_plugin/errors/amazon_chime_error.dart';
 import 'package:amazon_chime_plugin/features/meeting/data/meeting_controller.dart';
 import 'package:amazon_chime_plugin/features/meeting/models/meeting/join_info_model.dart';
 import 'package:amazon_chime_plugin/utils/result.dart';
@@ -9,23 +8,23 @@ abstract interface class AmazonChimePluginInterface {
   AmazonChimePluginInterface(this.meetingRepository) : super();
   final MeetingController meetingRepository;
 
-  Future<Result<String, AmazonChimeError>> getPlatformVersion();
-  Future<Result<String, AmazonChimeError>> initialAudioSelection();
-  Future<Result<List<String>, AmazonChimeError>> listAudioDevices();
-  Future<Result<String, AmazonChimeError>> updateCurrentDevice(
+  Future<Result<String>> getPlatformVersion();
+  Future<Result<String>> initialAudioSelection();
+  Future<Result<List<String>>> listAudioDevices();
+  Future<Result<String>> updateCurrentDevice(
     String deviceLabel,
   );
-  Future<Result<void, AmazonChimeError>> startLocalVideo();
-  Future<Result<void, AmazonChimeError>> stopLocalVideo();
-  Future<Result<void, AmazonChimeError>> joinMeetingWithAPI(
+  Future<Result<void>> startLocalVideo();
+  Future<Result<void>> stopLocalVideo();
+  Future<Result<void>> joinMeetingWithAPI(
     String meetingId,
     String attendeeName,
     ApiConfig config,
   );
-  Future<Result<void, AmazonChimeError>> joinMeeting(
+  Future<Result<void>> joinMeeting(
     JoinInfoModel info,
   );
-  Future<Result<void, AmazonChimeError>> stop();
-  Future<Result<void, AmazonChimeError>> mute();
-  Future<Result<void, AmazonChimeError>> unmute();
+  Future<Result<void>> stop();
+  Future<Result<void>> mute();
+  Future<Result<void>> unmute();
 }
