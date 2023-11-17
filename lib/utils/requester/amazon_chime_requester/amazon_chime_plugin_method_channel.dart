@@ -101,6 +101,13 @@ final class MethodChannelAmazonChimeRequester
       return requester.unmute();
     });
   }
+
+  @override
+  Future<Result<void>> switchLocalCamera() async {
+    return _runCatching(() async {
+      return requester.switchCamera();
+    });
+  }
 }
 
 extension MethodChannelAmazonChimePluginExt

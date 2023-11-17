@@ -49,4 +49,7 @@ final class ApiConfig {
   });
   final String region;
   final String apiUrl;
+
+  @override
+  String toString() => 'ApiConfig(region: $region, apiUrl: $apiUrl)';
 }

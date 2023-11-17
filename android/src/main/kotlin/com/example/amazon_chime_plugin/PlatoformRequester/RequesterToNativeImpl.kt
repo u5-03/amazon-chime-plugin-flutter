@@ -155,8 +155,8 @@ class RequesterToNativeImpl(context: Context): RequesterToNative, RealtimeObserv
        MeetingSession.shared.meetingSession?.audioVideo?.let { audioVideo ->
            audioVideo.stop()
            audioVideo.stopRemoteVideo()
-           MeetingSession.shared.removeSession()
            removeObservers()
+           MeetingSession.shared.removeSession()
            callback(Result.success(Unit))
        } ?: run {
            callback(Result.failure(AmazonChimeError.CustomError(text = "Meeting audioVideo is nil").asFlutterError))
@@ -188,6 +188,15 @@ class RequesterToNativeImpl(context: Context): RequesterToNative, RealtimeObserv
            callback(Result.failure(AmazonChimeError.CustomError(text = "Meeting audioVideo is nil").asFlutterError))
        }
     }
+
+    override fun switchCamera(callback: (Result<Unit>) -> Unit) {
+        MeetingSession.shared.meetingSession?.audioVideo?.let { audioVideo ->
+            audioVideo.switchCamera()
+            callback(Result.success(Unit))
+        } ?: run {
+            callback(Result.failure(AmazonChimeError.CustomError(text = "Meeting audioVideo is nil").asFlutterError))
+        }
+     }
 
     // MARK: RealtimeObserver
     override fun onAttendeesDropped(attendeeInfo: Array<AttendeeInfo>) {

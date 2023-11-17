@@ -124,6 +124,8 @@ abstract class RequesterToNative {
   void mute();
   @async
   void unmute();
+  @async
+  void switchCamera();
 }
 
 @FlutterApi() // Native -> Flutter

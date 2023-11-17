@@ -217,6 +217,7 @@ interface RequesterToNative {
   fun stop(callback: (Result<Unit>) -> Unit)
   fun mute(callback: (Result<Unit>) -> Unit)
   fun unmute(callback: (Result<Unit>) -> Unit)
+  fun switchCamera(callback: (Result<Unit>) -> Unit)
 
   companion object {
     /** The codec used by RequesterToNative. */
@@ -392,6 +393,23 @@ interface RequesterToNative {
         if (api != null) {
           channel.setMessageHandler { _, reply ->
             api.unmute() { result: Result<Unit> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                reply.reply(wrapResult(null))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.switchCamera", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            api.switchCamera() { result: Result<Unit> ->
               val error = result.exceptionOrNull()
               if (error != null) {
                 reply.reply(wrapError(error))

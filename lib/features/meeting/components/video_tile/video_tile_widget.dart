@@ -190,10 +190,14 @@ final class VideoTileWidget extends ConsumerWidget {
     final remoteParticipantId = meetingData.remoteParticipantId;
     final participants = meetingData.participants;
 
-    final localVideoTile =
-        VideoTileWidget.tileKind(tileKind: VideoTileKind.local);
-    final remoteVideoTile =
-        VideoTileWidget.tileKind(tileKind: VideoTileKind.remote);
+    final localVideoTile = VideoTileWidget.tileKind(
+      tileKind: VideoTileKind.local,
+      isScaleToFill: false,
+    );
+    final remoteVideoTile = VideoTileWidget.tileKind(
+      tileKind: VideoTileKind.remote,
+      isScaleToFill: false,
+    );
 
     if (participants.containsKey(contentParticipantId)) {
       if (meetingData.isReceivingScreenShare) {
