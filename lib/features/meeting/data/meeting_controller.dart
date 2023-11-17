@@ -485,6 +485,12 @@ final class MeetingController extends Notifier<MeetingData>
     }
   }
 
+  void switchLocalCamera() {
+    () async {
+      await chimePlugin.switchLocalCamera();
+    }();
+  }
+
   // //
   // // —————————————————————————— Helpers ——————————————————————————————————————
   // //

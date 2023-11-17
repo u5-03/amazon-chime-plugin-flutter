@@ -226,6 +226,7 @@ protocol RequesterToNative {
   func stop(completion: @escaping (Result<Void, Error>) -> Void)
   func mute(completion: @escaping (Result<Void, Error>) -> Void)
   func unmute(completion: @escaping (Result<Void, Error>) -> Void)
+  func switchCamera(completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -387,6 +388,21 @@ class RequesterToNativeSetup {
       }
     } else {
       unmuteChannel.setMessageHandler(nil)
+    }
+    let switchCameraChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.switchCamera", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      switchCameraChannel.setMessageHandler { _, reply in
+        api.switchCamera() { result in
+          switch result {
+            case .success:
+              reply(wrapResult(nil))
+            case .failure(let error):
+              reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      switchCameraChannel.setMessageHandler(nil)
     }
   }
 }

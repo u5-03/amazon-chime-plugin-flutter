@@ -1,14 +1,14 @@
 import 'package:amazon_chime_plugin/api/api.dart';
 import 'package:amazon_chime_plugin/extensions/alert_dialog.dart';
-import 'package:amazon_chime_plugin/extensions/string.dart';
+import 'package:amazon_chime_plugin/features/meeting/components/meeting_body/meeting_body_portrait_widget.dart';
 import 'package:amazon_chime_plugin/features/meeting/data/meeting_controller.dart';
 import 'package:amazon_chime_plugin/utils/result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final _meetingIdProvider =
-    StateProvider<String>((ref) => StringExt.randomLength);
-final _userNameProvider = StateProvider<String>((ref) => 'test');
+    StateProvider<String>((ref) => '1d94fb6b-1ade-4dbd-b6bc-be911c422713');
+final _userNameProvider = StateProvider<String>((ref) => 'TestUser');
 
 class InputInfoDebugScreen extends ConsumerWidget {
   const InputInfoDebugScreen(this.apiConfig, {super.key});
@@ -32,7 +32,7 @@ class InputInfoDebugScreen extends ConsumerWidget {
         await Navigator.push(
           context,
           MaterialPageRoute<dynamic>(
-            builder: (_) => const Text(''), //MeetingBodyPortraitWidget(),
+            builder: (_) => const MeetingBodyPortraitWidget(),
             fullscreenDialog: true, // modal page
           ),
         );

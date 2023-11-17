@@ -62,6 +62,18 @@ class MeetingBodyPortraitWidget extends ConsumerWidget {
             color: Colors.blue,
             onPressed: meetingController.toggleLocalVideoTileStatus,
           ),
+          IconButton(
+            icon: const Icon(
+              Icons.switch_camera,
+              size: 20,
+            ),
+            iconSize: Style.iconSize,
+            padding: EdgeInsets.symmetric(
+              horizontal: Style.iconPadding,
+            ),
+            color: Colors.blue,
+            onPressed: meetingController.switchLocalCamera,
+          ),
         ],
       ),
     );
@@ -133,74 +145,81 @@ class MeetingBodyPortraitWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final meetingData = ref.watch(meetingControllerProvider);
+    final size = MediaQuery.of(context).size;
     // RequesterToFlutterImp.ref = ref;
     RequesterToFlutterImp.meetingController ??=
         ref.read(meetingControllerProvider.notifier);
-    return WillPopScope(
-      onWillPop: () async {
-        await ref.read(meetingControllerProvider.notifier).stopMeeting();
-        return true;
-      },
-      child: SingleChildScrollView(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            minHeight: MediaQuery.of(context).size.height,
-          ),
-          child: IntrinsicHeight(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: VideoTileWidget.displayVideoTiles(
-                    Orientation.portrait,
-                    meetingData,
-                    const Size(200, 230),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 30, bottom: 20),
-                  child: Text(
-                    'Attendees:',
-                    style: TextStyle(fontSize: Style.titleSize),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                Column(
-                  children: displayParticipants(
-                    context,
-                    ref.read(meetingControllerProvider.notifier),
-                    meetingData,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: ElevatedButton(
-                    child: Text(
-                      'MeetingID: ${ref.watch(meetingControllerProvider).meetingId ?? ''}',
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Input Info Debug Screen'),
+      ),
+      body: WillPopScope(
+        onWillPop: () async {
+          await ref.read(meetingControllerProvider.notifier).stopMeeting();
+          return true;
+        },
+        child: SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height,
+            ),
+            child: IntrinsicHeight(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: VideoTileWidget.displayVideoTiles(
+                      Orientation.portrait,
+                      meetingData,
+                      Size(size.width / 2, 230),
                     ),
-                    onPressed: () {
-                      Clipboard.setData(
-                        ClipboardData(
-                          text:
-                              ref.watch(meetingControllerProvider).meetingId ??
-                                  '',
-                        ),
-                      );
-                    },
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 50),
-                  child: SizedBox(
-                    height: 50,
-                    width: 300,
-                    child: leaveMeetingButton(context, ref),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 30, bottom: 20),
+                    child: Text(
+                      'Attendees:',
+                      style: TextStyle(fontSize: Style.titleSize),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                const Spacer(),
-              ],
+                  Column(
+                    children: displayParticipants(
+                      context,
+                      ref.read(meetingControllerProvider.notifier),
+                      meetingData,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: ElevatedButton(
+                      child: Text(
+                        'MeetingID: ${ref.watch(meetingControllerProvider).meetingId ?? ''}',
+                      ),
+                      onPressed: () {
+                        Clipboard.setData(
+                          ClipboardData(
+                            text: ref
+                                    .watch(meetingControllerProvider)
+                                    .meetingId ??
+                                '',
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 50),
+                    child: SizedBox(
+                      height: 50,
+                      width: 300,
+                      child: leaveMeetingButton(context, ref),
+                    ),
+                  ),
+                  const Spacer(),
+                ],
+              ),
             ),
           ),
         ),

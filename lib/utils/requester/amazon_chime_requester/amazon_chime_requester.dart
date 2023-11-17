@@ -57,4 +57,9 @@ final class AmazonChimeRequester extends AmazonChimeRequesterPlatform {
   Future<Result<void>> unmute() async {
     return AmazonChimeRequesterPlatform.instance.unmute();
   }
+
+  @override
+  Future<Result<void>> switchLocalCamera() async {
+    return AmazonChimeRequesterPlatform.instance.switchLocalCamera();
+  }
 }

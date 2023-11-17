@@ -17,4 +17,8 @@ extension StringExt on String {
       ),
     );
   }
+
+  String? get percentEscaped {
+    return Uri.encodeQueryComponent(this);
+  }
 }

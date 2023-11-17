@@ -86,4 +86,10 @@ abstract class AmazonChimeRequesterPlatform extends PlatformInterface {
       'unmute() has not been implemented.',
     );
   }
+
+  Future<Result<void>> switchLocalCamera() async {
+    throw UnimplementedError(
+      'switchLocalCamera() has not been implemented.',
+    );
+  }
 }

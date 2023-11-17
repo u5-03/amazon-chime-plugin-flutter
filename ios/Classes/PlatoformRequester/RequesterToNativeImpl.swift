@@ -120,8 +120,9 @@ final class RequesterToNativeImpl: RequesterToNative {
     func stop(completion: @escaping (Result<Void, Error>) -> Void) {
         if let meetingSession = MeetingSession.shared.meetingSession {
             meetingSession.audioVideo.stop()
-            MeetingSession.shared.removeSession()
+            meetingSession.audioVideo.switchCamera()
             removeObservers()
+            MeetingSession.shared.removeSession()
             completion(.success(()))
         } else {
             completion(.failure(AmazonChimeError.customError(text: "Meeting session is nil")))
@@ -146,6 +147,11 @@ final class RequesterToNativeImpl: RequesterToNative {
         } else {
             completion(.failure(AmazonChimeError.customError(text: "Failed to unmute").asFlutterError))
         }
+    }
+
+    func switchCamera(completion: @escaping (Result<Void, Error>) -> Void) {
+        MeetingSession.shared.meetingSession?.audioVideo.switchCamera()
+        completion(.success(()))
     }
 }
 
@@ -195,7 +201,6 @@ private extension RequesterToNativeImpl {
         MeetingSession.shared.meetingSession?.audioVideo.removeAudioVideoObserver(observer: self)
     }
 }
-
 
 extension RequesterToNativeImpl: RealtimeObserver {
     public func volumeDidChange(volumeUpdates: [VolumeUpdate]) {
