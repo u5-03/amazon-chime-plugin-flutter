@@ -209,9 +209,9 @@ extension RequesterToNativeImpl: RealtimeObserver {
     public func signalStrengthDidChange(signalUpdates: [SignalUpdate]) {
     }
 
-    public func attendeesDidJoin(attendeeInfo: [AttendeeInfo]) {
+    public func attendeesDidJoin(attendeeInfo: [AmazonChimeSDK.AttendeeInfo]) {
         for currentAttendeeInfo in attendeeInfo {
-            let info = ParticipantInfo(
+            let info = AttendeeInfo(
                 attendeeId: currentAttendeeInfo.attendeeId,
                 externalUserId: currentAttendeeInfo.externalUserId
             )
@@ -219,9 +219,9 @@ extension RequesterToNativeImpl: RealtimeObserver {
         }
     }
 
-    public func attendeesDidLeave(attendeeInfo: [AttendeeInfo]) {
+    public func attendeesDidLeave(attendeeInfo: [AmazonChimeSDK.AttendeeInfo]) {
         for currentAttendeeInfo in attendeeInfo {
-            let info = ParticipantInfo(
+            let info = AttendeeInfo(
                 attendeeId: currentAttendeeInfo.attendeeId,
                 externalUserId: currentAttendeeInfo.externalUserId
             )
@@ -229,9 +229,9 @@ extension RequesterToNativeImpl: RealtimeObserver {
         }
     }
 
-    public func attendeesDidDrop(attendeeInfo: [AttendeeInfo]) {
+    public func attendeesDidDrop(attendeeInfo: [AmazonChimeSDK.AttendeeInfo]) {
         for currentAttendeeInfo in attendeeInfo {
-            let info = ParticipantInfo(
+            let info = AttendeeInfo(
                 attendeeId: currentAttendeeInfo.attendeeId,
                 externalUserId: currentAttendeeInfo.externalUserId
             )
@@ -239,9 +239,9 @@ extension RequesterToNativeImpl: RealtimeObserver {
         }
     }
 
-    public func attendeesDidMute(attendeeInfo: [AttendeeInfo]) {
+    public func attendeesDidMute(attendeeInfo: [AmazonChimeSDK.AttendeeInfo]) {
         for currentAttendeeInfo in attendeeInfo {
-            let info = ParticipantInfo(
+            let info = AttendeeInfo(
                 attendeeId: currentAttendeeInfo.attendeeId,
                 externalUserId: currentAttendeeInfo.externalUserId
             )
@@ -249,9 +249,9 @@ extension RequesterToNativeImpl: RealtimeObserver {
         }
     }
 
-    public func attendeesDidUnmute(attendeeInfo: [AttendeeInfo]) {
+    public func attendeesDidUnmute(attendeeInfo: [AmazonChimeSDK.AttendeeInfo]) {
         for currentAttendeeInfo in attendeeInfo {
-            let info = ParticipantInfo(
+            let info = AttendeeInfo(
                 attendeeId: currentAttendeeInfo.attendeeId,
                 externalUserId: currentAttendeeInfo.externalUserId
             )

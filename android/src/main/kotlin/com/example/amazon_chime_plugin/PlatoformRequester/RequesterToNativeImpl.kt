@@ -2,7 +2,7 @@ package com.example.amazon_chime_plugin.PlatoformRequester
 
 import FlutterError
 import JoinParameter
-import ParticipantInfo
+import AttendeeInfo
 import RequesterToNative
 import TileInfo
 import android.os.Build
@@ -201,7 +201,7 @@ class RequesterToNativeImpl(context: Context): RequesterToNative, RealtimeObserv
     // MARK: RealtimeObserver
     override fun onAttendeesDropped(attendeeInfo: Array<AttendeeInfo>) {
         for (currentAttendeeInfo in attendeeInfo) {
-            val info = ParticipantInfo(
+            val info = AttendeeInfo(
                 currentAttendeeInfo.attendeeId,
                 currentAttendeeInfo.externalUserId
             )
@@ -211,7 +211,7 @@ class RequesterToNativeImpl(context: Context): RequesterToNative, RealtimeObserv
 
     override fun onAttendeesJoined(attendeeInfo: Array<AttendeeInfo>) {
         for (currentAttendeeInfo in attendeeInfo) {
-            val info = ParticipantInfo(
+            val info = AttendeeInfo(
                 currentAttendeeInfo.attendeeId,
                 currentAttendeeInfo.externalUserId
             )
@@ -221,7 +221,7 @@ class RequesterToNativeImpl(context: Context): RequesterToNative, RealtimeObserv
 
     override fun onAttendeesLeft(attendeeInfo: Array<AttendeeInfo>) {
         for (currentAttendeeInfo in attendeeInfo) {
-            val info = ParticipantInfo(
+            val info = AttendeeInfo(
                 attendeeId = currentAttendeeInfo.attendeeId,
                 externalUserId = currentAttendeeInfo.externalUserId
             )
@@ -231,7 +231,7 @@ class RequesterToNativeImpl(context: Context): RequesterToNative, RealtimeObserv
 
     override fun onAttendeesMuted(attendeeInfo: Array<AttendeeInfo>) {
         for (currentAttendeeInfo in attendeeInfo) {
-            val info = ParticipantInfo(
+            val info = AttendeeInfo(
                 attendeeId = currentAttendeeInfo.attendeeId,
                 externalUserId = currentAttendeeInfo.externalUserId
             )
@@ -241,7 +241,7 @@ class RequesterToNativeImpl(context: Context): RequesterToNative, RealtimeObserv
 
     override fun onAttendeesUnmuted(attendeeInfo: Array<AttendeeInfo>) {
         for (currentAttendeeInfo in attendeeInfo) {
-            val info = ParticipantInfo(
+            val info = AttendeeInfo(
                 attendeeId = currentAttendeeInfo.attendeeId,
                 externalUserId = currentAttendeeInfo.externalUserId
             )

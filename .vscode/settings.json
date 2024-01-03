@@ -10,11 +10,12 @@
   "editor.suggestSelection": "first",
   "editor.guides.bracketPairs": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll": true,
-    "source.organizeImports": true
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit"
   },
   "cSpell.words": [
     "curr",
+    "dotenv",
     "fullscreen",
     "nodoc",
     "riverpod",
@@ -31,7 +32,7 @@
   "[dart]": {
     "editor.tabSize": 2,
     "editor.codeActionsOnSave": {
-      "quickfix.insertSemicolon": true
+      "quickfix.insertSemicolon": "explicit"
     },
     "editor.detectIndentation": false,
     "editor.insertSpaces": false,
@@ -42,7 +43,7 @@
     "editor.suggest.snippetsPreventQuickSuggestions": false,
     "editor.suggestSelection": "first",
     "editor.tabCompletion": "onlySnippets",
-    "editor.wordBasedSuggestions": false,
+    "editor.wordBasedSuggestions": "off",
     "editor.defaultFormatter": "Dart-Code.dart-code",
     "editor.formatOnPaste": true
   },

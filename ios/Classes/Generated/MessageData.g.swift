@@ -119,15 +119,15 @@ struct JoinParameter {
 }
 
 /// Generated class from Pigeon that represents data sent in messages.
-struct ParticipantInfo {
+struct AttendeeInfo {
   var attendeeId: String
   var externalUserId: String
 
-  static func fromList(_ list: [Any?]) -> ParticipantInfo? {
+  static func fromList(_ list: [Any?]) -> AttendeeInfo? {
     let attendeeId = list[0] as! String
     let externalUserId = list[1] as! String
 
-    return ParticipantInfo(
+    return AttendeeInfo(
       attendeeId: attendeeId,
       externalUserId: externalUserId
     )
@@ -410,7 +410,7 @@ private class RequesterToFlutterCodecReader: FlutterStandardReader {
   override func readValue(ofType type: UInt8) -> Any? {
     switch type {
       case 128:
-        return ParticipantInfo.fromList(self.readValue() as! [Any?])
+        return AttendeeInfo.fromList(self.readValue() as! [Any?])
       case 129:
         return TileInfo.fromList(self.readValue() as! [Any?])
       default:
@@ -421,7 +421,7 @@ private class RequesterToFlutterCodecReader: FlutterStandardReader {
 
 private class RequesterToFlutterCodecWriter: FlutterStandardWriter {
   override func writeValue(_ value: Any) {
-    if let value = value as? ParticipantInfo {
+    if let value = value as? AttendeeInfo {
       super.writeByte(128)
       super.writeValue(value.toList())
     } else if let value = value as? TileInfo {
@@ -468,31 +468,31 @@ class RequesterToFlutter {
       completion(.success(Void()))
     }
   }
-  func joined(info infoArg: ParticipantInfo, completion: @escaping (Result<Void, FlutterError>) -> Void) {
+  func joined(info infoArg: AttendeeInfo, completion: @escaping (Result<Void, FlutterError>) -> Void) {
     let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.joined", binaryMessenger: binaryMessenger, codec: codec)
     channel.sendMessage([infoArg] as [Any?]) { _ in
       completion(.success(Void()))
     }
   }
-  func left(info infoArg: ParticipantInfo, completion: @escaping (Result<Void, FlutterError>) -> Void) {
+  func left(info infoArg: AttendeeInfo, completion: @escaping (Result<Void, FlutterError>) -> Void) {
     let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.left", binaryMessenger: binaryMessenger, codec: codec)
     channel.sendMessage([infoArg] as [Any?]) { _ in
       completion(.success(Void()))
     }
   }
-  func dropped(info infoArg: ParticipantInfo, completion: @escaping (Result<Void, FlutterError>) -> Void) {
+  func dropped(info infoArg: AttendeeInfo, completion: @escaping (Result<Void, FlutterError>) -> Void) {
     let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.dropped", binaryMessenger: binaryMessenger, codec: codec)
     channel.sendMessage([infoArg] as [Any?]) { _ in
       completion(.success(Void()))
     }
   }
-  func muted(info infoArg: ParticipantInfo, completion: @escaping (Result<Void, FlutterError>) -> Void) {
+  func muted(info infoArg: AttendeeInfo, completion: @escaping (Result<Void, FlutterError>) -> Void) {
     let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.muted", binaryMessenger: binaryMessenger, codec: codec)
     channel.sendMessage([infoArg] as [Any?]) { _ in
       completion(.success(Void()))
     }
   }
-  func unmuted(info infoArg: ParticipantInfo, completion: @escaping (Result<Void, FlutterError>) -> Void) {
+  func unmuted(info infoArg: AttendeeInfo, completion: @escaping (Result<Void, FlutterError>) -> Void) {
     let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.unmuted", binaryMessenger: binaryMessenger, codec: codec)
     channel.sendMessage([infoArg] as [Any?]) { _ in
       completion(.success(Void()))
