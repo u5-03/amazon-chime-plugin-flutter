@@ -127,17 +127,17 @@ data class JoinParameter (
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
-data class ParticipantInfo (
+data class AttendeeInfo (
   val attendeeId: String,
   val externalUserId: String
 
 ) {
   companion object {
     @Suppress("UNCHECKED_CAST")
-    fun fromList(list: List<Any?>): ParticipantInfo {
+    fun fromList(list: List<Any?>): AttendeeInfo {
       val attendeeId = list[0] as String
       val externalUserId = list[1] as String
-      return ParticipantInfo(attendeeId, externalUserId)
+      return AttendeeInfo(attendeeId, externalUserId)
     }
   }
   fun toList(): List<Any?> {
@@ -431,7 +431,7 @@ private object RequesterToFlutterCodec : StandardMessageCodec() {
     return when (type) {
       128.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          ParticipantInfo.fromList(it)
+          AttendeeInfo.fromList(it)
         }
       }
       129.toByte() -> {
@@ -444,7 +444,7 @@ private object RequesterToFlutterCodec : StandardMessageCodec() {
   }
   override fun writeValue(stream: ByteArrayOutputStream, value: Any?)   {
     when (value) {
-      is ParticipantInfo -> {
+      is AttendeeInfo -> {
         stream.write(128)
         writeValue(stream, value.toList())
       }
@@ -494,7 +494,7 @@ class RequesterToFlutter(private val binaryMessenger: BinaryMessenger) {
       } 
     }
   }
-  fun joined(infoArg: ParticipantInfo, callback: (Result<Unit>) -> Unit) {
+  fun joined(infoArg: AttendeeInfo, callback: (Result<Unit>) -> Unit) {
     val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.joined", codec)
     channel.send(listOf(infoArg)) {
       if (it is List<*>) {
@@ -508,7 +508,7 @@ class RequesterToFlutter(private val binaryMessenger: BinaryMessenger) {
       } 
     }
   }
-  fun left(infoArg: ParticipantInfo, callback: (Result<Unit>) -> Unit) {
+  fun left(infoArg: AttendeeInfo, callback: (Result<Unit>) -> Unit) {
     val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.left", codec)
     channel.send(listOf(infoArg)) {
       if (it is List<*>) {
@@ -522,7 +522,7 @@ class RequesterToFlutter(private val binaryMessenger: BinaryMessenger) {
       } 
     }
   }
-  fun dropped(infoArg: ParticipantInfo, callback: (Result<Unit>) -> Unit) {
+  fun dropped(infoArg: AttendeeInfo, callback: (Result<Unit>) -> Unit) {
     val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.dropped", codec)
     channel.send(listOf(infoArg)) {
       if (it is List<*>) {
@@ -536,7 +536,7 @@ class RequesterToFlutter(private val binaryMessenger: BinaryMessenger) {
       } 
     }
   }
-  fun muted(infoArg: ParticipantInfo, callback: (Result<Unit>) -> Unit) {
+  fun muted(infoArg: AttendeeInfo, callback: (Result<Unit>) -> Unit) {
     val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.muted", codec)
     channel.send(listOf(infoArg)) {
       if (it is List<*>) {
@@ -550,7 +550,7 @@ class RequesterToFlutter(private val binaryMessenger: BinaryMessenger) {
       } 
     }
   }
-  fun unmuted(infoArg: ParticipantInfo, callback: (Result<Unit>) -> Unit) {
+  fun unmuted(infoArg: AttendeeInfo, callback: (Result<Unit>) -> Unit) {
     val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.unmuted", codec)
     channel.send(listOf(infoArg)) {
       if (it is List<*>) {
