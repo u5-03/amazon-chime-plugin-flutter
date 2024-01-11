@@ -7,7 +7,7 @@ import RequesterToNative
 import TileInfo
 import android.os.Build
 import android.content.Context
-import com.amazonaws.services.chime.sdk.meetings.audiovideo.AttendeeInfo
+import com.amazonaws.services.chime.sdk.meetings.audiovideo.AttendeeInfo as ChimeAttendeeInfo
 import com.amazonaws.services.chime.sdk.meetings.audiovideo.AudioVideoObserver
 import com.amazonaws.services.chime.sdk.meetings.audiovideo.SignalUpdate
 import com.amazonaws.services.chime.sdk.meetings.audiovideo.VolumeUpdate
@@ -199,7 +199,7 @@ class RequesterToNativeImpl(context: Context): RequesterToNative, RealtimeObserv
      }
 
     // MARK: RealtimeObserver
-    override fun onAttendeesDropped(attendeeInfo: Array<AttendeeInfo>) {
+    override fun onAttendeesDropped(attendeeInfo: Array<ChimeAttendeeInfo>) {
         for (currentAttendeeInfo in attendeeInfo) {
             val info = AttendeeInfo(
                 currentAttendeeInfo.attendeeId,
@@ -209,7 +209,7 @@ class RequesterToNativeImpl(context: Context): RequesterToNative, RealtimeObserv
         }
     }
 
-    override fun onAttendeesJoined(attendeeInfo: Array<AttendeeInfo>) {
+    override fun onAttendeesJoined(attendeeInfo: Array<ChimeAttendeeInfo>) {
         for (currentAttendeeInfo in attendeeInfo) {
             val info = AttendeeInfo(
                 currentAttendeeInfo.attendeeId,
@@ -219,7 +219,7 @@ class RequesterToNativeImpl(context: Context): RequesterToNative, RealtimeObserv
         }
     }
 
-    override fun onAttendeesLeft(attendeeInfo: Array<AttendeeInfo>) {
+    override fun onAttendeesLeft(attendeeInfo: Array<ChimeAttendeeInfo>) {
         for (currentAttendeeInfo in attendeeInfo) {
             val info = AttendeeInfo(
                 attendeeId = currentAttendeeInfo.attendeeId,
@@ -229,7 +229,7 @@ class RequesterToNativeImpl(context: Context): RequesterToNative, RealtimeObserv
         }
     }
 
-    override fun onAttendeesMuted(attendeeInfo: Array<AttendeeInfo>) {
+    override fun onAttendeesMuted(attendeeInfo: Array<ChimeAttendeeInfo>) {
         for (currentAttendeeInfo in attendeeInfo) {
             val info = AttendeeInfo(
                 attendeeId = currentAttendeeInfo.attendeeId,
@@ -239,7 +239,7 @@ class RequesterToNativeImpl(context: Context): RequesterToNative, RealtimeObserv
         }
     }
 
-    override fun onAttendeesUnmuted(attendeeInfo: Array<AttendeeInfo>) {
+    override fun onAttendeesUnmuted(attendeeInfo: Array<ChimeAttendeeInfo>) {
         for (currentAttendeeInfo in attendeeInfo) {
             val info = AttendeeInfo(
                 attendeeId = currentAttendeeInfo.attendeeId,

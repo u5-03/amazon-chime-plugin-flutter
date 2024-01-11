@@ -120,7 +120,6 @@ final class RequesterToNativeImpl: RequesterToNative {
     func stop(completion: @escaping (Result<Void, Error>) -> Void) {
         if let meetingSession = MeetingSession.shared.meetingSession {
             meetingSession.audioVideo.stop()
-            meetingSession.audioVideo.switchCamera()
             removeObservers()
             MeetingSession.shared.removeSession()
             completion(.success(()))
