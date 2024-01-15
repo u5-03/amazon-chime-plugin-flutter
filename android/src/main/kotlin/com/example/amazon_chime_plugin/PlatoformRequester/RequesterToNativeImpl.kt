@@ -26,6 +26,7 @@ import com.amazonaws.services.chime.sdk.meetings.session.MeetingSessionStatus
 import com.amazonaws.services.chime.sdk.meetings.utils.logger.ConsoleLogger
 import com.example.amazon_chime_plugin.AmazonChimePlugin
 import com.example.amazon_chime_plugin.Manager.MeetingSession
+import com.example.amazon_chime_plugin.PlatoformRequester.Errors.AmazonChimeError
 import com.example.amazon_chime_plugin.PlatoformRequester.Models.ResponseMessageKind
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

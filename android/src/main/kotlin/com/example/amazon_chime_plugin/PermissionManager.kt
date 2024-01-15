@@ -12,7 +12,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import android.Manifest
-import com.example.amazon_chime_plugin.PlatoformRequester.AmazonChimeError
+import com.example.amazon_chime_plugin.PlatoformRequester.Errors.AmazonChimeError
 
 class PermissionManager(
     private val activity: Activity

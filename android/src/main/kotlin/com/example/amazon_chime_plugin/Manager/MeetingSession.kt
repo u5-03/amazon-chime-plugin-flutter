@@ -2,7 +2,7 @@ package com.example.amazon_chime_plugin.Manager
 
 import com.amazonaws.services.chime.sdk.meetings.audiovideo.AudioVideoFacade
 import com.amazonaws.services.chime.sdk.meetings.session.DefaultMeetingSession
-import com.example.amazon_chime_plugin.PlatoformRequester.AmazonChimeError
+import com.example.amazon_chime_plugin.PlatoformRequester.Errors.AmazonChimeError
 
 class MeetingSession private constructor() {
     companion object {

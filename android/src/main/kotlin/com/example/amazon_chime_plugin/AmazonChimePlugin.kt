@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import com.example.amazon_chime_plugin.Views.VideoTile.VideoTileFactory
 
-// After modified, must modify ios/dart defition too.
+// After modified, must modify ios/dart definition too.
 enum class PlatformViewKind(val rawValue: String) {
   VIDEO_TILE("videoTile")
 }
