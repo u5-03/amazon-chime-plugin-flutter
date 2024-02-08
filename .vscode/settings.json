@@ -1,7 +1,11 @@
 {
   "files.insertFinalNewline": true,
   // Ref: https://zenn.dev/inari_sushio/articles/0f4c606c8340ee
-  "editor.quickSuggestions": false,
+  "editor.quickSuggestions": {
+    "comments": "off",
+    "strings": "off",
+    "other": "off"
+  },
   "editor.formatOnSave": true,
   "editor.suggestSelection": "first",
   "editor.guides.bracketPairs": true,
@@ -34,7 +38,9 @@
     "editor.insertSpaces": false,
     "editor.formatOnSave": true,
     "editor.formatOnType": true,
-    "editor.rulers": [120],
+    "editor.rulers": [
+      120
+    ],
     "editor.selectionHighlight": false,
     "editor.suggest.snippetsPreventQuickSuggestions": false,
     "editor.suggestSelection": "first",

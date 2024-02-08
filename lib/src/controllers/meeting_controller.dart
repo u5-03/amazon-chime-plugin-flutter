@@ -37,8 +37,9 @@ final class MeetingController implements AudioDevicesInterface {
     try {
       await native.joinMeeting(info);
       notifier.initializeLocalAttendee();
-      await listAudioDevices();
-      await initialAudioSelection();
+      // Androidでたまにエラーになるので、いったんコメントアウト
+      // await listAudioDevices();
+      // await initialAudioSelection();
       return;
     } catch (e) {
       rethrow;
