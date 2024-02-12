@@ -31,15 +31,17 @@ final class VideoTileView: NSObject, FlutterPlatformView {
         self.tileId = tileId
         super.init()
 
+
         // Memo: without delay, tileView won't present when re-display tileView
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             // Bind view to VideoView
             MeetingSession.shared.meetingSession?.audioVideo.bindVideoView(videoView: self.videoRenderView, tileId: tileId)
             // この辺りの設定をViewの宣言時に設定すると、なぜかUIが崩れるのでここに記載
             // Fix aspect ratio
-            (self.videoRenderView as? UIView)?.contentMode = isScaleToFill ? .scaleToFill : .scaleAspectFit
+            (self.videoRenderView as? UIView)?.contentMode = isScaleToFill ? .scaleAspectFill : .scaleAspectFit
+            (self.videoRenderView as? UIView)?.clipsToBounds = true
+            (self.videoRenderView as? UIView)?.backgroundColor = .black
             (self.videoRenderView as? DefaultVideoRenderView)?.mirror = isMirror
-
         }
         // Declare _view as UIView for Flutter interpretation
         //        videoRenderView = videoRenderView as UIView

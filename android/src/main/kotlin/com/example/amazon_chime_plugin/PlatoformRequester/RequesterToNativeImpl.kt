@@ -156,6 +156,7 @@ class RequesterToNativeImpl(context: Context): RequesterToNative, RealtimeObserv
        MeetingSession.shared.meetingSession?.audioVideo?.let { audioVideo ->
            audioVideo.stop()
            audioVideo.stopRemoteVideo()
+           audioVideo.stopLocalVideo()
            removeObservers()
            MeetingSession.shared.removeSession()
            callback(Result.success(Unit))

@@ -31,6 +31,10 @@ class MeetingSession private constructor() {
         if (audioVideo != null) {
             audioVideo.start()
             audioVideo.startRemoteVideo()
+
+            // Remove background noise
+            // Ref: https://github.com/aws/amazon-chime-sdk-android?tab=readme-ov-file#amazon-voice-focus
+            audioVideo.realtimeSetVoiceFocusEnabled(true);
         } else {
             throw AmazonChimeError.CustomError("Audio video is null").asFlutterError
         }

@@ -119,6 +119,8 @@ final class RequesterToNativeImpl: RequesterToNative {
 
     func stop(completion: @escaping (Result<Void, Error>) -> Void) {
         if let meetingSession = MeetingSession.shared.meetingSession {
+            meetingSession.audioVideo.stopLocalVideo()
+            meetingSession.audioVideo.stopRemoteVideo()
             meetingSession.audioVideo.stop()
             removeObservers()
             MeetingSession.shared.removeSession()
@@ -149,8 +151,10 @@ final class RequesterToNativeImpl: RequesterToNative {
     }
 
     func switchCamera(completion: @escaping (Result<Void, Error>) -> Void) {
-        MeetingSession.shared.meetingSession?.audioVideo.switchCamera()
-        completion(.success(()))
+        DispatchQueue.global(qos: .userInitiated).async {
+            MeetingSession.shared.meetingSession?.audioVideo.switchCamera()
+            completion(.success(()))
+        }
     }
 }
 

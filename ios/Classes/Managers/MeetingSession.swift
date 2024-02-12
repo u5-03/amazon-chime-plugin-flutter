@@ -33,6 +33,9 @@ final class MeetingSession {
         // TODO: fix bug audio setting error
         try configureAudioSession()
         try startAudioVideoConnection()
+        // Remove background noise
+        // Ref: https://github.com/aws/amazon-chime-sdk-ios?tab=readme-ov-file#amazon-voice-focus
+        _ = meetingSession?.audioVideo.realtimeSetVoiceFocusEnabled(enabled: true)
     }
 }
 
