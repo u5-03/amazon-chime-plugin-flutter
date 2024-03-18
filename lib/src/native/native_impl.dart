@@ -48,6 +48,16 @@ final class NativeImpl implements NativeInterface {
   }
 
   @override
+  Future<void> startRemoteVideo() {
+    return _runCatching(requester.startRemoteVideo);
+  }
+
+  @override
+  Future<void> stopRemoteVideo() {
+    return _runCatching(requester.stopRemoteVideo);
+  }
+
+  @override
   Future<void> switchLocalCamera() {
     return _runCatching(requester.switchCamera);
   }

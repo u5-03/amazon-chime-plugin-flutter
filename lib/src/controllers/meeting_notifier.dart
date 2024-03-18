@@ -12,12 +12,45 @@ import 'package:flutter/material.dart';
 final class MeetingNotifier extends ValueNotifier<MeetingValue> {
   MeetingNotifier({
     required this.native,
-    required this.callbacks,
   }) : super(MeetingValue.empty()) {
     RequesterToFlutter.setup(
       RequesterToFlutterImp(
         callbacks: RequesterToFlutterCallbacks(
-          audioSessionDidStop: () => resetMeetingValues(),
+          audioSessionDidStop: () {
+            callbacks.audioSessionDidStop?.call();
+            resetMeetingValues();
+          },
+          audioSessionDidDrop: () {
+            callbacks.audioSessionDidDrop?.call();
+          },
+          connectionDidRecover: () {
+            callbacks.connectionDidRecover?.call();
+          },
+          connectionDidBecomePoor: () {
+            callbacks.connectionDidBecomePoor?.call();
+          },
+          audioSessionDidCancelReconnect: () {
+            callbacks.audioSessionDidCancelReconnect?.call();
+          },
+          videoSessionDidStartConnecting: () {
+            callbacks.videoSessionDidStartConnecting?.call();
+          },
+          audioSessionDidStartConnecting: (isReconnecting) {
+            print('Streaming: $callbacks');
+            callbacks.audioSessionDidStartConnecting?.call(isReconnecting);
+          },
+          audioSessionDidStart: (isReconnecting) {
+            callbacks.audioSessionDidStart?.call(isReconnecting);
+          },
+          cameraSendAvailabilityDidChange: (isAvailable) {
+            callbacks.cameraSendAvailabilityDidChange?.call(isAvailable);
+          },
+          remoteVideoSourcesDidBecomeAvailable: (sources) {
+            callbacks.remoteVideoSourcesDidBecomeAvailable?.call(sources);
+          },
+          remoteVideoSourcesDidBecomeUnavailable: (sources) {
+            callbacks.remoteVideoSourcesDidBecomeUnavailable?.call(sources);
+          },
           joined: (info) => didJoinParticipant(info),
           dropped: (info) => _attendeeDidLeave(info, didDrop: true),
           left: (info) => _attendeeDidLeave(info, didDrop: false),
@@ -48,7 +81,7 @@ final class MeetingNotifier extends ValueNotifier<MeetingValue> {
   }
 
   final NativeInterface native;
-  final RequesterToFlutterCallbacks? callbacks;
+  RequesterToFlutterCallbacks callbacks = RequesterToFlutterCallbacks();
 
   void updateContentAttendeeId(String contentAttendeeId) {
     value = value.copyWith(contentAttendeeId: contentAttendeeId);
@@ -56,6 +89,10 @@ final class MeetingNotifier extends ValueNotifier<MeetingValue> {
 
   void updateRemoteAttendeeId(String remoteAttendeeId) {
     value = value.copyWith(remoteAttendeeId: remoteAttendeeId);
+  }
+
+  void updateLocalVideoEnabled({required bool isLocalVideoEnabled}) {
+    value = value.copyWith(isLocalVideoEnabled: isLocalVideoEnabled);
   }
 
   void addAttendee({required AttendeeModel attendee}) {

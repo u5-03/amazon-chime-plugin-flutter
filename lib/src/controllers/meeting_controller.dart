@@ -4,21 +4,81 @@ import 'package:amazon_chime_plugin/src/data/api_config.dart';
 import 'package:amazon_chime_plugin/src/interfaces/audio_devices_interface.dart';
 import 'package:amazon_chime_plugin/src/models/join_info_model.dart';
 import 'package:amazon_chime_plugin/src/native/native_interface.dart';
-import 'package:amazon_chime_plugin/src/native/requester_to_flutter/requester_to_flutter_callbacks.dart';
 
 final class MeetingController implements AudioDevicesInterface {
   MeetingController({
-    this.callbacks,
     NativeInterface? native,
   })  : native = native ?? NativeInterface.defaultInstance,
         notifier = MeetingNotifier(
           native: NativeInterface.defaultInstance,
-          callbacks: callbacks,
         );
 
   final NativeInterface native;
   final MeetingNotifier notifier;
-  final RequesterToFlutterCallbacks? callbacks;
+
+  void setAudioSessionDidStop(void Function() audioSessionDidStop) {
+    notifier.callbacks.audioSessionDidStop = audioSessionDidStop;
+  }
+
+  void setAudioSessionDidDrop(void Function() audioSessionDidDrop) {
+    notifier.callbacks.audioSessionDidDrop = audioSessionDidDrop;
+  }
+
+  void setConnectionDidRecover(void Function() connectionDidRecover) {
+    notifier.callbacks.connectionDidRecover = connectionDidRecover;
+  }
+
+  void setConnectionDidBecomePoor(void Function() connectionDidBecomePoor) {
+    notifier.callbacks.connectionDidBecomePoor = connectionDidBecomePoor;
+  }
+
+  void setAudioSessionDidCancelReconnect(
+    void Function() audioSessionDidCancelReconnect,
+  ) {
+    notifier.callbacks.audioSessionDidCancelReconnect =
+        audioSessionDidCancelReconnect;
+  }
+
+  void setVideoSessionDidStartConnecting(
+    void Function() videoSessionDidStartConnecting,
+  ) {
+    notifier.callbacks.videoSessionDidStartConnecting =
+        videoSessionDidStartConnecting;
+  }
+
+  void setAudioSessionDidStartConnecting(
+    void Function(bool) audioSessionDidStartConnecting,
+  ) {
+    notifier.callbacks.audioSessionDidStartConnecting =
+        audioSessionDidStartConnecting;
+  }
+
+  void setAudioSessionDidStart(
+    void Function(bool) audioSessionDidStart,
+  ) {
+    notifier.callbacks.audioSessionDidStart = audioSessionDidStart;
+  }
+
+  void setCameraSendAvailabilityDidChange(
+    void Function(bool) cameraSendAvailabilityDidChange,
+  ) {
+    notifier.callbacks.cameraSendAvailabilityDidChange =
+        cameraSendAvailabilityDidChange;
+  }
+
+  void setRemoteVideoSourcesDidBecomeAvailable(
+    void Function(List<String>) remoteVideoSourcesDidBecomeAvailable,
+  ) {
+    notifier.callbacks.remoteVideoSourcesDidBecomeAvailable =
+        remoteVideoSourcesDidBecomeAvailable;
+  }
+
+  void setRemoteVideoSourcesDidBecomeUnavailable(
+    void Function(List<String>) remoteVideoSourcesDidBecomeUnavailable,
+  ) {
+    notifier.callbacks.remoteVideoSourcesDidBecomeUnavailable =
+        remoteVideoSourcesDidBecomeUnavailable;
+  }
 
   Future<String> getPlatformVersion() {
     return native.getPlatformVersion();
@@ -63,6 +123,7 @@ final class MeetingController implements AudioDevicesInterface {
   }
 
   Future<void> startLocalVideo() {
+    notifier.updateLocalVideoEnabled(isLocalVideoEnabled: true);
     return native.startLocalVideo();
   }
 
@@ -71,7 +132,16 @@ final class MeetingController implements AudioDevicesInterface {
   }
 
   Future<void> stopLocalVideo() {
+    notifier.updateLocalVideoEnabled(isLocalVideoEnabled: false);
     return native.stopLocalVideo();
+  }
+
+  Future<void> startRemoteVideo() {
+    return native.startRemoteVideo();
+  }
+
+  Future<void> stopRemoteVideo() {
+    return native.stopRemoteVideo();
   }
 
   Future<void> switchLocalCamera() {

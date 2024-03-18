@@ -15,6 +15,7 @@ final class MeetingValue {
     this.orientation = Orientation.portrait,
     this.isReceivingScreenShare = false,
     this.isMeetingActive = false,
+    this.isLocalVideoEnabled = false,
   });
 
   factory MeetingValue.empty() => const MeetingValue();
@@ -30,6 +31,7 @@ final class MeetingValue {
   final Orientation orientation;
   final bool isReceivingScreenShare;
   final bool isMeetingActive;
+  final bool isLocalVideoEnabled;
 
   MeetingValue copyWith({
     String? meetingId,
@@ -43,6 +45,7 @@ final class MeetingValue {
     Orientation? orientation,
     bool? isReceivingScreenShare,
     bool? isMeetingActive,
+    bool? isLocalVideoEnabled,
   }) {
     return MeetingValue(
       meetingId: meetingId ?? this.meetingId,
@@ -57,6 +60,7 @@ final class MeetingValue {
       isReceivingScreenShare:
           isReceivingScreenShare ?? this.isReceivingScreenShare,
       isMeetingActive: isMeetingActive ?? this.isMeetingActive,
+      isLocalVideoEnabled: isLocalVideoEnabled ?? this.isLocalVideoEnabled,
     );
   }
 }

@@ -17,6 +17,55 @@ final class RequesterToFlutterImp implements RequesterToFlutter {
   }
 
   @override
+  void audioSessionDidCancelReconnect() {
+    callbacks.audioSessionDidCancelReconnect?.call();
+  }
+
+  @override
+  void audioSessionDidStart(bool reconnecting) {
+    callbacks.audioSessionDidStart?.call(reconnecting);
+  }
+
+  @override
+  void audioSessionDidStartConnecting(bool reconnecting) {
+    callbacks.audioSessionDidStartConnecting?.call(reconnecting);
+  }
+
+  @override
+  void connectionDidBecomePoor() {
+    callbacks.connectionDidBecomePoor?.call();
+  }
+
+  @override
+  void connectionDidRecover() {
+    callbacks.connectionDidRecover?.call();
+  }
+
+  @override
+  void videoSessionDidStartConnecting() {
+    callbacks.videoSessionDidStartConnecting?.call();
+  }
+
+  @override
+  void cameraSendAvailabilityDidChange(bool available) {
+    callbacks.cameraSendAvailabilityDidChange?.call(available);
+  }
+
+  @override
+  void remoteVideoSourcesDidBecomeAvailable(List<String?> sources) {
+    callbacks.remoteVideoSourcesDidBecomeAvailable?.call(
+      sources.whereType<String>().toList(),
+    );
+  }
+
+  @override
+  void remoteVideoSourcesDidBecomeUnavailable(List<String?> sources) {
+    callbacks.remoteVideoSourcesDidBecomeUnavailable?.call(
+      sources.whereType<String>().toList(),
+    );
+  }
+
+  @override
   void joined(AttendeeInfo info) {
     callbacks.joined?.call(info);
   }

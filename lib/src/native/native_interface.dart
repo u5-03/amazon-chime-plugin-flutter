@@ -10,6 +10,8 @@ abstract class NativeInterface {
   );
   Future<void> startLocalVideo();
   Future<void> stopLocalVideo();
+  Future<void> startRemoteVideo();
+  Future<void> stopRemoteVideo();
   Future<void> joinMeeting(
     JoinInfoModel info,
   );

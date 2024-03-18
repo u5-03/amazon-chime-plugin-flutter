@@ -112,7 +112,25 @@ class RequesterToNativeImpl(context: Context): RequesterToNative, RealtimeObserv
        }
    }
 
-   override fun join(parameter: JoinParameter, callback: (Result<Unit>) -> Unit) {
+    override fun startRemoteVideo(callback: (Result<Unit>) -> Unit) {
+        val result: Unit? = MeetingSession.shared.meetingSession?.audioVideo?.startRemoteVideo()
+        if (result != null) {
+            callback(Result.success(Unit))
+        } else {
+            callback(Result.failure(AmazonChimeError.CustomError("Failed to start local video!").asFlutterError))
+        }
+    }
+
+    override fun stopRemoteVideo(callback: (Result<Unit>) -> Unit) {
+        val result: Unit? = MeetingSession.shared.meetingSession?.audioVideo?.stopRemoteVideo()
+        if (result != null) {
+            callback(Result.success(Unit))
+        } else {
+            callback(Result.failure(AmazonChimeError.CustomError("Failed to stop local video!").asFlutterError))
+        }
+    }
+
+    override fun join(parameter: JoinParameter, callback: (Result<Unit>) -> Unit) {
        val createMeetingResponse = CreateMeetingResponse(
            Meeting(
                parameter.externalMeetingId,
@@ -296,8 +314,6 @@ class RequesterToNativeImpl(context: Context): RequesterToNative, RealtimeObserv
         // Out of scope
     }
 
-
-
     private fun removeObservers() {
         MeetingSession.shared.meetingSession?.audioVideo?.removeRealtimeObserver(this);
         MeetingSession.shared.meetingSession?.audioVideo?.removeVideoTileObserver(this);
@@ -305,31 +321,51 @@ class RequesterToNativeImpl(context: Context): RequesterToNative, RealtimeObserv
     }
 
     // MARK: AudioVideoObserver
-    override fun onAudioSessionCancelledReconnect() {}
+    override fun onAudioSessionCancelledReconnect() {
+        AmazonChimePlugin.requester?.audioSessionDidCancelReconnect {}
+    }
 
-    override fun onAudioSessionDropped() {}
+    override fun onAudioSessionDropped() {
+        AmazonChimePlugin.requester?.audioSessionDidDrop {}
+    }
 
-    override fun onAudioSessionStarted(reconnecting: Boolean) {}
+    override fun onAudioSessionStarted(reconnecting: Boolean) {
+        AmazonChimePlugin.requester?.audioSessionDidStart(reconnecting) {}
+    }
 
-    override fun onAudioSessionStartedConnecting(reconnecting: Boolean) {}
+    override fun onAudioSessionStartedConnecting(reconnecting: Boolean) {
+        AmazonChimePlugin.requester?.audioSessionDidStartConnecting(reconnecting) {}
+    }
 
     override fun onAudioSessionStopped(sessionStatus: MeetingSessionStatus) {
         AmazonChimePlugin.requester?.audioSessionDidStop {}
     }
 
-    override fun onCameraSendAvailabilityUpdated(available: Boolean) {}
+    override fun onCameraSendAvailabilityUpdated(available: Boolean) {
+        AmazonChimePlugin.requester?.cameraSendAvailabilityDidChange(available) {}
+    }
 
-    override fun onConnectionBecamePoor() {}
+    override fun onConnectionBecamePoor() {
+        AmazonChimePlugin.requester?.connectionDidBecomePoor {}
+    }
 
-    override fun onConnectionRecovered() {}
+    override fun onConnectionRecovered() {
+        AmazonChimePlugin.requester?.connectionDidRecover {}
+    }
 
-    override fun onRemoteVideoSourceAvailable(sources: List<RemoteVideoSource>) {}
+    override fun onRemoteVideoSourceAvailable(sources: List<RemoteVideoSource>) {
+        AmazonChimePlugin.requester?.remoteVideoSourcesDidBecomeAvailable(sources.map { it.attendeeId }) {}
+    }
 
-    override fun onRemoteVideoSourceUnavailable(sources: List<RemoteVideoSource>) {}
+    override fun onRemoteVideoSourceUnavailable(sources: List<RemoteVideoSource>) {
+        AmazonChimePlugin.requester?.remoteVideoSourcesDidBecomeUnavailable(sources.map { it.attendeeId }) {}
+    }
+
+    override fun onVideoSessionStartedConnecting() {
+        AmazonChimePlugin.requester?.videoSessionDidStartConnecting {}
+    }
 
     override fun onVideoSessionStarted(sessionStatus: MeetingSessionStatus) {}
-
-    override fun onVideoSessionStartedConnecting() {}
 
     override fun onVideoSessionStopped(sessionStatus: MeetingSessionStatus) {}
 }

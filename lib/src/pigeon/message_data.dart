@@ -117,6 +117,10 @@ abstract class RequesterToNative {
   @async
   void stopLocalVideo();
   @async
+  void startRemoteVideo();
+  @async
+  void stopRemoteVideo();
+  @async
   void join(JoinParameter parameter);
   @async
   void stop();
@@ -132,6 +136,15 @@ abstract class RequesterToNative {
 abstract class RequesterToFlutter {
   void audioSessionDidDrop();
   void audioSessionDidStop();
+  void connectionDidRecover();
+  void connectionDidBecomePoor();
+  void audioSessionDidCancelReconnect();
+  void videoSessionDidStartConnecting();
+  void audioSessionDidStartConnecting(bool reconnecting);
+  void audioSessionDidStart(bool reconnecting);
+  void cameraSendAvailabilityDidChange(bool available);
+  void remoteVideoSourcesDidBecomeAvailable(List<String> sources);
+  void remoteVideoSourcesDidBecomeUnavailable(List<String> sources);
   void joined(AttendeeInfo info);
   void left(AttendeeInfo info);
   void dropped(AttendeeInfo info);

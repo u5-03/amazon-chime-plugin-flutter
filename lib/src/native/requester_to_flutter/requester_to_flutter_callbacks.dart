@@ -4,6 +4,15 @@ final class RequesterToFlutterCallbacks {
   RequesterToFlutterCallbacks({
     this.audioSessionDidDrop,
     this.audioSessionDidStop,
+    this.connectionDidRecover,
+    this.connectionDidBecomePoor,
+    this.audioSessionDidCancelReconnect,
+    this.videoSessionDidStartConnecting,
+    this.audioSessionDidStartConnecting,
+    this.audioSessionDidStart,
+    this.cameraSendAvailabilityDidChange,
+    this.remoteVideoSourcesDidBecomeAvailable,
+    this.remoteVideoSourcesDidBecomeUnavailable,
     this.joined,
     this.dropped,
     this.left,
@@ -14,6 +23,15 @@ final class RequesterToFlutterCallbacks {
   });
   void Function()? audioSessionDidDrop;
   void Function()? audioSessionDidStop;
+  void Function()? connectionDidRecover;
+  void Function()? connectionDidBecomePoor;
+  void Function()? audioSessionDidCancelReconnect;
+  void Function()? videoSessionDidStartConnecting;
+  void Function(bool)? audioSessionDidStartConnecting;
+  void Function(bool)? audioSessionDidStart;
+  void Function(bool)? cameraSendAvailabilityDidChange;
+  void Function(List<String>)? remoteVideoSourcesDidBecomeAvailable;
+  void Function(List<String>)? remoteVideoSourcesDidBecomeUnavailable;
   void Function(AttendeeInfo)? joined;
   void Function(AttendeeInfo)? dropped;
   void Function(AttendeeInfo)? left;

@@ -8,7 +8,7 @@ sealed class AmazonChimeError implements Exception {
       CustomError('Error: $msg');
   factory AmazonChimeError.responseMessage([String msg = '']) =>
       ResponseMessage(msg);
-  factory AmazonChimeError.unknown() => UnknownError('Unknown Error');
+  factory AmazonChimeError.unknown() => UnknownError('不明なエラーが発生しました(ac)');
 
   factory AmazonChimeError.invalidResponse() =>
       InvalidResponse('Invalid Response');

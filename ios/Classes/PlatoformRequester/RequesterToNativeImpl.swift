@@ -64,6 +64,16 @@ final class RequesterToNativeImpl: RequesterToNative {
         completion(.success(()))
     }
 
+    func startRemoteVideo(completion: @escaping (Result<Void, any Error>) -> Void) {
+        MeetingSession.shared.meetingSession?.audioVideo.startRemoteVideo()
+        completion(.success(()))
+    }
+
+    func stopRemoteVideo(completion: @escaping (Result<Void, any Error>) -> Void) {
+        MeetingSession.shared.meetingSession?.audioVideo.stopRemoteVideo()
+        completion(.success(()))
+    }
+
     func join(parameter: JoinParameter, completion: @escaping (Result<Void, Error>) -> Void) {
         let meetingResponse = CreateMeetingResponse(
             meeting: Meeting(
@@ -303,28 +313,34 @@ extension RequesterToNativeImpl: VideoTileObserver {
 
 extension RequesterToNativeImpl: AudioVideoObserver {
     func audioSessionDidStartConnecting(reconnecting: Bool) {
+        AmazonChimePlugin.requester?.audioSessionDidStartConnecting(reconnecting: reconnecting, completion: { _ in })
     }
     
     func audioSessionDidStart(reconnecting: Bool) {
+        AmazonChimePlugin.requester?.audioSessionDidStart(reconnecting: reconnecting, completion: { _ in })
     }
     
     func audioSessionDidDrop() {
+        AmazonChimePlugin.requester?.audioSessionDidDrop(completion: { _ in })
     }
     
     func audioSessionDidStopWithStatus(sessionStatus: AmazonChimeSDK.MeetingSessionStatus) {
-        AmazonChimePlugin.requester?.audioSessionDidStop(completion: { _ in })
     }
     
     func audioSessionDidCancelReconnect() {
+        AmazonChimePlugin.requester?.audioSessionDidCancelReconnect(completion: { _ in })
     }
     
     func connectionDidRecover() {
+        AmazonChimePlugin.requester?.connectionDidRecover(completion: { _ in })
     }
     
     func connectionDidBecomePoor() {
+        AmazonChimePlugin.requester?.connectionDidBecomePoor(completion: { _ in })
     }
     
     func videoSessionDidStartConnecting() {
+        AmazonChimePlugin.requester?.videoSessionDidStartConnecting(completion: { _ in })
     }
     
     func videoSessionDidStartWithStatus(sessionStatus: AmazonChimeSDK.MeetingSessionStatus) {
@@ -334,11 +350,14 @@ extension RequesterToNativeImpl: AudioVideoObserver {
     }
     
     func remoteVideoSourcesDidBecomeAvailable(sources: [AmazonChimeSDK.RemoteVideoSource]) {
+        AmazonChimePlugin.requester?.remoteVideoSourcesDidBecomeAvailable(sources: sources.map(\.attendeeId), completion: { _ in })
     }
     
     func remoteVideoSourcesDidBecomeUnavailable(sources: [AmazonChimeSDK.RemoteVideoSource]) {
+        AmazonChimePlugin.requester?.remoteVideoSourcesDidBecomeUnavailable(sources: sources.map(\.attendeeId), completion: { _ in })
     }
     
     func cameraSendAvailabilityDidChange(available: Bool) {
+        AmazonChimePlugin.requester?.cameraSendAvailabilityDidChange(available: available, completion: { _ in })
     }
 }

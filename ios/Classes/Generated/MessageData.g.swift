@@ -222,6 +222,8 @@ protocol RequesterToNative {
   func updateCurrentDevice(deviceLabel: String, completion: @escaping (Result<String, Error>) -> Void)
   func startLocalVideo(completion: @escaping (Result<Void, Error>) -> Void)
   func stopLocalVideo(completion: @escaping (Result<Void, Error>) -> Void)
+  func startRemoteVideo(completion: @escaping (Result<Void, Error>) -> Void)
+  func stopRemoteVideo(completion: @escaping (Result<Void, Error>) -> Void)
   func join(parameter: JoinParameter, completion: @escaping (Result<Void, Error>) -> Void)
   func stop(completion: @escaping (Result<Void, Error>) -> Void)
   func mute(completion: @escaping (Result<Void, Error>) -> Void)
@@ -326,6 +328,36 @@ class RequesterToNativeSetup {
       }
     } else {
       stopLocalVideoChannel.setMessageHandler(nil)
+    }
+    let startRemoteVideoChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.startRemoteVideo", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      startRemoteVideoChannel.setMessageHandler { _, reply in
+        api.startRemoteVideo() { result in
+          switch result {
+            case .success:
+              reply(wrapResult(nil))
+            case .failure(let error):
+              reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      startRemoteVideoChannel.setMessageHandler(nil)
+    }
+    let stopRemoteVideoChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.stopRemoteVideo", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      stopRemoteVideoChannel.setMessageHandler { _, reply in
+        api.stopRemoteVideo() { result in
+          switch result {
+            case .success:
+              reply(wrapResult(nil))
+            case .failure(let error):
+              reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      stopRemoteVideoChannel.setMessageHandler(nil)
     }
     let joinChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.join", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
@@ -465,6 +497,60 @@ class RequesterToFlutter {
   func audioSessionDidStop(completion: @escaping (Result<Void, FlutterError>) -> Void) {
     let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.audioSessionDidStop", binaryMessenger: binaryMessenger, codec: codec)
     channel.sendMessage(nil) { _ in
+      completion(.success(Void()))
+    }
+  }
+  func connectionDidRecover(completion: @escaping (Result<Void, FlutterError>) -> Void) {
+    let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.connectionDidRecover", binaryMessenger: binaryMessenger, codec: codec)
+    channel.sendMessage(nil) { _ in
+      completion(.success(Void()))
+    }
+  }
+  func connectionDidBecomePoor(completion: @escaping (Result<Void, FlutterError>) -> Void) {
+    let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.connectionDidBecomePoor", binaryMessenger: binaryMessenger, codec: codec)
+    channel.sendMessage(nil) { _ in
+      completion(.success(Void()))
+    }
+  }
+  func audioSessionDidCancelReconnect(completion: @escaping (Result<Void, FlutterError>) -> Void) {
+    let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.audioSessionDidCancelReconnect", binaryMessenger: binaryMessenger, codec: codec)
+    channel.sendMessage(nil) { _ in
+      completion(.success(Void()))
+    }
+  }
+  func videoSessionDidStartConnecting(completion: @escaping (Result<Void, FlutterError>) -> Void) {
+    let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.videoSessionDidStartConnecting", binaryMessenger: binaryMessenger, codec: codec)
+    channel.sendMessage(nil) { _ in
+      completion(.success(Void()))
+    }
+  }
+  func audioSessionDidStartConnecting(reconnecting reconnectingArg: Bool, completion: @escaping (Result<Void, FlutterError>) -> Void) {
+    let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.audioSessionDidStartConnecting", binaryMessenger: binaryMessenger, codec: codec)
+    channel.sendMessage([reconnectingArg] as [Any?]) { _ in
+      completion(.success(Void()))
+    }
+  }
+  func audioSessionDidStart(reconnecting reconnectingArg: Bool, completion: @escaping (Result<Void, FlutterError>) -> Void) {
+    let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.audioSessionDidStart", binaryMessenger: binaryMessenger, codec: codec)
+    channel.sendMessage([reconnectingArg] as [Any?]) { _ in
+      completion(.success(Void()))
+    }
+  }
+  func cameraSendAvailabilityDidChange(available availableArg: Bool, completion: @escaping (Result<Void, FlutterError>) -> Void) {
+    let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.cameraSendAvailabilityDidChange", binaryMessenger: binaryMessenger, codec: codec)
+    channel.sendMessage([availableArg] as [Any?]) { _ in
+      completion(.success(Void()))
+    }
+  }
+  func remoteVideoSourcesDidBecomeAvailable(sources sourcesArg: [String], completion: @escaping (Result<Void, FlutterError>) -> Void) {
+    let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.remoteVideoSourcesDidBecomeAvailable", binaryMessenger: binaryMessenger, codec: codec)
+    channel.sendMessage([sourcesArg] as [Any?]) { _ in
+      completion(.success(Void()))
+    }
+  }
+  func remoteVideoSourcesDidBecomeUnavailable(sources sourcesArg: [String], completion: @escaping (Result<Void, FlutterError>) -> Void) {
+    let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.remoteVideoSourcesDidBecomeUnavailable", binaryMessenger: binaryMessenger, codec: codec)
+    channel.sendMessage([sourcesArg] as [Any?]) { _ in
       completion(.success(Void()))
     }
   }

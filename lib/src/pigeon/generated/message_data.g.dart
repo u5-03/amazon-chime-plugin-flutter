@@ -366,6 +366,50 @@ class RequesterToNative {
     }
   }
 
+  Future<void> startRemoteVideo() async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.startRemoteVideo', codec,
+        binaryMessenger: _binaryMessenger);
+    final List<Object?>? replyList =
+        await channel.send(null) as List<Object?>?;
+    if (replyList == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyList.length > 1) {
+      throw PlatformException(
+        code: replyList[0]! as String,
+        message: replyList[1] as String?,
+        details: replyList[2],
+      );
+    } else {
+      return;
+    }
+  }
+
+  Future<void> stopRemoteVideo() async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.stopRemoteVideo', codec,
+        binaryMessenger: _binaryMessenger);
+    final List<Object?>? replyList =
+        await channel.send(null) as List<Object?>?;
+    if (replyList == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyList.length > 1) {
+      throw PlatformException(
+        code: replyList[0]! as String,
+        message: replyList[1] as String?,
+        details: replyList[2],
+      );
+    } else {
+      return;
+    }
+  }
+
   Future<void> join(JoinParameter arg_parameter) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.join', codec,
@@ -512,6 +556,24 @@ abstract class RequesterToFlutter {
 
   void audioSessionDidStop();
 
+  void connectionDidRecover();
+
+  void connectionDidBecomePoor();
+
+  void audioSessionDidCancelReconnect();
+
+  void videoSessionDidStartConnecting();
+
+  void audioSessionDidStartConnecting(bool reconnecting);
+
+  void audioSessionDidStart(bool reconnecting);
+
+  void cameraSendAvailabilityDidChange(bool available);
+
+  void remoteVideoSourcesDidBecomeAvailable(List<String?> sources);
+
+  void remoteVideoSourcesDidBecomeUnavailable(List<String?> sources);
+
   void joined(AttendeeInfo info);
 
   void left(AttendeeInfo info);
@@ -556,6 +618,207 @@ abstract class RequesterToFlutter {
         channel.setMessageHandler((Object? message) async {
           try {
             api.audioSessionDidStop();
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.connectionDidRecover', codec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        channel.setMessageHandler(null);
+      } else {
+        channel.setMessageHandler((Object? message) async {
+          try {
+            api.connectionDidRecover();
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.connectionDidBecomePoor', codec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        channel.setMessageHandler(null);
+      } else {
+        channel.setMessageHandler((Object? message) async {
+          try {
+            api.connectionDidBecomePoor();
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.audioSessionDidCancelReconnect', codec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        channel.setMessageHandler(null);
+      } else {
+        channel.setMessageHandler((Object? message) async {
+          try {
+            api.audioSessionDidCancelReconnect();
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.videoSessionDidStartConnecting', codec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        channel.setMessageHandler(null);
+      } else {
+        channel.setMessageHandler((Object? message) async {
+          try {
+            api.videoSessionDidStartConnecting();
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.audioSessionDidStartConnecting', codec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        channel.setMessageHandler(null);
+      } else {
+        channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+          'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.audioSessionDidStartConnecting was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final bool? arg_reconnecting = (args[0] as bool?);
+          assert(arg_reconnecting != null,
+              'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.audioSessionDidStartConnecting was null, expected non-null bool.');
+          try {
+            api.audioSessionDidStartConnecting(arg_reconnecting!);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.audioSessionDidStart', codec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        channel.setMessageHandler(null);
+      } else {
+        channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+          'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.audioSessionDidStart was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final bool? arg_reconnecting = (args[0] as bool?);
+          assert(arg_reconnecting != null,
+              'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.audioSessionDidStart was null, expected non-null bool.');
+          try {
+            api.audioSessionDidStart(arg_reconnecting!);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.cameraSendAvailabilityDidChange', codec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        channel.setMessageHandler(null);
+      } else {
+        channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+          'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.cameraSendAvailabilityDidChange was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final bool? arg_available = (args[0] as bool?);
+          assert(arg_available != null,
+              'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.cameraSendAvailabilityDidChange was null, expected non-null bool.');
+          try {
+            api.cameraSendAvailabilityDidChange(arg_available!);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.remoteVideoSourcesDidBecomeAvailable', codec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        channel.setMessageHandler(null);
+      } else {
+        channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+          'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.remoteVideoSourcesDidBecomeAvailable was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final List<String?>? arg_sources = (args[0] as List<Object?>?)?.cast<String?>();
+          assert(arg_sources != null,
+              'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.remoteVideoSourcesDidBecomeAvailable was null, expected non-null List<String?>.');
+          try {
+            api.remoteVideoSourcesDidBecomeAvailable(arg_sources!);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.remoteVideoSourcesDidBecomeUnavailable', codec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        channel.setMessageHandler(null);
+      } else {
+        channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+          'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.remoteVideoSourcesDidBecomeUnavailable was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final List<String?>? arg_sources = (args[0] as List<Object?>?)?.cast<String?>();
+          assert(arg_sources != null,
+              'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.remoteVideoSourcesDidBecomeUnavailable was null, expected non-null List<String?>.');
+          try {
+            api.remoteVideoSourcesDidBecomeUnavailable(arg_sources!);
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
