@@ -3,6 +3,11 @@
 A new Flutter plugin project.
 [![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg)](https://pub.dev/packages/very_good_analysis)
 
+## This Package uses [Amazon Chime SDK](https://aws.amazon.com/jp/chime/chime-sdk/) mobile-native sdks.
+
+1. [iOS](https://github.com/aws/amazon-chime-sdk-ios)
+2. [Android](https://github.com/aws/amazon-chime-sdk-android)
+
 ## Getting Started
 
 This project is a starting point for a Flutter
@@ -37,10 +42,3 @@ post_install do |installer|
 end
 
 ```
-
-## メモ
-
-1. 現状 Android の plugin および`example`の Android のアプリは、Lint がうまく通らない
-   1. app/`build.gradle`にオプションを定義して、該当の Lint の適用を外そうとしてもうまく効かない
-2. Plugin の Android のコードを直接`./gradlew build`でビルドしようとしても、ビルドできない
-   1. `example`の Android アプリの方は、`./gradlew assembleDebug`(lint をせずに、ビルドのみ実行)は実行可能
