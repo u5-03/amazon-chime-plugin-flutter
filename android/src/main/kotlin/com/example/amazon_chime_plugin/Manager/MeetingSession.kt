@@ -1,6 +1,9 @@
 package com.example.amazon_chime_plugin.Manager
 
+import com.amazonaws.services.chime.sdk.meetings.audiovideo.AudioVideoConfiguration
 import com.amazonaws.services.chime.sdk.meetings.audiovideo.AudioVideoFacade
+import com.amazonaws.services.chime.sdk.meetings.audiovideo.audio.AudioRecordingPresetOverride
+import com.amazonaws.services.chime.sdk.meetings.audiovideo.audio.AudioStreamType
 import com.amazonaws.services.chime.sdk.meetings.session.DefaultMeetingSession
 import com.example.amazon_chime_plugin.PlatoformRequester.Errors.AmazonChimeError
 
@@ -29,7 +32,10 @@ class MeetingSession private constructor() {
         val audioVideo =
             meetingSession?.audioVideo
         if (audioVideo != null) {
-            audioVideo.start()
+            val audioVideoConfiguration = AudioVideoConfiguration(
+                audioStreamType = AudioStreamType.Music,
+            )
+            audioVideo.start(audioVideoConfiguration)
             audioVideo.startRemoteVideo()
 
             // Remove background noise
