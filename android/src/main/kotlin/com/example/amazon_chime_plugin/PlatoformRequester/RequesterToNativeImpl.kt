@@ -40,6 +40,7 @@ class RequesterToNativeImpl(context: Context): RequesterToNative, RealtimeObserv
 
     init {
         this.context = context
+        MeetingSession.shared.setContext(context);
     }
 
     fun cancel() {

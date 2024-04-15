@@ -172,14 +172,8 @@ private extension RequesterToNativeImpl {
     private func configureAudioSession() {
         let audioSession = AVAudioSession.sharedInstance()
         do {
-            if audioSession.category != .playAndRecord {
-                try audioSession.setCategory(AVAudioSession.Category.playAndRecord,
-                                             options: AVAudioSession.CategoryOptions.allowBluetooth)
-                try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
-            }
-            if audioSession.mode != .voiceChat {
-                try audioSession.setMode(.voiceChat)
-            }
+            try audioSession.setCategory(.playAndRecord, mode: .videoRecording, options: [.allowBluetooth, .defaultToSpeaker])
+            try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
         } catch {
             MeetingSession.shared.meetingSession?.logger.error(msg: "Error configuring AVAudioSession: \(error.localizedDescription)")
         }
