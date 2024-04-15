@@ -58,7 +58,6 @@ class MeetingSession private constructor() {
     private fun setSpeakerSetting() {
         val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         audioManager.isSpeakerphoneOn = true
-        audioManager.
     }
 
     private fun restoreSpeakerSetting() {
