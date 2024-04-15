@@ -43,8 +43,8 @@ private extension MeetingSession {
     func configureAudioSession() throws {
         let audioSession = AVAudioSession.sharedInstance()
         do {
+            try audioSession.setCategory(.playAndRecord, mode: .videoRecording, options: [.allowBluetooth, .defaultToSpeaker])
             try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
-            try audioSession.setMode(.voiceChat)
         } catch {
             logger.error(msg: "Error configuring AVAudioSession: \(error.localizedDescription)")
             throw AmazonChimeError.customError(text: error.localizedDescription)
