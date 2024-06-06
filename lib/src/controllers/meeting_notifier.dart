@@ -164,6 +164,10 @@ final class MeetingNotifier extends ValueNotifier<MeetingValue> {
     );
   }
 
+  void toggleFrontCamera() {
+    value = value.copyWith(isFrontCamera: !value.isFrontCamera);
+  }
+
   void initializeLocalAttendee() {
     final meetingData = value.meetingData;
     if (meetingData == null) {

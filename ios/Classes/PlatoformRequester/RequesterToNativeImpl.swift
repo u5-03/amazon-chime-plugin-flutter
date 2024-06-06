@@ -11,6 +11,7 @@ import Flutter
 import AmazonChimeSDK
 
 final class RequesterToNativeImpl: RequesterToNative {
+    let localCameraController = LocalCameraController()
     func getPlatformVersion(completion: @escaping (Result<String, Error>) -> Void) {
         Task {
             completion(.success(await UIDevice.current.systemVersion))
@@ -47,21 +48,15 @@ final class RequesterToNativeImpl: RequesterToNative {
         }
     }
 
-    func startLocalVideo(completion: @escaping (Result<Void, Error>) -> Void) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            do {
-                try MeetingSession.shared.meetingSession?.audioVideo.startLocalVideo()
-                completion(.success(()))
-            } catch {
-                MeetingSession.shared.meetingSession?.logger.error(msg: "Error configuring AVAudioSession: \(error.localizedDescription)")
-                completion(.failure(AmazonChimeError.customError(text: "Failed to start local video").asFlutterError))
-            }
-        }
+    func startLocalVideo() throws {
+        let videoSource = LocalCameraSource(localCameraController: localCameraController)
+        localCameraController.startRunning()
+        MeetingSession.shared.meetingSession?.audioVideo.startLocalVideo(source: videoSource)
     }
 
-    func stopLocalVideo(completion: @escaping (Result<Void, Error>) -> Void) {
+    func stopLocalVideo() throws {
+        localCameraController.stopRunning()
         MeetingSession.shared.meetingSession?.audioVideo.stopLocalVideo()
-        completion(.success(()))
     }
 
     func startRemoteVideo(completion: @escaping (Result<Void, any Error>) -> Void) {
@@ -162,7 +157,7 @@ final class RequesterToNativeImpl: RequesterToNative {
 
     func switchCamera(completion: @escaping (Result<Void, Error>) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
-            MeetingSession.shared.meetingSession?.audioVideo.switchCamera()
+            self.localCameraController.switchCamera()
             completion(.success(()))
         }
     }
