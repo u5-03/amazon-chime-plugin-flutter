@@ -229,6 +229,8 @@ protocol RequesterToNative {
   func mute(completion: @escaping (Result<Void, Error>) -> Void)
   func unmute(completion: @escaping (Result<Void, Error>) -> Void)
   func switchCamera(completion: @escaping (Result<Void, Error>) -> Void)
+  func createTileTexture(tileId: Int64, completion: @escaping (Result<Int64, Error>) -> Void)
+  func disposeTileTexture(tileId: Int64, completion: @escaping (Result<Int64, Error>) -> Void)
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -435,6 +437,40 @@ class RequesterToNativeSetup {
       }
     } else {
       switchCameraChannel.setMessageHandler(nil)
+    }
+    let createTileTextureChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.createTileTexture", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      createTileTextureChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let tileIdArg = args[0] is Int64 ? args[0] as! Int64 : Int64(args[0] as! Int32)
+        api.createTileTexture(tileId: tileIdArg) { result in
+          switch result {
+            case .success(let res):
+              reply(wrapResult(res))
+            case .failure(let error):
+              reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      createTileTextureChannel.setMessageHandler(nil)
+    }
+    let disposeTileTextureChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.disposeTileTexture", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      disposeTileTextureChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let tileIdArg = args[0] is Int64 ? args[0] as! Int64 : Int64(args[0] as! Int32)
+        api.disposeTileTexture(tileId: tileIdArg) { result in
+          switch result {
+            case .success(let res):
+              reply(wrapResult(res))
+            case .failure(let error):
+              reply(wrapError(error))
+          }
+        }
+      }
+    } else {
+      disposeTileTextureChannel.setMessageHandler(nil)
     }
   }
 }

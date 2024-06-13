@@ -71,6 +71,16 @@ final class NativeImpl implements NativeInterface {
   Future<String> updateCurrentDevice(String deviceLabel) {
     return _runCatching(() => requester.updateCurrentDevice(deviceLabel));
   }
+
+  @override
+  Future<int> createTileTexture(int tileId) {
+    return _runCatching(() => requester.createTileTexture(tileId));
+  }
+
+  @override
+  Future<int> disposeTileTexture(int tileId) {
+    return _runCatching(() => requester.disposeTileTexture(tileId));
+  }
 }
 
 extension NativeImplExt on NativeImpl {

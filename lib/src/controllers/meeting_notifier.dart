@@ -36,7 +36,6 @@ final class MeetingNotifier extends ValueNotifier<MeetingValue> {
             callbacks.videoSessionDidStartConnecting?.call();
           },
           audioSessionDidStartConnecting: (isReconnecting) {
-            print('Streaming: $callbacks');
             callbacks.audioSessionDidStartConnecting?.call(isReconnecting);
           },
           audioSessionDidStart: (isReconnecting) {

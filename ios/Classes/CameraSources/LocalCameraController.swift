@@ -14,6 +14,7 @@ final class LocalCameraController: NSObject {
     private let videoQueue = DispatchQueue(label: "videoQueue")
     private let cmSampleBufferSubject = PassthroughSubject<CMSampleBuffer, Never>()
     private let initialCameraPosition: AVCaptureDevice.Position = .front
+    private let videoOutput = AVCaptureVideoDataOutput()
     var cmSampleBufferPublisher: AnyPublisher<CMSampleBuffer, Never> {
         return cmSampleBufferSubject.eraseToAnyPublisher()
     }
@@ -57,24 +58,34 @@ final class LocalCameraController: NSObject {
             captureSession.commitConfiguration()
             return
         }
-
         captureSession.addInput(newVideoInput)
+        setVideoRotationState()
         captureSession.commitConfiguration()
     }
 
     private func setUp() {
         captureSession.beginConfiguration()
-        let videoOutput = AVCaptureVideoDataOutput()
+
         guard let videoDevice = getCamera(with: initialCameraPosition), captureSession.canAddOutput(videoOutput) else { return }
+
         do {
             let videoInput = try AVCaptureDeviceInput(device: videoDevice)
 
             captureSession.addInput(videoInput)
             captureSession.addOutput(videoOutput)
+            setVideoRotationState()
             videoOutput.setSampleBufferDelegate(self, queue: videoQueue)
             captureSession.commitConfiguration()
         } catch {
             print("Error setting device video input: \(error)")
+        }
+    }
+
+    private func setVideoRotationState() {
+        if #available(iOS 17.0, *) {
+            videoOutput.connection(with: .video)?.videoRotationAngle = 90
+        } else {
+            videoOutput.connection(with: .video)?.videoOrientation = .portrait
         }
     }
 

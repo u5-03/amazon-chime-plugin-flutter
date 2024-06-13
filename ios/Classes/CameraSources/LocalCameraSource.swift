@@ -16,7 +16,6 @@ final class LocalCameraSource: VideoSource {
     private let sinks = NSMutableSet()
     private let context = CIContext()
     private var cancellableSet = Set<AnyCancellable>()
-    private var bufferOrientation: AmazonChimeSDK.VideoRotation = .rotation90
     var videoContentHint: AmazonChimeSDK.VideoContentHint = .none
 
     init(localCameraController: LocalCameraController) {
@@ -43,7 +42,7 @@ private extension LocalCameraSource {
         guard let cvPixelBuffer = CMSampleBufferGetImageBuffer(cmSampleBuffer) else { return }
         let timestamp = CMSampleBufferGetPresentationTimeStamp(cmSampleBuffer)
         let processedFrame = VideoFrame(timestampNs: cmTimeToNanoSeconds(timestamp),
-                                        rotation: bufferOrientation,
+                                        rotation: .rotation0,
                                         buffer: VideoFramePixelBuffer(pixelBuffer: cvPixelBuffer))
 
         for sink in sinks {
