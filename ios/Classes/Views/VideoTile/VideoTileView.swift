@@ -14,11 +14,13 @@ final class VideoTileView: NSObject, FlutterPlatformView {
     private let videoRenderView: VideoRenderView = DefaultVideoRenderView()
     private let logger = ConsoleLogger(name: "MeetingSession")
     private let tileId: Int
+    private let registrar: FlutterPluginRegistrar
 
     init(
         frame: CGRect,
         viewIdentifier viewId: Int64,
-        arguments args: Any?
+        arguments args: Any?,
+        registrar: FlutterPluginRegistrar
     ) {
 
         // Receieve tileId as a param.
@@ -29,8 +31,8 @@ final class VideoTileView: NSObject, FlutterPlatformView {
             fatalError("`args` paramter must be `Int`!")
         }
         self.tileId = tileId
+        self.registrar = registrar
         super.init()
-
 
         // Memo: without delay, tileView won't present when re-display tileView
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {

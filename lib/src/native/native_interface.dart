@@ -19,6 +19,8 @@ abstract class NativeInterface {
   Future<void> mute();
   Future<void> unmute();
   Future<void> switchLocalCamera();
+  Future<int> createTileTexture(int tileId);
+  Future<int> disposeTileTexture(int tileId);
 
   static NativeInterface get defaultInstance => NativeImpl();
 }

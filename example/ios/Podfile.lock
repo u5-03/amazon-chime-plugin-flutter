@@ -1,10 +1,10 @@
 PODS:
-  - amazon_chime_plugin (0.0.1):
-    - AmazonChimeSDK-Bitcode (= 0.23.1)
+  - amazon_chime_plugin (0.0.2):
+    - AmazonChimeSDK (= 0.25.0)
     - Flutter
-  - AmazonChimeSDK-Bitcode (0.23.1):
-    - AmazonChimeSDKMedia-Bitcode (= 0.18.1)
-  - AmazonChimeSDKMedia-Bitcode (0.18.1)
+  - AmazonChimeSDK (0.25.0):
+    - AmazonChimeSDKMedia (= 0.20.0)
+  - AmazonChimeSDKMedia (0.20.0)
   - Flutter (1.0.0)
   - integration_test (0.0.1):
     - Flutter
@@ -19,8 +19,8 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - AmazonChimeSDK-Bitcode
-    - AmazonChimeSDKMedia-Bitcode
+    - AmazonChimeSDK
+    - AmazonChimeSDKMedia
 
 EXTERNAL SOURCES:
   amazon_chime_plugin:
@@ -33,9 +33,9 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
 
 SPEC CHECKSUMS:
-  amazon_chime_plugin: 4e33d2f3076bfaa6d3263a6db94097ea9afb33a4
-  AmazonChimeSDK-Bitcode: d84fa7718ad937a1c9e4cce17aee55e379e83601
-  AmazonChimeSDKMedia-Bitcode: d2a2d28dbbc905d95b78edf2a4b91af76eee867a
+  amazon_chime_plugin: 95af27c80b7dd2503d4f76ebe3c40a71a296d796
+  AmazonChimeSDK: c1ec29eb180cc95627b1c3110e001b10160da6af
+  AmazonChimeSDKMedia: 9a5665dc05cdd7ae94cd919136154580460bb7c9
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   integration_test: 13825b8a9334a850581300559b8839134b124670
   permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6

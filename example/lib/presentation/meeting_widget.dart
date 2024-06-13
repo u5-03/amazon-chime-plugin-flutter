@@ -169,14 +169,63 @@ class MeetingWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const SizedBox(height: 8),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: VideoTileWidget.displayVideoTiles(
-                            Orientation.portrait,
-                            controller,
-                            Size(size.width / 2, 230),
-                          ),
-                        ),
+                        if (meetingValue.localAttendeeId != null ||
+                            meetingValue.remoteAttendeeId != null)
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Builder(builder: (context) {
+                                  final attendees = meetingValue.attendees;
+                                  final remoteAttendeeId =
+                                      meetingValue.remoteAttendeeId;
+                                  final remoteTileId =
+                                      attendees[remoteAttendeeId]
+                                          ?.videoTile
+                                          ?.tileId;
+                                  if (remoteTileId != null) {
+                                    return Column(
+                                      children: [
+                                        Text('Remote($remoteTileId)'),
+                                        SizedBox(
+                                          width: size.width / 2,
+                                          height: size.width / 2 / 9 * 16,
+                                          child: VideoTileTextureWidget(
+                                            tileId: remoteTileId,
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  } else {
+                                    return const SizedBox.shrink();
+                                  }
+                                }),
+                                Builder(builder: (context) {
+                                  final attendees = meetingValue.attendees;
+                                  final localAttendeeId =
+                                      meetingValue.localAttendeeId;
+                                  final localTileId = attendees[localAttendeeId]
+                                      ?.videoTile
+                                      ?.tileId;
+                                  if (localTileId != null) {
+                                    return Column(
+                                      children: [
+                                        Text('Local($localTileId)'),
+                                        SizedBox(
+                                          width: size.width / 2,
+                                          height: size.width / 2 / 9 * 16,
+                                          child: VideoTileTextureWidget(
+                                            tileId: localTileId,
+                                            isMirror:
+                                                meetingValue.isFrontCamera,
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  } else {
+                                    return const SizedBox.shrink();
+                                  }
+                                })
+                              ]),
                         const Padding(
                           padding: EdgeInsets.only(top: 30, bottom: 20),
                           child: Text(

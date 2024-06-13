@@ -9,10 +9,10 @@ import Foundation
 import Flutter
 
 final class FlutterVideoTileFactory: NSObject, FlutterPlatformViewFactory {
-    private let messenger: FlutterBinaryMessenger
+    private let registrar: FlutterPluginRegistrar
 
-    init(messenger: FlutterBinaryMessenger) {
-        self.messenger = messenger
+    init(registrar: FlutterPluginRegistrar) {
+        self.registrar = registrar
         super.init()
     }
 
@@ -24,7 +24,8 @@ final class FlutterVideoTileFactory: NSObject, FlutterPlatformViewFactory {
         return VideoTileView(
             frame: frame,
             viewIdentifier: viewId,
-            arguments: args
+            arguments: args,
+            registrar: registrar
         )
     }
 
