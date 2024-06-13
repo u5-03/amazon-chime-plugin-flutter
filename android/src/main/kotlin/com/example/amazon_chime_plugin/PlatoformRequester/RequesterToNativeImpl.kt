@@ -5,8 +5,15 @@ import JoinParameter
 import AttendeeInfo
 import RequesterToNative
 import TileInfo
+import VideoSurfaceRenderView
+import VideoTileTextureController
+import android.app.Activity
 import android.os.Build
 import android.content.Context
+import android.opengl.GLSurfaceView
+import android.util.Log
+import android.widget.FrameLayout
+import android.widget.LinearLayout
 import com.amazonaws.services.chime.sdk.meetings.audiovideo.AttendeeInfo as ChimeAttendeeInfo
 import com.amazonaws.services.chime.sdk.meetings.audiovideo.AudioVideoObserver
 import com.amazonaws.services.chime.sdk.meetings.audiovideo.SignalUpdate
@@ -31,8 +38,12 @@ import com.example.amazon_chime_plugin.PlatoformRequester.Models.ResponseMessage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import io.flutter.view.TextureRegistry
 
-class RequesterToNativeImpl(context: Context): RequesterToNative, RealtimeObserver, VideoTileObserver,
+class RequesterToNativeImpl(
+    context: Context,
+    private val surfaceTextureEntry: TextureRegistry.SurfaceTextureEntry,
+): RequesterToNative, RealtimeObserver, VideoTileObserver,
     AudioVideoObserver {
     private var scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
     private var job: Job? = null
@@ -218,6 +229,45 @@ class RequesterToNativeImpl(context: Context): RequesterToNative, RealtimeObserv
             callback(Result.failure(AmazonChimeError.CustomError(text = "Meeting audioVideo is nil").asFlutterError))
         }
      }
+
+    override fun createTileTexture(tileId: Long, callback: (Result<Long>) -> Unit) {
+        try {
+            val controller = VideoSurfaceRenderView(context, null,  surfaceTextureEntry, tileId.toInt())
+            val textureId = controller.textureId
+            AmazonChimePlugin.videoTileTextureControllers[tileId] = controller
+
+//            // GLSurfaceViewの初期化と設定
+//            val glSurfaceView = GLSurfaceView(context).apply {
+//                setEGLContextClientVersion(2) // OpenGL ES 2.0を使用
+//                setRenderer(controller)
+//                renderMode = GLSurfaceView.RENDERMODE_CONTINUOUSLY // 常にレンダリングするように設定
+//            }
+
+            // デバッグメッセージ
+            Log.d("MyVideoPlugin", "Texture created with ID: $textureId")
+
+//            // Add GLSurfaceView to the layout
+//            (context as Activity).runOnUiThread {
+//                val layout = FrameLayout(context)
+//                layout.addView(glSurfaceView)
+//                context.setContentView(layout)
+//            }
+
+            // デバッグメッセージ
+            Log.d("MyVideoPlugin", "Texture created with ID: $textureId")
+
+            callback(Result.success(textureId))
+        } catch (e: Exception) {
+            Log.e("MyVideoPlugin", "Error creating texture", e)
+            callback(Result.failure(e))
+        }
+    }
+
+    override fun disposeTileTexture(tileId: Long, callback: (Result<Long>) -> Unit) {
+        val controller = AmazonChimePlugin.videoTileTextureControllers.entries.firstOrNull { it.key == tileId }?.value
+        controller?.dispose()
+        AmazonChimePlugin.videoTileTextureControllers.remove(tileId)
+    }
 
     // MARK: RealtimeObserver
     override fun onAttendeesDropped(attendeeInfo: Array<ChimeAttendeeInfo>) {

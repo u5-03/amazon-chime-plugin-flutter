@@ -220,6 +220,8 @@ interface RequesterToNative {
   fun mute(callback: (Result<Unit>) -> Unit)
   fun unmute(callback: (Result<Unit>) -> Unit)
   fun switchCamera(callback: (Result<Unit>) -> Unit)
+  fun createTileTexture(tileId: Long, callback: (Result<Long>) -> Unit)
+  fun disposeTileTexture(tileId: Long, callback: (Result<Long>) -> Unit)
 
   companion object {
     /** The codec used by RequesterToNative. */
@@ -451,6 +453,46 @@ interface RequesterToNative {
                 reply.reply(wrapError(error))
               } else {
                 reply.reply(wrapResult(null))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.createTileTexture", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val tileIdArg = args[0].let { if (it is Int) it.toLong() else it as Long }
+            api.createTileTexture(tileIdArg) { result: Result<Long> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
+              }
+            }
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.disposeTileTexture", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val tileIdArg = args[0].let { if (it is Int) it.toLong() else it as Long }
+            api.disposeTileTexture(tileIdArg) { result: Result<Long> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(wrapResult(data))
               }
             }
           }

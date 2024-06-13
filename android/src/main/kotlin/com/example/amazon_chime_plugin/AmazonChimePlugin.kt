@@ -3,6 +3,8 @@ package com.example.amazon_chime_plugin
 import JoinParameter
 import RequesterToNative
 import RequesterToFlutter
+import VideoSurfaceRenderView
+import VideoTileTextureController
 import androidx.annotation.NonNull
 import android.content.Context
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -25,13 +27,17 @@ enum class PlatformViewKind(val rawValue: String) {
 /** AmazonChimePlugin */
 public class AmazonChimePlugin: FlutterPlugin {
   companion object {
+    var videoTileTextureControllers: MutableMap<Long, VideoSurfaceRenderView> = mutableMapOf()
     var requester: RequesterToFlutter? = null
   }
 
   // MARK: FlutterPlugin
   override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
     // throw IllegalStateException("Another condition was not met!")
-    RequesterToNative.setUp(flutterPluginBinding.binaryMessenger, RequesterToNativeImpl(flutterPluginBinding.applicationContext))
+    RequesterToNative.setUp(
+      flutterPluginBinding.binaryMessenger,
+      RequesterToNativeImpl(flutterPluginBinding.applicationContext, flutterPluginBinding.textureRegistry.createSurfaceTexture())
+    )
     requester = RequesterToFlutter(flutterPluginBinding.binaryMessenger)
     flutterPluginBinding.platformViewRegistry
       .registerViewFactory(PlatformViewKind.VIDEO_TILE.rawValue, VideoTileFactory())
