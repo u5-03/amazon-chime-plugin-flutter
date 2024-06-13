@@ -241,9 +241,9 @@ class RequesterToNative {
     }
   }
 
-  Future<String> initialAudioSelection() async {
+  Future<String> getActiveAudioDevice() async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.initialAudioSelection', codec,
+        'dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.getActiveAudioDevice', codec,
         binaryMessenger: _binaryMessenger);
     final List<Object?>? replyList =
         await channel.send(null) as List<Object?>?;
@@ -641,6 +641,8 @@ abstract class RequesterToFlutter {
   void videoTileAdded(TileInfo info);
 
   void videoTileRemoved(TileInfo info);
+
+  void didChangedAudioDevice(String deviceLabel);
 
   static void setup(RequesterToFlutter? api, {BinaryMessenger? binaryMessenger}) {
     {
@@ -1048,6 +1050,31 @@ abstract class RequesterToFlutter {
               'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.videoTileRemoved was null, expected non-null TileInfo.');
           try {
             api.videoTileRemoved(arg_info!);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.didChangedAudioDevice', codec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        channel.setMessageHandler(null);
+      } else {
+        channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+          'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.didChangedAudioDevice was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final String? arg_deviceLabel = (args[0] as String?);
+          assert(arg_deviceLabel != null,
+              'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.didChangedAudioDevice was null, expected non-null String.');
+          try {
+            api.didChangedAudioDevice(arg_deviceLabel!);
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);

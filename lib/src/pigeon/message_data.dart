@@ -107,7 +107,7 @@ abstract class RequesterToNative {
   @async
   String getPlatformVersion();
   @async
-  String initialAudioSelection();
+  String getActiveAudioDevice();
   @async
   List<String> listAudioDevices();
   @async
@@ -156,4 +156,5 @@ abstract class RequesterToFlutter {
   void unmuted(AttendeeInfo info);
   void videoTileAdded(TileInfo info);
   void videoTileRemoved(TileInfo info);
+  void didChangedAudioDevice(String deviceLabel);
 }

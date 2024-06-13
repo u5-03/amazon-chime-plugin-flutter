@@ -217,7 +217,7 @@ class RequesterToNativeCodec: FlutterStandardMessageCodec {
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol RequesterToNative {
   func getPlatformVersion(completion: @escaping (Result<String, Error>) -> Void)
-  func initialAudioSelection(completion: @escaping (Result<String, Error>) -> Void)
+  func getActiveAudioDevice(completion: @escaping (Result<String, Error>) -> Void)
   func listAudioDevices(completion: @escaping (Result<[String], Error>) -> Void)
   func updateCurrentDevice(deviceLabel: String, completion: @escaping (Result<String, Error>) -> Void)
   func startLocalVideo(completion: @escaping (Result<Void, Error>) -> Void)
@@ -254,10 +254,10 @@ class RequesterToNativeSetup {
     } else {
       getPlatformVersionChannel.setMessageHandler(nil)
     }
-    let initialAudioSelectionChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.initialAudioSelection", binaryMessenger: binaryMessenger, codec: codec)
+    let getActiveAudioDeviceChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.getActiveAudioDevice", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
-      initialAudioSelectionChannel.setMessageHandler { _, reply in
-        api.initialAudioSelection() { result in
+      getActiveAudioDeviceChannel.setMessageHandler { _, reply in
+        api.getActiveAudioDevice() { result in
           switch result {
             case .success(let res):
               reply(wrapResult(res))
@@ -267,7 +267,7 @@ class RequesterToNativeSetup {
         }
       }
     } else {
-      initialAudioSelectionChannel.setMessageHandler(nil)
+      getActiveAudioDeviceChannel.setMessageHandler(nil)
     }
     let listAudioDevicesChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToNative.listAudioDevices", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
@@ -629,6 +629,12 @@ class RequesterToFlutter {
   func videoTileRemoved(info infoArg: TileInfo, completion: @escaping (Result<Void, FlutterError>) -> Void) {
     let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.videoTileRemoved", binaryMessenger: binaryMessenger, codec: codec)
     channel.sendMessage([infoArg] as [Any?]) { _ in
+      completion(.success(Void()))
+    }
+  }
+  func didChangedAudioDevice(deviceLabel deviceLabelArg: String, completion: @escaping (Result<Void, FlutterError>) -> Void) {
+    let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.didChangedAudioDevice", binaryMessenger: binaryMessenger, codec: codec)
+    channel.sendMessage([deviceLabelArg] as [Any?]) { _ in
       completion(.success(Void()))
     }
   }

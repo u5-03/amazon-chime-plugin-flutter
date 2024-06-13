@@ -219,6 +219,14 @@ class RequesterToNativeImpl(context: Context): RequesterToNative, RealtimeObserv
         }
      }
 
+    override fun createTileTexture(tileId: Long, callback: (Result<Long>) -> Unit) {
+        TODO("Not yet implemented")
+    }
+
+    override fun disposeTileTexture(tileId: Long, callback: (Result<Long>) -> Unit) {
+        TODO("Not yet implemented")
+    }
+
     // MARK: RealtimeObserver
     override fun onAttendeesDropped(attendeeInfo: Array<ChimeAttendeeInfo>) {
         for (currentAttendeeInfo in attendeeInfo) {
