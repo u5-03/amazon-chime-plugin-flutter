@@ -13,8 +13,8 @@ final class NativeImpl implements NativeInterface {
   }
 
   @override
-  Future<String> initialAudioSelection() {
-    return _runCatching(requester.initialAudioSelection);
+  Future<String> getActiveAudioDevice() {
+    return _runCatching(requester.getActiveAudioDevice);
   }
 
   @override

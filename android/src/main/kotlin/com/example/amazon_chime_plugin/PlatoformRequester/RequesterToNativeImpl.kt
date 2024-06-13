@@ -61,7 +61,7 @@ class RequesterToNativeImpl(context: Context): RequesterToNative, RealtimeObserv
         callback(Result.success("Android ${Build.VERSION.RELEASE}"))
     }
 
-   override fun initialAudioSelection(callback: (Result<String>) -> Unit) {
+   override fun getActiveAudioDevice(callback: (Result<String>) -> Unit) {
        val initialAudioDevice = MeetingSession.shared.meetingSession?.audioVideo?.getActiveAudioDevice()
        if (initialAudioDevice != null) {
            callback(Result.success(initialAudioDevice.label))
@@ -218,6 +218,14 @@ class RequesterToNativeImpl(context: Context): RequesterToNative, RealtimeObserv
             callback(Result.failure(AmazonChimeError.CustomError(text = "Meeting audioVideo is nil").asFlutterError))
         }
      }
+
+    override fun createTileTexture(tileId: Long, callback: (Result<Long>) -> Unit) {
+        TODO("Not yet implemented")
+    }
+
+    override fun disposeTileTexture(tileId: Long, callback: (Result<Long>) -> Unit) {
+        TODO("Not yet implemented")
+    }
 
     // MARK: RealtimeObserver
     override fun onAttendeesDropped(attendeeInfo: Array<ChimeAttendeeInfo>) {

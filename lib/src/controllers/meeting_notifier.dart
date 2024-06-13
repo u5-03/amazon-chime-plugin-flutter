@@ -74,6 +74,10 @@ final class MeetingNotifier extends ValueNotifier<MeetingValue> {
               value = value.copyWith(isReceivingScreenShare: false);
             }
           },
+          didChangedAudioDevice: (deviceLabel) {
+            updateAudioDeviceLabel(deviceLabel);
+            callbacks.didChangedAudioDevice?.call(deviceLabel);
+          },
         ),
       ),
     );
@@ -182,6 +186,10 @@ final class MeetingNotifier extends ValueNotifier<MeetingValue> {
       attendeeId: localAttendeeId,
       externalUserId: externalUserId,
     );
+  }
+
+  void updateAudioDeviceLabel(String label) {
+    value = value.copyWith(selectedAudioDevice: label);
   }
 
   void resetMeetingValues() {

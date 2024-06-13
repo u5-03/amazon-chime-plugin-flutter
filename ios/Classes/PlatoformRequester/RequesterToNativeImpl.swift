@@ -24,7 +24,7 @@ final class RequesterToNativeImpl: RequesterToNative {
         }
     }
 
-    func initialAudioSelection(completion: @escaping (Result<String, Error>) -> Void) {
+    func getActiveAudioDevice(completion: @escaping (Result<String, Error>) -> Void) {
         if let initialAudioDevice = MeetingSession.shared.meetingSession?.audioVideo.getActiveAudioDevice() {
             completion(.success(initialAudioDevice.label))
         } else {

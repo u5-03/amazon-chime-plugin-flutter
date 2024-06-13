@@ -151,8 +151,8 @@ final class MeetingController implements AudioDevicesInterface {
 
   /// AudioDevicesInterface methods
   @override
-  Future<String> initialAudioSelection() {
-    return native.initialAudioSelection();
+  Future<String> getActiveAudioDevice() {
+    return native.getActiveAudioDevice();
   }
 
   @override

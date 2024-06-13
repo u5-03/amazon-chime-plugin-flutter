@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:amazon_chime_plugin/amazon_chime_plugin.dart';
 import 'package:amazon_chime_plugin_example/constants/style.dart';
 import 'package:flutter/material.dart';
@@ -143,6 +145,20 @@ class MeetingWidget extends StatelessWidget {
     return attendeesWidgets;
   }
 
+  Widget _tileWidget(int tileId) {
+    if (Platform.isAndroid) {
+      // TODO: Android TextureView implementation
+      return VideoTileWidget(
+        controller: controller,
+        parameterType: VideoTileParameterType.tileId(tileId),
+      );
+    } else {
+      return VideoTileTextureWidget(
+        tileId: tileId,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -189,9 +205,7 @@ class MeetingWidget extends StatelessWidget {
                                         SizedBox(
                                           width: size.width / 2,
                                           height: size.width / 2 / 9 * 16,
-                                          child: VideoTileTextureWidget(
-                                            tileId: remoteTileId,
-                                          ),
+                                          child: _tileWidget(remoteTileId),
                                         ),
                                       ],
                                     );
@@ -213,11 +227,7 @@ class MeetingWidget extends StatelessWidget {
                                         SizedBox(
                                           width: size.width / 2,
                                           height: size.width / 2 / 9 * 16,
-                                          child: VideoTileTextureWidget(
-                                            tileId: localTileId,
-                                            isMirror:
-                                                meetingValue.isFrontCamera,
-                                          ),
+                                          child: _tileWidget(localTileId),
                                         ),
                                       ],
                                     );
@@ -251,6 +261,21 @@ class MeetingWidget extends StatelessWidget {
                               Clipboard.setData(
                                 ClipboardData(
                                   text: meetingValue.meetingId ?? '',
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: ElevatedButton(
+                            child: Text(
+                              'AudioDevice: ${meetingValue.selectedAudioDevice ?? 'None'}',
+                            ),
+                            onPressed: () {
+                              Clipboard.setData(
+                                ClipboardData(
+                                  text: meetingValue.selectedAudioDevice ?? '',
                                 ),
                               );
                             },

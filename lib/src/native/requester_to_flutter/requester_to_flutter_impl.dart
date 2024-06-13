@@ -99,4 +99,9 @@ final class RequesterToFlutterImp implements RequesterToFlutter {
   void videoTileRemoved(TileInfo info) {
     callbacks.videoTileRemoved?.call(info);
   }
+
+  @override
+  void didChangedAudioDevice(String deviceLabel) {
+    callbacks.didChangedAudioDevice?.call(deviceLabel);
+  }
 }
