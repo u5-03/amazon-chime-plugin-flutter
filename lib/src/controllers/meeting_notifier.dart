@@ -36,7 +36,6 @@ final class MeetingNotifier extends ValueNotifier<MeetingValue> {
             callbacks.videoSessionDidStartConnecting?.call();
           },
           audioSessionDidStartConnecting: (isReconnecting) {
-            print('Streaming: $callbacks');
             callbacks.audioSessionDidStartConnecting?.call(isReconnecting);
           },
           audioSessionDidStart: (isReconnecting) {
@@ -162,6 +161,10 @@ final class MeetingNotifier extends ValueNotifier<MeetingValue> {
       meetingData: meetData,
       meetingId: meetData.meeting.meetingId,
     );
+  }
+
+  void toggleFrontCamera() {
+    value = value.copyWith(isFrontCamera: !value.isFrontCamera);
   }
 
   void initializeLocalAttendee() {

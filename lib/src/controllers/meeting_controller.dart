@@ -145,6 +145,7 @@ final class MeetingController implements AudioDevicesInterface {
   }
 
   Future<void> switchLocalCamera() {
+    notifier.toggleFrontCamera();
     return native.switchLocalCamera();
   }
 

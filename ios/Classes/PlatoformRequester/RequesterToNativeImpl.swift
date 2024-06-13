@@ -11,6 +11,13 @@ import Flutter
 import AmazonChimeSDK
 
 final class RequesterToNativeImpl: RequesterToNative {
+    let textureRegistry: FlutterTextureRegistry
+    let localCameraController = LocalCameraController()
+
+    init(textureRegistry: FlutterTextureRegistry) {
+        self.textureRegistry = textureRegistry
+    }
+
     func getPlatformVersion(completion: @escaping (Result<String, Error>) -> Void) {
         Task {
             completion(.success(await UIDevice.current.systemVersion))
@@ -47,19 +54,15 @@ final class RequesterToNativeImpl: RequesterToNative {
         }
     }
 
-    func startLocalVideo(completion: @escaping (Result<Void, Error>) -> Void) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            do {
-                try MeetingSession.shared.meetingSession?.audioVideo.startLocalVideo()
-                completion(.success(()))
-            } catch {
-                MeetingSession.shared.meetingSession?.logger.error(msg: "Error configuring AVAudioSession: \(error.localizedDescription)")
-                completion(.failure(AmazonChimeError.customError(text: "Failed to start local video").asFlutterError))
-            }
-        }
+    func startLocalVideo(completion: @escaping (Result<Void, any Error>) -> Void) {
+        let videoSource = LocalCameraSource(localCameraController: localCameraController)
+        localCameraController.startRunning()
+        MeetingSession.shared.meetingSession?.audioVideo.startLocalVideo(source: videoSource)
+        completion(.success(()))
     }
 
-    func stopLocalVideo(completion: @escaping (Result<Void, Error>) -> Void) {
+    func stopLocalVideo(completion: @escaping (Result<Void, any Error>) -> Void) {
+        localCameraController.stopRunning()
         MeetingSession.shared.meetingSession?.audioVideo.stopLocalVideo()
         completion(.success(()))
     }
@@ -162,9 +165,22 @@ final class RequesterToNativeImpl: RequesterToNative {
 
     func switchCamera(completion: @escaping (Result<Void, Error>) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
-            MeetingSession.shared.meetingSession?.audioVideo.switchCamera()
+            self.localCameraController.switchCamera()
             completion(.success(()))
         }
+    }
+
+    func createTileTexture(tileId: Int64, completion: @escaping (Result<Int64, any Error>) -> Void) {
+        let controller = VideoTileTextureController(tileId: Int(tileId), registrar: textureRegistry)
+        let textureId = controller.textureId
+        AmazonChimePlugin.videoTileTextureControllers[tileId] = controller
+        completion(.success(textureId))
+    }
+
+    func disposeTileTexture(tileId: Int64, completion: @escaping (Result<Int64, any Error>) -> Void) {
+        let controller = AmazonChimePlugin.videoTileTextureControllers.first(where: { $0.key == tileId })?.value
+        controller?.dispose()
+        AmazonChimePlugin.videoTileTextureControllers.removeValue(forKey: tileId)
     }
 }
 
@@ -182,7 +198,7 @@ private extension RequesterToNativeImpl {
     private func setupObservers() {
         // TODO: implement
         //        self.realtimeObserver = MyRealtimeObserver(withMethodChannel: self)
-//                if realtimeObserver !=
+        //                if realtimeObserver !=
         MeetingSession.shared.meetingSession?.audioVideo.addRealtimeObserver(observer: self)
         MeetingSession.shared.meetingSession?.audioVideo.addVideoTileObserver(observer: self)
         MeetingSession.shared.meetingSession?.audioVideo.addAudioVideoObserver(observer: self)
@@ -309,48 +325,48 @@ extension RequesterToNativeImpl: AudioVideoObserver {
     func audioSessionDidStartConnecting(reconnecting: Bool) {
         AmazonChimePlugin.requester?.audioSessionDidStartConnecting(reconnecting: reconnecting, completion: { _ in })
     }
-    
+
     func audioSessionDidStart(reconnecting: Bool) {
         AmazonChimePlugin.requester?.audioSessionDidStart(reconnecting: reconnecting, completion: { _ in })
     }
-    
+
     func audioSessionDidDrop() {
         AmazonChimePlugin.requester?.audioSessionDidDrop(completion: { _ in })
     }
-    
+
     func audioSessionDidStopWithStatus(sessionStatus: AmazonChimeSDK.MeetingSessionStatus) {
     }
-    
+
     func audioSessionDidCancelReconnect() {
         AmazonChimePlugin.requester?.audioSessionDidCancelReconnect(completion: { _ in })
     }
-    
+
     func connectionDidRecover() {
         AmazonChimePlugin.requester?.connectionDidRecover(completion: { _ in })
     }
-    
+
     func connectionDidBecomePoor() {
         AmazonChimePlugin.requester?.connectionDidBecomePoor(completion: { _ in })
     }
-    
+
     func videoSessionDidStartConnecting() {
         AmazonChimePlugin.requester?.videoSessionDidStartConnecting(completion: { _ in })
     }
-    
+
     func videoSessionDidStartWithStatus(sessionStatus: AmazonChimeSDK.MeetingSessionStatus) {
     }
-    
+
     func videoSessionDidStopWithStatus(sessionStatus: AmazonChimeSDK.MeetingSessionStatus) {
     }
-    
+
     func remoteVideoSourcesDidBecomeAvailable(sources: [AmazonChimeSDK.RemoteVideoSource]) {
         AmazonChimePlugin.requester?.remoteVideoSourcesDidBecomeAvailable(sources: sources.map(\.attendeeId), completion: { _ in })
     }
-    
+
     func remoteVideoSourcesDidBecomeUnavailable(sources: [AmazonChimeSDK.RemoteVideoSource]) {
         AmazonChimePlugin.requester?.remoteVideoSourcesDidBecomeUnavailable(sources: sources.map(\.attendeeId), completion: { _ in })
     }
-    
+
     func cameraSendAvailabilityDidChange(available: Bool) {
         AmazonChimePlugin.requester?.cameraSendAvailabilityDidChange(available: available, completion: { _ in })
     }

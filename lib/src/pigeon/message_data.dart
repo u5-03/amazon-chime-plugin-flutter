@@ -130,6 +130,10 @@ abstract class RequesterToNative {
   void unmute();
   @async
   void switchCamera();
+  @async
+  int createTileTexture(int tileId);
+  @async
+  int disposeTileTexture(int tileId);
 }
 
 @FlutterApi() // Native -> Flutter

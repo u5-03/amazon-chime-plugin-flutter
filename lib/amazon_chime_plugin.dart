@@ -6,4 +6,5 @@ export 'src/models/attendee_model.dart';
 export 'src/models/join_info_model.dart';
 export 'src/native/requester_to_flutter/requester_to_flutter_callbacks.dart';
 export 'src/pigeon/generated/message_data.g.dart' show JoinParameter;
+export 'src/presentation/video_tile_texture_widget.dart';
 export 'src/presentation/video_tile_widget.dart';
