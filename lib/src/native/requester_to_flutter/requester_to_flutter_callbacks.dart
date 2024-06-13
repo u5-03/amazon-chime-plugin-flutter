@@ -20,6 +20,7 @@ final class RequesterToFlutterCallbacks {
     this.unmuted,
     this.videoTileAdded,
     this.videoTileRemoved,
+    this.didChangedAudioDevice,
   });
   void Function()? audioSessionDidDrop;
   void Function()? audioSessionDidStop;
@@ -39,4 +40,5 @@ final class RequesterToFlutterCallbacks {
   void Function(AttendeeInfo)? unmuted;
   void Function(TileInfo)? videoTileAdded;
   void Function(TileInfo)? videoTileRemoved;
+  void Function(String)? didChangedAudioDevice;
 }

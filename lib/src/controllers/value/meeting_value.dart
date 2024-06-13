@@ -17,6 +17,7 @@ final class MeetingValue {
     this.isMeetingActive = false,
     this.isLocalVideoEnabled = false,
     this.isFrontCamera = true,
+    this.audioDeviceLabel,
   });
 
   factory MeetingValue.empty() => const MeetingValue();
@@ -34,6 +35,7 @@ final class MeetingValue {
   final bool isMeetingActive;
   final bool isLocalVideoEnabled;
   final bool isFrontCamera;
+  final String? audioDeviceLabel;
 
   MeetingValue copyWith({
     String? meetingId,

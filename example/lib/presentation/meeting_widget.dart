@@ -267,6 +267,21 @@ class MeetingWidget extends StatelessWidget {
                           ),
                         ),
                         Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: ElevatedButton(
+                            child: Text(
+                              'AudioDevice: ${meetingValue.selectedAudioDevice ?? 'None'}',
+                            ),
+                            onPressed: () {
+                              Clipboard.setData(
+                                ClipboardData(
+                                  text: meetingValue.selectedAudioDevice ?? '',
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        Padding(
                           padding: const EdgeInsets.symmetric(vertical: 50),
                           child: SizedBox(
                             height: 50,

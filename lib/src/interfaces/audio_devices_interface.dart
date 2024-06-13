@@ -1,5 +1,5 @@
 abstract class AudioDevicesInterface {
-  void initialAudioSelection() {}
+  void getActiveAudioDevice() {}
 
   Future<void> listAudioDevices() async {}
 

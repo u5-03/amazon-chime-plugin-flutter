@@ -3,7 +3,7 @@ import 'package:amazon_chime_plugin/src/native/native_impl.dart';
 
 abstract class NativeInterface {
   Future<String> getPlatformVersion();
-  Future<String> initialAudioSelection();
+  Future<String> getActiveAudioDevice();
   Future<List<String?>> listAudioDevices();
   Future<String> updateCurrentDevice(
     String deviceLabel,

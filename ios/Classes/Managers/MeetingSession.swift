@@ -26,6 +26,7 @@ final class MeetingSession {
     }
 
     func removeSession() {
+        meetingSession?.audioVideo.removeDeviceChangeObserver(observer: self)
         meetingSession = nil
     }
 
@@ -33,6 +34,7 @@ final class MeetingSession {
         // TODO: fix bug audio setting error
         try configureAudioSession()
         try startAudioVideoConnection()
+        meetingSession?.audioVideo.addDeviceChangeObserver(observer: self)
         // Remove background noise
         // Ref: https://github.com/aws/amazon-chime-sdk-ios?tab=readme-ov-file#amazon-voice-focus
         _ = meetingSession?.audioVideo.realtimeSetVoiceFocusEnabled(enabled: true)
@@ -55,10 +57,22 @@ private extension MeetingSession {
         do {
             try meetingSession?.audioVideo.start()
             meetingSession?.audioVideo.startRemoteVideo()
+            notifyCurrentActiveAudioDevice()
         } catch PermissionError.audioPermissionError {
             throw AmazonChimeError.customError(text: PermissionError.audioPermissionError.localizedDescription)
         } catch {
             throw AmazonChimeError.customError(text: error.localizedDescription)
         }
+    }
+
+    func notifyCurrentActiveAudioDevice() {
+        let currentActiveDevice = meetingSession?.audioVideo.getActiveAudioDevice();
+        AmazonChimePlugin.requester?.didChangedAudioDevice(deviceLabel: currentActiveDevice?.label ?? "", completion: { _ in })
+    }
+}
+
+extension MeetingSession: DeviceChangeObserver {
+    func audioDeviceDidChange(freshAudioDeviceList: [MediaDevice]) {
+        notifyCurrentActiveAudioDevice()
     }
 }

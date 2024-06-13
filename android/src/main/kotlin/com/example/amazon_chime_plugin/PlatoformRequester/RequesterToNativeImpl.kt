@@ -61,7 +61,7 @@ class RequesterToNativeImpl(context: Context): RequesterToNative, RealtimeObserv
         callback(Result.success("Android ${Build.VERSION.RELEASE}"))
     }
 
-   override fun initialAudioSelection(callback: (Result<String>) -> Unit) {
+   override fun getActiveAudioDevice(callback: (Result<String>) -> Unit) {
        val initialAudioDevice = MeetingSession.shared.meetingSession?.audioVideo?.getActiveAudioDevice()
        if (initialAudioDevice != null) {
            callback(Result.success(initialAudioDevice.label))
