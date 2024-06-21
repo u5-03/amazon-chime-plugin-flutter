@@ -12,7 +12,9 @@ import AmazonChimeSDK
 
 final class RequesterToNativeImpl: RequesterToNative {
     let textureRegistry: FlutterTextureRegistry
-    let localCameraController = LocalCameraController()
+    // Not to show camera permission alert when app launches,
+    // don't generate localCameraController(AVCaptureSession) instance at first.
+    private var localCameraController: LocalCameraController?
 
     init(textureRegistry: FlutterTextureRegistry) {
         self.textureRegistry = textureRegistry
@@ -55,14 +57,22 @@ final class RequesterToNativeImpl: RequesterToNative {
     }
 
     func startLocalVideo(completion: @escaping (Result<Void, any Error>) -> Void) {
-        let videoSource = LocalCameraSource(localCameraController: localCameraController)
-        localCameraController.startRunning()
+        let tmpLocalCameraController: LocalCameraController
+        if let localCameraController = localCameraController {
+            tmpLocalCameraController = localCameraController
+        } else {
+            let localCameraController = LocalCameraController()
+            self.localCameraController = localCameraController
+            tmpLocalCameraController = localCameraController
+        }
+        let videoSource = LocalCameraSource(localCameraController: tmpLocalCameraController)
+        tmpLocalCameraController.startRunning()
         MeetingSession.shared.meetingSession?.audioVideo.startLocalVideo(source: videoSource)
         completion(.success(()))
     }
 
     func stopLocalVideo(completion: @escaping (Result<Void, any Error>) -> Void) {
-        localCameraController.stopRunning()
+        localCameraController?.stopRunning()
         MeetingSession.shared.meetingSession?.audioVideo.stopLocalVideo()
         completion(.success(()))
     }
@@ -165,7 +175,7 @@ final class RequesterToNativeImpl: RequesterToNative {
 
     func switchCamera(completion: @escaping (Result<Void, Error>) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
-            self.localCameraController.switchCamera()
+            self.localCameraController?.switchCamera()
             completion(.success(()))
         }
     }
