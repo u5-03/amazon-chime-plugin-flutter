@@ -72,7 +72,15 @@ final class RequesterToNativeImpl: RequesterToNative {
     }
 
     func stopLocalVideo(completion: @escaping (Result<Void, any Error>) -> Void) {
-        localCameraController?.stopRunning()
+        let tmpLocalCameraController: LocalCameraController
+        if let localCameraController = localCameraController {
+            tmpLocalCameraController = localCameraController
+        } else {
+            let localCameraController = LocalCameraController()
+            self.localCameraController = localCameraController
+            tmpLocalCameraController = localCameraController
+        }
+        tmpLocalCameraController.stopRunning()
         MeetingSession.shared.meetingSession?.audioVideo.stopLocalVideo()
         completion(.success(()))
     }
@@ -174,8 +182,16 @@ final class RequesterToNativeImpl: RequesterToNative {
     }
 
     func switchCamera(completion: @escaping (Result<Void, Error>) -> Void) {
+        let tmpLocalCameraController: LocalCameraController
+        if let localCameraController = localCameraController {
+            tmpLocalCameraController = localCameraController
+        } else {
+            let localCameraController = LocalCameraController()
+            self.localCameraController = localCameraController
+            tmpLocalCameraController = localCameraController
+        }
         DispatchQueue.global(qos: .userInitiated).async {
-            self.localCameraController?.switchCamera()
+            tmpLocalCameraController.switchCamera()
             completion(.success(()))
         }
     }
