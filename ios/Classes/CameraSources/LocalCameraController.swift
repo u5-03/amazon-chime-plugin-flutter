@@ -32,6 +32,16 @@ final class LocalCameraController: NSObject {
         setUp()
     }
 
+    func dispose() {
+        captureSession.stopRunning()
+        for input in captureSession.inputs {
+            captureSession.removeInput(input)
+        }
+        for output in captureSession.outputs {
+            captureSession.removeOutput(output)
+        }
+    }
+
     func startRunning() {
         if !captureSession.isRunning {
             DispatchQueue.global(qos: .userInitiated).async {

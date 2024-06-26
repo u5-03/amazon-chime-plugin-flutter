@@ -149,6 +149,8 @@ final class RequesterToNativeImpl: RequesterToNative {
     }
 
     func stop(completion: @escaping (Result<Void, Error>) -> Void) {
+        localCameraController?.dispose()
+        localCameraController = nil
         if let meetingSession = MeetingSession.shared.meetingSession {
             meetingSession.audioVideo.stopLocalVideo()
             meetingSession.audioVideo.stopRemoteVideo()
