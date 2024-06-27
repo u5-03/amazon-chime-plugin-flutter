@@ -638,4 +638,10 @@ class RequesterToFlutter {
       completion(.success(Void()))
     }
   }
+  func didChangeVideoBufferSize(tileId tileIdArg: Int64, height heightArg: Int64, width widthArg: Int64, completion: @escaping (Result<Void, FlutterError>) -> Void) {
+    let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.didChangeVideoBufferSize", binaryMessenger: binaryMessenger, codec: codec)
+    channel.sendMessage([tileIdArg, heightArg, widthArg] as [Any?]) { _ in
+      completion(.success(Void()))
+    }
+  }
 }

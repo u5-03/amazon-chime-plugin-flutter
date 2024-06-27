@@ -78,6 +78,14 @@ final class MeetingNotifier extends ValueNotifier<MeetingValue> {
             updateAudioDeviceLabel(deviceLabel);
             callbacks.didChangedAudioDevice?.call(deviceLabel);
           },
+          didChangeVideoBufferSize: (tileId, height, width) {
+            updateVideoBufferSize(
+              tileId,
+              Size(width.toDouble(), height.toDouble()),
+            );
+            callbacks.didChangeVideoBufferSize?.call(tileId, height, width);
+            notifyListeners();
+          },
         ),
       ),
     );
@@ -190,6 +198,12 @@ final class MeetingNotifier extends ValueNotifier<MeetingValue> {
 
   void updateAudioDeviceLabel(String label) {
     value = value.copyWith(selectedAudioDevice: label);
+  }
+
+  void updateVideoBufferSize(int tileId, Size size) {
+    final videoBufferSizes = {...value.videoBufferSizes};
+    videoBufferSizes[tileId] = size;
+    value = value.copyWith(videoBufferSizes: videoBufferSizes);
   }
 
   void resetMeetingValues() {

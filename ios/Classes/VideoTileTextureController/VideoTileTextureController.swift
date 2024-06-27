@@ -20,6 +20,8 @@ final class VideoTileTextureController: NSObject {
     var textureId: Int64 {
         return _textureId
     }
+    private var localCameraBufferWidth = 0
+    private var localCameraBufferHeight = 0
     private var videoFrame: VideoFrame?
 
     init(tileId: Int, registrar: FlutterTextureRegistry) {
@@ -42,6 +44,14 @@ extension VideoTileTextureController: FlutterTexture {
     func copyPixelBuffer() -> Unmanaged<CVPixelBuffer>? {
         guard let videoFramePixelBuffer = videoFrame?.buffer as? VideoFramePixelBuffer else { return nil }
         let cvPixelBuffer = videoFramePixelBuffer.pixelBuffer
+        let bufferWidth = CVPixelBufferGetWidth(cvPixelBuffer)
+        let bufferHeight = CVPixelBufferGetHeight(cvPixelBuffer)
+
+        if localCameraBufferWidth != bufferWidth || localCameraBufferHeight != bufferHeight {
+            localCameraBufferWidth = bufferWidth
+            localCameraBufferHeight = bufferHeight
+            AmazonChimePlugin.requester?.didChangeVideoBufferSize(tileId: Int64(tileId), height: Int64(bufferHeight), width: Int64(bufferWidth), completion: { _ in })
+        }
         return Unmanaged.passRetained(cvPixelBuffer)
     }
 }

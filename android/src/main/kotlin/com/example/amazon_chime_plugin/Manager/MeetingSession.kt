@@ -52,7 +52,10 @@ class MeetingSession private constructor() {
         val audioVideo =
             meetingSession?.audioVideo
         if (audioVideo != null) {
-            audioVideo.start()
+            val audioVideoConfiguration = AudioVideoConfiguration(
+                audioStreamType = AudioStreamType.Music,
+            )
+            audioVideo.start(audioVideoConfiguration)
             audioVideo.startRemoteVideo()
 
             // Remove background noise

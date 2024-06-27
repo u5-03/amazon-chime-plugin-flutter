@@ -1,15 +1,21 @@
 import 'package:amazon_chime_plugin/amazon_chime_plugin.dart';
+import 'package:amazon_chime_plugin/src/controllers/meeting_notifier.dart';
 import 'package:amazon_chime_plugin/src/native/native_interface.dart';
 import 'package:flutter/material.dart';
 
 final class VideoTileTextureWidget extends StatefulWidget {
-  const VideoTileTextureWidget(
-      {required this.tileId, this.isMirror = false, super.key});
+  const VideoTileTextureWidget({
+    required this.tileId,
+    required this.notifier,
+    this.isMirror = false,
+    super.key,
+  });
 
   static int get _uninitializedTextureId => -1;
 
   final int tileId;
   final bool isMirror;
+  final MeetingNotifier notifier;
 
   @override
   State<VideoTileTextureWidget> createState() => _VideoTileTextureWidgetState();
@@ -51,10 +57,13 @@ final class VideoTileTextureWidget extends StatefulWidget {
 
 final class _VideoTileTextureWidgetState extends State<VideoTileTextureWidget> {
   var _textureId = VideoTileTextureWidget._uninitializedTextureId;
+  // If default size is zero, Texture view process won't work
+  var _bufferSize = Size.square(100);
 
   @override
   void initState() {
     super.initState();
+
     NativeInterface.defaultInstance
         .createTileTexture(widget.tileId)
         .then((textureId) {
@@ -62,18 +71,37 @@ final class _VideoTileTextureWidgetState extends State<VideoTileTextureWidget> {
         _textureId = textureId;
       });
     });
+    widget.notifier.addListener(_notifierListener);
   }
 
   @override
   void dispose() {
     NativeInterface.defaultInstance.disposeTileTexture(widget.tileId);
+    widget.notifier.removeListener(_notifierListener);
     super.dispose();
+  }
+
+  void _notifierListener() {
+    final videoBufferSize =
+        widget.notifier.value.videoBufferSizes[widget.tileId];
+    if (videoBufferSize != null) {
+      setState(() {
+        _bufferSize = videoBufferSize;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return _textureId != VideoTileTextureWidget._uninitializedTextureId
-        ? Texture(textureId: _textureId)
+        ? ClipRect(
+            child: FittedBox(
+                fit: BoxFit.cover,
+                child: SizedBox(
+                    height: _bufferSize.height,
+                    width: _bufferSize.width,
+                    child: Texture(textureId: _textureId))),
+          )
         : SizedBox.shrink();
   }
 }
