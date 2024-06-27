@@ -157,4 +157,5 @@ abstract class RequesterToFlutter {
   void videoTileAdded(TileInfo info);
   void videoTileRemoved(TileInfo info);
   void didChangedAudioDevice(String deviceLabel);
+  void didChangeVideoBufferSize(int tileId, int height, int width);
 }

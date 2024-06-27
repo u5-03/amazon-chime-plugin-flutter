@@ -21,6 +21,7 @@ final class RequesterToFlutterCallbacks {
     this.videoTileAdded,
     this.videoTileRemoved,
     this.didChangedAudioDevice,
+    this.didChangeVideoBufferSize,
   });
   void Function()? audioSessionDidDrop;
   void Function()? audioSessionDidStop;
@@ -41,4 +42,5 @@ final class RequesterToFlutterCallbacks {
   void Function(TileInfo)? videoTileAdded;
   void Function(TileInfo)? videoTileRemoved;
   void Function(String)? didChangedAudioDevice;
+  void Function(int tileId, int height, int width)? didChangeVideoBufferSize;
 }

@@ -155,6 +155,7 @@ class MeetingWidget extends StatelessWidget {
     } else {
       return VideoTileTextureWidget(
         tileId: tileId,
+        notifier: controller.notifier,
       );
     }
   }
@@ -162,7 +163,6 @@ class MeetingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    // RequesterToFlutterImp.ref = ref;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Input Info Debug Screen'),

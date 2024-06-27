@@ -55,35 +55,4 @@ private extension LocalCameraSource {
         let nanoseconds = seconds * 1_000_000_000.0
         return Int64(nanoseconds)
     }
-
-    func mirroredPixelBufferHorizontally(cvPixelBuffer: CVPixelBuffer, shouldMirror: Bool) -> CVPixelBuffer {
-        let ciImage = CIImage(cvPixelBuffer: cvPixelBuffer)
-
-        let rotatedImage = ciImage.transformed(by: CGAffineTransform(rotationAngle: .pi / 2))
-
-        let mirroredImage: CIImage
-        if shouldMirror {
-            mirroredImage = rotatedImage.transformed(by: CGAffineTransform(scaleX: -1, y: 1).translatedBy(x: -rotatedImage.extent.width, y: 0))
-        } else {
-            mirroredImage = rotatedImage
-        }
-
-        var outputPixelBuffer: CVPixelBuffer?
-        let attributes = [
-            kCVPixelBufferCGImageCompatibilityKey: kCFBooleanTrue!,
-            kCVPixelBufferCGBitmapContextCompatibilityKey: kCFBooleanTrue!
-        ] as CFDictionary
-
-        CVPixelBufferCreate(kCFAllocatorDefault,
-                            Int(mirroredImage.extent.width),
-                            Int(mirroredImage.extent.height),
-                            kCVPixelFormatType_32BGRA,
-                            attributes,
-                            &outputPixelBuffer)
-
-        guard let finalPixelBuffer = outputPixelBuffer else { return cvPixelBuffer }
-
-        context.render(mirroredImage, to: finalPixelBuffer)
-        return finalPixelBuffer
-    }
 }

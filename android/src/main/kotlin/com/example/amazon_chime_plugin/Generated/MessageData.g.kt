@@ -810,4 +810,18 @@ class RequesterToFlutter(private val binaryMessenger: BinaryMessenger) {
       } 
     }
   }
+  fun didChangeVideoBufferSize(tileIdArg: Long, heightArg: Long, widthArg: Long, callback: (Result<Unit>) -> Unit) {
+    val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.didChangeVideoBufferSize", codec)
+    channel.send(listOf(tileIdArg, heightArg, widthArg)) {
+      if (it is List<*>) {
+        if (it.size > 1) {
+          callback(Result.failure(FlutterError(it[0] as String, it[1] as String, it[2] as String?)));
+        } else {
+          callback(Result.success(Unit));
+        }
+      } else {
+        callback(Result.failure(FlutterError("channel-error",  "Unable to establish connection on channel.", "")));
+      } 
+    }
+  }
 }

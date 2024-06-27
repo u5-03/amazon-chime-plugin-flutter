@@ -18,6 +18,7 @@ final class MeetingValue {
     this.isLocalVideoEnabled = false,
     this.isFrontCamera = true,
     this.audioDeviceLabel,
+    this.videoBufferSizes = const {},
   });
 
   factory MeetingValue.empty() => const MeetingValue();
@@ -36,6 +37,7 @@ final class MeetingValue {
   final bool isLocalVideoEnabled;
   final bool isFrontCamera;
   final String? audioDeviceLabel;
+  final Map<int, Size> videoBufferSizes;
 
   MeetingValue copyWith({
     String? meetingId,
@@ -51,6 +53,7 @@ final class MeetingValue {
     bool? isMeetingActive,
     bool? isLocalVideoEnabled,
     bool? isFrontCamera,
+    Map<int, Size>? videoBufferSizes,
   }) {
     return MeetingValue(
       meetingId: meetingId ?? this.meetingId,
@@ -67,6 +70,7 @@ final class MeetingValue {
       isMeetingActive: isMeetingActive ?? this.isMeetingActive,
       isLocalVideoEnabled: isLocalVideoEnabled ?? this.isLocalVideoEnabled,
       isFrontCamera: isFrontCamera ?? this.isFrontCamera,
+      videoBufferSizes: videoBufferSizes ?? this.videoBufferSizes,
     );
   }
 }

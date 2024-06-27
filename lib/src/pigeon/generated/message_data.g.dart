@@ -644,6 +644,8 @@ abstract class RequesterToFlutter {
 
   void didChangedAudioDevice(String deviceLabel);
 
+  void didChangeVideoBufferSize(int tileId, int height, int width);
+
   static void setup(RequesterToFlutter? api, {BinaryMessenger? binaryMessenger}) {
     {
       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
@@ -1075,6 +1077,37 @@ abstract class RequesterToFlutter {
               'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.didChangedAudioDevice was null, expected non-null String.');
           try {
             api.didChangedAudioDevice(arg_deviceLabel!);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.didChangeVideoBufferSize', codec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        channel.setMessageHandler(null);
+      } else {
+        channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+          'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.didChangeVideoBufferSize was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final int? arg_tileId = (args[0] as int?);
+          assert(arg_tileId != null,
+              'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.didChangeVideoBufferSize was null, expected non-null int.');
+          final int? arg_height = (args[1] as int?);
+          assert(arg_height != null,
+              'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.didChangeVideoBufferSize was null, expected non-null int.');
+          final int? arg_width = (args[2] as int?);
+          assert(arg_width != null,
+              'Argument for dev.flutter.pigeon.amazon_chime_plugin.RequesterToFlutter.didChangeVideoBufferSize was null, expected non-null int.');
+          try {
+            api.didChangeVideoBufferSize(arg_tileId!, arg_height!, arg_width!);
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
