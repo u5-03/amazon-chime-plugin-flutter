@@ -9,15 +9,27 @@ import Foundation
 import AVFoundation
 import Flutter
 import AmazonChimeSDK
+import Combine
 
 final class RequesterToNativeImpl: RequesterToNative {
     let textureRegistry: FlutterTextureRegistry
     // Not to show camera permission alert when app launches,
     // don't generate localCameraController(AVCaptureSession) instance at first.
     private var localCameraController: LocalCameraController?
+    private var isLocalCameraRunning = false
+    private var cancellableSet = Set<AnyCancellable>()
 
     init(textureRegistry: FlutterTextureRegistry) {
         self.textureRegistry = textureRegistry
+
+        NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)
+            .sink { [weak self] _ in
+                // Only execute when in Live(Meeting Session is alive)
+                if MeetingSession.shared.meetingSession != nil && self?.isLocalCameraRunning ?? false {
+                    self?.startLocalVideo(completion: { _ in })
+                }
+            }
+            .store(in: &cancellableSet)
     }
 
     func getPlatformVersion(completion: @escaping (Result<String, Error>) -> Void) {
@@ -68,6 +80,7 @@ final class RequesterToNativeImpl: RequesterToNative {
         let videoSource = LocalCameraSource(localCameraController: tmpLocalCameraController)
         tmpLocalCameraController.startRunning()
         MeetingSession.shared.meetingSession?.audioVideo.startLocalVideo(source: videoSource)
+        isLocalCameraRunning = true
         completion(.success(()))
     }
 
@@ -82,6 +95,7 @@ final class RequesterToNativeImpl: RequesterToNative {
         }
         tmpLocalCameraController.stopRunning()
         MeetingSession.shared.meetingSession?.audioVideo.stopLocalVideo()
+        isLocalCameraRunning = false
         completion(.success(()))
     }
 
@@ -399,3 +413,4 @@ extension RequesterToNativeImpl: AudioVideoObserver {
         AmazonChimePlugin.requester?.cameraSendAvailabilityDidChange(available: available, completion: { _ in })
     }
 }
+
