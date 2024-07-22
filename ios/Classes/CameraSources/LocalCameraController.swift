@@ -25,11 +25,32 @@ final class LocalCameraController: NSObject {
         guard let currentInput = currentInput else { return initialCameraPosition == .front }
         return currentInput.device.position == .front
     }
+    private var cancellableSet = Set<AnyCancellable>()
+    private var isLocalCameraRunning = false
 
     override init() {
         captureSession = AVCaptureSession()
         super.init()
         setUp()
+
+        // AVCaptureSession will stop session automatically when entering background, so required to restart after returning to foreground.
+        NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)
+            .sink { [weak self] _ in
+                // Only execute when in Live(Meeting Session is alive)
+                if MeetingSession.shared.meetingSession != nil && self?.isLocalCameraRunning ?? false {
+                    self?.startRunning()
+                }
+            }
+            .store(in: &cancellableSet)
+        // Explicitly stopping a session
+        NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)
+            .sink { [weak self] _ in
+                // Only execute when in Live(Meeting Session is alive)
+                if MeetingSession.shared.meetingSession != nil && self?.captureSession.isRunning ?? false {
+                    self?.captureSession.stopRunning()
+                }
+            }
+            .store(in: &cancellableSet)
     }
 
     func dispose() {
@@ -46,6 +67,7 @@ final class LocalCameraController: NSObject {
         if !captureSession.isRunning {
             DispatchQueue.global(qos: .userInitiated).async {
                 self.captureSession.startRunning()
+                self.isLocalCameraRunning = true
             }
         }
     }
@@ -53,6 +75,7 @@ final class LocalCameraController: NSObject {
     func stopRunning() {
         if captureSession.isRunning {
             captureSession.stopRunning()
+            self.isLocalCameraRunning = false
         }
     }
 

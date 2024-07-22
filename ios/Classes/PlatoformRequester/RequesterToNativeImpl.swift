@@ -65,8 +65,8 @@ final class RequesterToNativeImpl: RequesterToNative {
             self.localCameraController = localCameraController
             tmpLocalCameraController = localCameraController
         }
-        let videoSource = LocalCameraSource(localCameraController: tmpLocalCameraController)
         tmpLocalCameraController.startRunning()
+        let videoSource = LocalCameraSource(localCameraController: tmpLocalCameraController)
         MeetingSession.shared.meetingSession?.audioVideo.startLocalVideo(source: videoSource)
         completion(.success(()))
     }
@@ -399,3 +399,4 @@ extension RequesterToNativeImpl: AudioVideoObserver {
         AmazonChimePlugin.requester?.cameraSendAvailabilityDidChange(available: available, completion: { _ in })
     }
 }
+

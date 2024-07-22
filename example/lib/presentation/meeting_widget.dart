@@ -5,14 +5,29 @@ import 'package:amazon_chime_plugin_example/constants/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class MeetingWidget extends StatelessWidget {
+final class MeetingWidget extends StatefulWidget {
   const MeetingWidget({
     required this.controller,
-    // required this.meetingValue,
     super.key,
   });
   final MeetingController controller;
-  // final MeetingValue meetingValue;
+  @override
+  State<MeetingWidget> createState() => _MeetingWidgetState();
+}
+
+class _MeetingWidgetState extends State<MeetingWidget> {
+  @override
+  void initState() {
+    super.initState();
+    Future<void>.delayed(const Duration(seconds: 1), () {
+      widget.controller.startLocalVideo();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   Widget localListInfo(
     BuildContext context,
@@ -53,7 +68,8 @@ class MeetingWidget extends StatelessWidget {
             iconSize: Style.iconSize,
             padding: EdgeInsets.symmetric(horizontal: Style.iconPadding),
             color: Colors.blue,
-            onPressed: isMuted ? controller.unmute : controller.mute,
+            onPressed:
+                isMuted ? widget.controller.unmute : widget.controller.mute,
           ),
           IconButton(
             icon: Icon(localVideoIcon(isVideoOn: isVideoOn)),
@@ -62,8 +78,8 @@ class MeetingWidget extends StatelessWidget {
             constraints: const BoxConstraints(),
             color: Colors.blue,
             onPressed: isVideoOn
-                ? controller.stopLocalVideo
-                : controller.startLocalVideo,
+                ? widget.controller.stopLocalVideo
+                : widget.controller.startLocalVideo,
           ),
           IconButton(
             icon: const Icon(
@@ -149,13 +165,13 @@ class MeetingWidget extends StatelessWidget {
     if (Platform.isAndroid) {
       // TODO: Android TextureView implementation
       return VideoTileWidget(
-        controller: controller,
+        controller: widget.controller,
         parameterType: VideoTileParameterType.tileId(tileId),
       );
     } else {
       return VideoTileTextureWidget(
         tileId: tileId,
-        notifier: controller.notifier,
+        notifier: widget.controller.notifier,
       );
     }
   }
@@ -169,11 +185,11 @@ class MeetingWidget extends StatelessWidget {
       ),
       body: WillPopScope(
         onWillPop: () async {
-          controller.stopMeeting();
+          widget.controller.stopMeeting();
           return true;
         },
         child: ValueListenableBuilder<MeetingValue>(
-            valueListenable: controller.notifier,
+            valueListenable: widget.controller.notifier,
             builder: (context, meetingValue, _) {
               return SingleChildScrollView(
                 child: ConstrainedBox(
@@ -247,7 +263,7 @@ class MeetingWidget extends StatelessWidget {
                         Column(
                           children: displayAttendees(
                             context,
-                            controller,
+                            widget.controller,
                             meetingValue,
                           ),
                         ),
@@ -286,7 +302,8 @@ class MeetingWidget extends StatelessWidget {
                           child: SizedBox(
                             height: 50,
                             width: 300,
-                            child: leaveMeetingButton(controller, context),
+                            child:
+                                leaveMeetingButton(widget.controller, context),
                           ),
                         ),
                         const Spacer(),
@@ -417,7 +434,7 @@ extension MeetingBodyPortraitExt on MeetingWidget {
   }
 }
 
-extension _MeetingBodyPortraitWidgetExt on MeetingWidget {
+extension _MeetingBodyPortraitWidgetExt on _MeetingWidgetState {
   Widget leaveMeetingButton(
       MeetingController controller, BuildContext context) {
     return ElevatedButton(
